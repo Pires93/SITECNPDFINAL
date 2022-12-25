@@ -1,74 +1,85 @@
 <template>
-      <!-- ======= composicao Section ======= -->
-        <section id="composicao" class="composicao">
-            <div class="container">
-
-                <div class="section-title">
-                    <h2>COMPOSIÇÃO</h2>
-                    <h3></h3> 
-                </div>
-                <p id="pmembros">A CNPD é composta por três personalidades de reconhecida competência 
-                    e integridade moral, eleitos pela Assembleia Nacional, por maioria de dois 
-                    terços dos deputados presentes, desde que superior à maioria absoluta dos 
-                    Deputados em efectividade de funções. Conta com um secretário, habilitado 
-                    com licenciatura e de reconhecida competência para o desempenho do cargo,
-                     e ainda pessoal de apoio administrativo e técnico.
-                </p>
-                <p><br></p>
-                <div class="row">
- 
-                    <div class="col-lg-4">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="img/pre.png" class="img-fluid" alt=""> 
-                            </div>
-                            <div class="member-info">
-                                <h4>Faustino Varela Monteiro</h4>
-                                <span>Presidente</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="img/membros.png" class="img-fluid" alt=""> 
-                            </div>
-                            <div class="member-info">
-                                <h4>Djamilson Pinto</h4>
-                                <span>Membro</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="member">
-                            <div class="member-img">
-                                <img src="img/membros.png" class="img-fluid" alt=""> 
-                            </div>
-                            <div class="member-info">
-                                <h4>José Maria de Pina</h4>
-                                <span>Membro</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+  <!-- ======= composicao Section ======= -->
+  <section id="composicao" class="composicao">
+    <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b>CNPD</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/composicao">
+            <b>Composição</b>
+          </router-link>
+        </h5>
+      </div>
+      <div class="section-title">
+        <h2>COMPOSIÇÃO</h2>
+        <h3></h3>
+      </div>
+      <p id="pmembros">
+        A CNPD é composta por três personalidades de reconhecida competência e
+        integridade moral, eleitos pela Assembleia Nacional, por maioria de dois
+        terços dos deputados presentes, desde que superior à maioria absoluta
+        dos Deputados em efectividade de funções. Conta com um secretário,
+        habilitado com licenciatura e de reconhecida competência para o
+        desempenho do cargo, e ainda pessoal de apoio administrativo e técnico.
+      </p>
+      <p><br /></p>
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="member">
+            <div class="member-img">
+              <img src="img/pre.png" class="img-fluid" alt="" />
             </div>
-        </section>
-        <!-- End composicao Section -->
+            <div class="member-info">
+              <h4>Faustino Varela Monteiro</h4>
+              <span>Presidente</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="member">
+            <div class="member-img">
+              <img src="img/membros.png" class="img-fluid" alt="" />
+            </div>
+            <div class="member-info">
+              <h4>José Maria de Pina</h4>
+              <span>Membro</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="member">
+            <div class="member-img">
+              <img src="img/membros.png" class="img-fluid" alt="" />
+            </div>
+            <div class="member-info">
+              <h4>Djamilson Pinto</h4>
+              <span>Membro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End composicao Section -->
 </template>
 
 <script>
 export default {
-    name: 'ComposicaoCnpd'
-}
+  name: "ComposicaoCnpd",
+};
 </script>
 
 <style scoped>
-#pmembros{
-    text-align: justify
+#pmembros {
+  text-align: justify;
 }
 .section-title {
   text-align: center;
@@ -81,7 +92,7 @@ export default {
   padding: 8px 20px;
   line-height: 1;
   margin: 0;
-  background: #BD9A13;
+  background: #bd9a13;
   color: #000;
   display: inline-block;
   text-transform: uppercase;
@@ -111,7 +122,7 @@ export default {
 .composicao {
   background: #fff;
   padding: 60px 0;
-  padding-top: 120px;
+  padding-top: 100px;
 }
 .composicao .member {
   margin-bottom: 20px;
@@ -184,6 +195,4 @@ export default {
 .composicao .member:hover .social {
   opacity: 1;
 }
-
- 
 </style>

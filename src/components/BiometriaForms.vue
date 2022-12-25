@@ -1,23 +1,41 @@
 <template>
   <section id="decisoes" class="decisoes">
     <div class="container">
-      <Form @submit="onSubmit" >
-      <div class="section-title">
-        <h2>Notificação de tratamento de dados biométricos de trabalhadores</h2>
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formularios">
+            <b>Formulários</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formsbio">
+            <b>Formulário de Biometria</b>
+          </router-link>
+        </h5>
       </div>
-      <!-- FORMS GERAL-->
+      <Form @submit="onSubmit">
+        <div class="section-title">
+          <h2>
+            Notificação de tratamento de dados biométricos de trabalhadores
+          </h2>
+        </div>
+        <!-- FORMS GERAL-->
 
-      <br />
-      <div class="col-md-12"></div>
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2">
+        <br />
+        <div class="col-md-12"></div>
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-2">
                 <label id="labelleft" for="TipoNot" class="form-label"
                   >Tipo Notificação</label
                 >
               </div>
-              <div class="col-md-10">  
+              <div class="col-md-10">
                 <Field
                   name="tipoNotificacao"
                   as="select"
@@ -35,20 +53,19 @@
                   </option>
                 </Field>
                 <ErrorMessage class="errorMessage" name="tipoNotificacao" />
-                
               </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="separacao">
-              1. Responsável pelo Tratamento
-            </div>
-            <div class="col-md-12"><br /></div>
-            <div class="col-md-4"></div>
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="separacao">
+                1. Responsável pelo Tratamento
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="col-md-4"></div>
               <div class="col-md-2">
                 <Field
                   :rules="validateRadio"
@@ -69,179 +86,178 @@
                   value="Pessoa Coletiva"
                   v-model="tipoPessoa"
                 />
-                <label for="Pessoa Coletiva"> Pessoa Coletiva</label> 
-              </div>  
+                <label for="Pessoa Coletiva"> Pessoa Coletiva</label>
+              </div>
               <div class="col-md-4"></div>
               <div class="col-md-12" id="alignCenter">
                 <ErrorMessage class="errorMessage" name="tipoPessoa" />
               </div>
 
-            <div class="col-md-12">
-              <Field
-                name="nomedenominacao"
-                type="text"
-                class="form-control"
-                id="nomedenominacao"
-                placeholder=" Nome/Denominação"
-                :rules="validateText"
-              />
-               <ErrorMessage class="errorMessage" name="nomedenominacao" />
-            </div>
-            
-            <div class="col-md-12">
-              <input
-                type="text"
-                class="form-control"
-                id="nomecomercial"
-                placeholder=" Nome/Comercial"
-                name="nomecomercial"
-               
-              />
-             
-            </div>
-            <div class="col">
-              <Field  as="select" name="atividadeDesenvolvida" class="form-select" aria-label="Default select example" :rules="validateRadio">
-                <option value="">- Escolha a actividade desenvolvida-</option>
-                <option v-for="atividade in atividades" :key="atividade">
-                  {{ atividade }}
-                </option>
-              </Field>
-              <ErrorMessage class="errorMessage" name="atividadeDesenvolvida"/>
-            </div>
-            <div class="col">
-              <Field
-                name="nif"
-                type="text"
-                class="form-control"
-                id="nif"
-                alt="NIF"
-                placeholder="Número de NIF"
-                :rules="validateNumber"
-              />
-              <ErrorMessage class="errorMessage" name="nif" />
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <input
-                    name="rua"
-                    type="text"
-                    class="form-control"
-                    id="rua"
-                    alt="RUA"
-                    placeholder="Entre o nome da Rua"
-                    
-                  />
-                  
-                </div>
-                <div class="col">
-                  <Field
-                    name="local"
-                    type="text"
-                    class="form-control"
-                    id="local"
-                    alt="Local"
-                    placeholder="Cidade/Vila/Lugar/Zona"
-                    :rules="validateText"
-                  />
-                  <ErrorMessage class="errorMessage" name="local" />
+              <div class="col-md-12">
+                <Field
+                  name="nomedenominacao"
+                  type="text"
+                  class="form-control"
+                  id="nomedenominacao"
+                  placeholder=" Nome/Denominação"
+                  :rules="validateText"
+                />
+                <ErrorMessage class="errorMessage" name="nomedenominacao" />
+              </div>
+
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nomecomercial"
+                  placeholder=" Nome/Comercial"
+                  name="nomecomercial"
+                />
+              </div>
+              <div class="col">
+                <Field
+                  as="select"
+                  name="atividadeDesenvolvida"
+                  class="form-select"
+                  aria-label="Default select example"
+                  :rules="validateRadio"
+                >
+                  <option value="">- Escolha a actividade desenvolvida-</option>
+                  <option v-for="atividade in atividades" :key="atividade">
+                    {{ atividade }}
+                  </option>
+                </Field>
+                <ErrorMessage
+                  class="errorMessage"
+                  name="atividadeDesenvolvida"
+                />
+              </div>
+              <div class="col">
+                <Field
+                  name="nif"
+                  type="text"
+                  class="form-control"
+                  id="nif"
+                  alt="NIF"
+                  placeholder="Número de NIF"
+                  :rules="validateNumber"
+                />
+                <ErrorMessage class="errorMessage" name="nif" />
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col">
+                    <input
+                      name="rua"
+                      type="text"
+                      class="form-control"
+                      id="rua"
+                      alt="RUA"
+                      placeholder="Entre o nome da Rua"
+                    />
+                  </div>
+                  <div class="col">
+                    <Field
+                      name="local"
+                      type="text"
+                      class="form-control"
+                      id="local"
+                      alt="Local"
+                      placeholder="Cidade/Vila/Lugar/Zona"
+                      :rules="validateText"
+                    />
+                    <ErrorMessage class="errorMessage" name="local" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <Field
-                    as="select"
-                    class="form-select"
-                    v-model="ilhaResp"
-                    name="ilhaResp"
-                    id="ilhaResp"
-                    for="ilhaResp"
-                    placeholder="- Seleciona uma ilha-"
-                    :rules="validateRadio"
-                  >
-                    <option value="">- selecione uma ilha -</option>
-                    <option
-                      v-for="option in ilhas"
-                      :key="option.value"
-                      :value="option.value"
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col">
+                    <Field
+                      as="select"
+                      class="form-select"
+                      v-model="ilhaResp"
+                      name="ilhaResp"
+                      id="ilhaResp"
+                      for="ilhaResp"
+                      placeholder="- Seleciona uma ilha-"
+                      :rules="validateRadio"
                     >
-                      {{ option.label }}
-                    </option>
-                  </Field>
-                  <ErrorMessage class="errorMessage" name="ilhaResp" />
-                </div>
-                <div class="col">
-                  <Field
-                    as="select"
-                    class="form-select"
-                    v-model="concelhoResp"
-                    name="concelhoResp"
-                    id="concelhoResp"
-                    for="concelhoResp"
-                    placeholder="- Seleciona um concelho -"
-                    :rules="validateRadio"
-                  >
-                    <option value="">- selecione um concelho -</option>
-                    <option
-                      v-for="option in concelhos[ilhaResp]"
-                      :key="option.value"
-                      :value="option.value"
+                      <option value="">- selecione uma ilha -</option>
+                      <option
+                        v-for="option in ilhas"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{ option.label }}
+                      </option>
+                    </Field>
+                    <ErrorMessage class="errorMessage" name="ilhaResp" />
+                  </div>
+                  <div class="col">
+                    <Field
+                      as="select"
+                      class="form-select"
+                      v-model="concelhoResp"
+                      name="concelhoResp"
+                      id="concelhoResp"
+                      for="concelhoResp"
+                      placeholder="- Seleciona um concelho -"
+                      :rules="validateRadio"
                     >
-                      {{ option.label }}
-                    </option>
-                  </Field>
-                  <ErrorMessage class="errorMessage" name="concelhoResp"/>
-
+                      <option value="">- selecione um concelho -</option>
+                      <option
+                        v-for="option in concelhos[ilhaResp]"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{ option.label }}
+                      </option>
+                    </Field>
+                    <ErrorMessage class="errorMessage" name="concelhoResp" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-12" id="divloco">
-              <div class="row">
-                <div class="col">
-                  <input
-                    name="caixapostal"
-                    type="text"
-                    class="form-control"
-                    id="caixapostal"
-                    alt="Caixa Postal"
-                    placeholder="Entre o número da Caixa Postal"
-                   
-                  />
-                  
-                </div>
-                <div class="col">
-                  <Field
-          
-                    name="telefone"
-                    type="number"
-                    class="form-control"
-                    id="telefone"
-                    alt="Telefone/Telemovel"
-                    placeholder="Contato: Telefone/Telemovel"
-                    :rules="validateNumber"
-                  />
-                  <ErrorMessage class="errorMessage" name="telefone" />
-
+              <div class="col-md-12" id="divloco">
+                <div class="row">
+                  <div class="col">
+                    <input
+                      name="caixapostal"
+                      type="text"
+                      class="form-control"
+                      id="caixapostal"
+                      alt="Caixa Postal"
+                      placeholder="Entre o número da Caixa Postal"
+                    />
+                  </div>
+                  <div class="col">
+                    <Field
+                      name="telefone"
+                      type="number"
+                      class="form-control"
+                      id="telefone"
+                      alt="Telefone/Telemovel"
+                      placeholder="Contato: Telefone/Telemovel"
+                      :rules="validateNumber"
+                    />
+                    <ErrorMessage class="errorMessage" name="telefone" />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <Field
-                    name="email"
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="Entre o seu email: example@cnpd.cv"
-                    :rules="validateEmail"
-                  />
-                  <ErrorMessage class="errorMessage" name="email" />
-
-                </div>
-                <div class="col">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col">
+                    <Field
+                      name="email"
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      placeholder="Entre o seu email: example@cnpd.cv"
+                      :rules="validateEmail"
+                    />
+                    <ErrorMessage class="errorMessage" name="email" />
+                  </div>
+                  <div class="col">
                     <div class="col">
                       <Field
                         :rules="validateRadio"
@@ -267,538 +283,546 @@
                       >
                     </div>
                     <ErrorMessage class="errorMessage" name="paisResp" />
-                 
                   </div>
-              </div>
-            </div>
-            <div class="col-md-12">
-              <Field
-                name="nomedenominacaoRepre"
-                type="text"
-                class="form-control"
-                id="nomedenominacao"
-                alt="Nome Denominação: Refere-se à designação oficial de uma instituição pública ou privada"
-                placeholder=" Representante"
-                :rules="validateText"
-              />
-              <ErrorMessage class="errorMessage" name="nomedenominacaoRepre" />
-            </div> 
-            <div class="col">
-              <input
-                name="ruaRepre"
-                type="text"
-                class="form-control"
-                id="rua"
-                placeholder=" Rua"
-               
-              />
-              
-            </div>
-            <div class="col">
-              <input
-                name="caixapostalRepre"
-                type="text"
-                class="form-control"
-                id="caixapostalRepre"
-                placeholder=" Caixa Postal"
-                
-              />
-              
-            </div>
-            <div class="col-md-12">
-              <Field
-                name="cidadeRepre"
-                type="text"
-                class="form-control"
-                id="cidadeRepre"
-                placeholder=" Cidade/Vila/Lugar/Zona"
-                :rules="validateText"
-              />
-              <ErrorMessage class="errorMessage" name="cidadeRepre"/>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <Field
-                    as="select"
-                    class="form-select"
-                    v-model="ilhaMorRep"
-                    name="ilhaMorRep"
-                    id="ilhaMorRep"
-                    for=" ilhaMorRep"
-                    placeholder="- Seleciona uma ilha-"
-                    :rules="validateRadio"
-                  >
-                    <option value="">- selecione uma ilha -</option>
-                    <option
-                      v-for="option in ilhas"
-                      :key="option.value"
-                      :value="option.value"
-                    >
-                      {{ option.label }}
-                    </option>
-                  </Field>
-                  <ErrorMessage class="errorMessage" name="ilhaMorRep" />
-                </div>
-                <div class="col">
-                  <Field
-                    as="select"
-                    class="form-select"
-                    v-model="concelhoMorRep"
-                    name="concelhoMorRep"
-                    id="concelhoMorRep"
-                    for="concelhoMorRep"
-                    placeholder="- Seleciona um concelho -"
-                    :rules="validateRadio"
-
-                  >
-                    <option value="">- selecione um concelho -</option>
-                    <option
-                      v-for="option in concelhos[ilhaMorRep]"
-                      :key="option.value"
-                      :value="option.value"
-                    >
-                      {{ option.label }}
-                    </option>
-                  </Field>
-                  <ErrorMessage class="errorMessage" name="concelhoMorRep" />
                 </div>
               </div>
-            </div>
-            <div class="col-md-12" id="divloco">
-              <Field
-                name="nomePessoaContato"
-                type="text"
-                class="form-control"
-                id="nomecomercial"
-                placeholder=" Nome da pessoa do contato"
-                :rules="validateText"  
-              />
-              <ErrorMessage class="errorMessage" name="nomePessoaContato" />
-
-
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col">
-                  <Field
-                    name="emailPessoadoContato"
-                    type="email"
-                    class="form-control"
-                    id="nomePessoaContato"
-                    alt="nomePessoaContato"
-                    placeholder="Entre o seu email: example@cnpd.cv"
-                    :rules="validateEmail"
-                  />
-                  <ErrorMessage class="errorMessage" name="emailPessoadoContato" />
-                </div>
-                <div class="col">
-                  <Field
-                    name="telefonePessoadoContato"
-                    type="number"
-                    class="form-control"
-                    id="telefone"
-                    alt="Telefone/Telemovel"
-                    placeholder="Contato: Telefone/Telemovel"
-                    :rules="validateNumber"
-                  />
-                  <ErrorMessage class="errorMessage" name="telefonePessoadoContato" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="separacao">
-              Processamento da informação
-            </div>
-            <div class="col-md-12"><br /></div>
-            <div class="col">
-              <label class="form-check-label">
-                Existe um Serviço Externo encarregado do processamento ?
-              </label>
-              <buttom
-                @click="changeServico"
-                type="button"
-                class="btn btn-outline-primary"
-                name="morada"
-                id="moradasimbotton"
-              >
-                {{ checkServico ? "Não" : "Sim" }}
-              </buttom>
-            </div>
-            <div class="col-md-12" v-if="checkServico">
               <div class="col-md-12">
                 <Field
+                  name="nomedenominacaoRepre"
                   type="text"
                   class="form-control"
-                  name="entidadeProcessInfo"
-                  id="entidadeProcessInfo"
-                  placeholder=" Qual a Entidade Encarregue pelo processamento dos dados"
+                  id="nomedenominacao"
+                  alt="Nome Denominação: Refere-se à designação oficial de uma instituição pública ou privada"
+                  placeholder=" Representante"
                   :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="entidadeProcessInfo" />
+                <ErrorMessage
+                  class="errorMessage"
+                  name="nomedenominacaoRepre"
+                />
               </div>
-              <div class="col-md-12">
+              <div class="col">
                 <input
+                  name="ruaRepre"
                   type="text"
                   class="form-control"
-                  name="ruaProcessInfo"
-                  id="ruaProcessInfo"
+                  id="rua"
                   placeholder=" Rua"
                 />
               </div>
-              <div class="col-md-12">
+              <div class="col">
                 <input
+                  name="caixapostalRepre"
                   type="text"
                   class="form-control"
-                  name="caixaPostalProcessInfo"
-                  id="caixaPostalProcessInfo"
+                  id="caixapostalRepre"
                   placeholder=" Caixa Postal"
                 />
               </div>
               <div class="col-md-12">
                 <Field
+                  name="cidadeRepre"
                   type="text"
                   class="form-control"
-                  name="lugarProcessInfo"
-                  id="lugarProcessInfo"
-                  placeholder="Cidade/Vila/Lugar/Zona da Entidade"
+                  id="cidadeRepre"
+                  placeholder=" Cidade/Vila/Lugar/Zona"
                   :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="lugarProcessInfo" />
+                <ErrorMessage class="errorMessage" name="cidadeRepre" />
               </div>
-
               <div class="col-md-12">
                 <div class="row">
                   <div class="col">
                     <Field
                       as="select"
                       class="form-select"
-                      v-model="ilhaServExt"
-                      name="ilhaServExt"
-                      id="ilhaServExt"
-                      for="ilhaServExt"
+                      v-model="ilhaMorRep"
+                      name="ilhaMorRep"
+                      id="ilhaMorRep"
+                      for=" ilhaMorRep"
                       placeholder="- Seleciona uma ilha-"
                       :rules="validateRadio"
                     >
                       <option value="">- selecione uma ilha -</option>
                       <option
-                        v-for="ilha in ilhas"
-                        :key="ilha.value"
-                        :value="ilha.value"
+                        v-for="option in ilhas"
+                        :key="option.value"
+                        :value="option.value"
                       >
-                        {{ ilha.value }}
+                        {{ option.label }}
                       </option>
                     </Field>
-                    <ErrorMessage class="errorMessage" name="ilhaServExt" />
+                    <ErrorMessage class="errorMessage" name="ilhaMorRep" />
                   </div>
                   <div class="col">
                     <Field
                       as="select"
                       class="form-select"
-                      v-model="concelhoServExt"
-                      name="concelhoServExt"
-                      id="concelhoServExt"
-                      for="concelhoServExt"
+                      v-model="concelhoMorRep"
+                      name="concelhoMorRep"
+                      id="concelhoMorRep"
+                      for="concelhoMorRep"
                       placeholder="- Seleciona um concelho -"
                       :rules="validateRadio"
                     >
                       <option value="">- selecione um concelho -</option>
                       <option
-                        v-for="concelho in concelhos[ilhaServExt]"
-                        :key="concelho.value"
-                        :value="concelho.value"
+                        v-for="option in concelhos[ilhaMorRep]"
+                        :key="option.value"
+                        :value="option.value"
                       >
-                        {{ concelho.value }}
+                        {{ option.label }}
                       </option>
                     </Field>
-                    <ErrorMessage class="errorMessage" name="concelhoServExt" />
+                    <ErrorMessage class="errorMessage" name="concelhoMorRep" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12" id="divloco">
+                <Field
+                  name="nomePessoaContato"
+                  type="text"
+                  class="form-control"
+                  id="nomecomercial"
+                  placeholder=" Nome da pessoa do contato"
+                  :rules="validateText"
+                />
+                <ErrorMessage class="errorMessage" name="nomePessoaContato" />
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col">
+                    <Field
+                      name="emailPessoadoContato"
+                      type="email"
+                      class="form-control"
+                      id="nomePessoaContato"
+                      alt="nomePessoaContato"
+                      placeholder="Entre o seu email: example@cnpd.cv"
+                      :rules="validateEmail"
+                    />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="emailPessoadoContato"
+                    />
+                  </div>
+                  <div class="col">
+                    <Field
+                      name="telefonePessoadoContato"
+                      type="number"
+                      class="form-control"
+                      id="telefone"
+                      alt="Telefone/Telemovel"
+                      placeholder="Contato: Telefone/Telemovel"
+                      :rules="validateNumber"
+                    />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="telefonePessoadoContato"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!--------------------------------------FINALIDADE DO TRATAMENTO----------------------------------------------------->
-
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
+        <div class="col" id="divg">
+          <div class="container">
+            <div class="row">
               <div class="col-md-12" id="separacao">
-                2. Finalidade do tratamento
+                Processamento da informação
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="col">
+                <label class="form-check-label">
+                  Existe um Serviço Externo encarregado do processamento ?
+                </label>
+                <buttom
+                  @click="changeServico"
+                  type="button"
+                  class="btn btn-outline-primary"
+                  name="morada"
+                  id="moradasimbotton"
+                >
+                  {{ checkServico ? "Não" : "Sim" }}
+                </buttom>
+              </div>
+              <div class="col-md-12" v-if="checkServico">
+                <div class="col-md-12">
+                  <Field
+                    type="text"
+                    class="form-control"
+                    name="entidadeProcessInfo"
+                    id="entidadeProcessInfo"
+                    placeholder=" Qual a Entidade Encarregue pelo processamento dos dados"
+                    :rules="validateText"
+                  />
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="entidadeProcessInfo"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ruaProcessInfo"
+                    id="ruaProcessInfo"
+                    placeholder=" Rua"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="caixaPostalProcessInfo"
+                    id="caixaPostalProcessInfo"
+                    placeholder=" Caixa Postal"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <Field
+                    type="text"
+                    class="form-control"
+                    name="lugarProcessInfo"
+                    id="lugarProcessInfo"
+                    placeholder="Cidade/Vila/Lugar/Zona da Entidade"
+                    :rules="validateText"
+                  />
+                  <ErrorMessage class="errorMessage" name="lugarProcessInfo" />
+                </div>
+
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col">
+                      <Field
+                        as="select"
+                        class="form-select"
+                        v-model="ilhaServExt"
+                        name="ilhaServExt"
+                        id="ilhaServExt"
+                        for="ilhaServExt"
+                        placeholder="- Seleciona uma ilha-"
+                        :rules="validateRadio"
+                      >
+                        <option value="">- selecione uma ilha -</option>
+                        <option
+                          v-for="ilha in ilhas"
+                          :key="ilha.value"
+                          :value="ilha.value"
+                        >
+                          {{ ilha.value }}
+                        </option>
+                      </Field>
+                      <ErrorMessage class="errorMessage" name="ilhaServExt" />
+                    </div>
+                    <div class="col">
+                      <Field
+                        as="select"
+                        class="form-select"
+                        v-model="concelhoServExt"
+                        name="concelhoServExt"
+                        id="concelhoServExt"
+                        for="concelhoServExt"
+                        placeholder="- Seleciona um concelho -"
+                        :rules="validateRadio"
+                      >
+                        <option value="">- selecione um concelho -</option>
+                        <option
+                          v-for="concelho in concelhos[ilhaServExt]"
+                          :key="concelho.value"
+                          :value="concelho.value"
+                        >
+                          {{ concelho.value }}
+                        </option>
+                      </Field>
+                      <ErrorMessage
+                        class="errorMessage"
+                        name="concelhoServExt"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div class="col-md-12"><br /></div>
-            <div class="col">
-              <label class="form-check-label">
-                (caso seja tratamento de assiduidade e controlo de acesso,
-                deverá selecionar as duas opções)
-              </label>
-              <treeselect
+        <!--------------------------------------FINALIDADE DO TRATAMENTO----------------------------------------------------->
+
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  2. Finalidade do tratamento
+                </div>
+              </div>
+
+              <div class="col-md-12"><br /></div>
+              <div class="col">
+                <label class="form-check-label">
+                  (caso seja tratamento de assiduidade e controlo de acesso,
+                  deverá selecionar as duas opções)
+                </label>
+                <treeselect
                   :multiple="true"
                   :options="finalidadeTratamentos"
                   placeholder="-Indique a(s) finalidade(s) do tratamento-"
                   v-model="finalidadeTratamento"
-                /> 
+                />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
-             </div>
+              </div>
 
-            <div class="col">
-              <label class="form-check-label"> Número de funcionarios </label>
-              <input
-                type="number"
-                class="form-control"
-                id="numeroFuncionarios"
-                alt="numero de funcionario"
-                placeholder="indique o número de funcionários que aderiram ao sistema"
-              />
+              <div class="col">
+                <label class="form-check-label"> Número de funcionarios </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="numeroFuncionarios"
+                  alt="numero de funcionario"
+                  placeholder="indique o número de funcionários que aderiram ao sistema"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                3. Dados pessoais contidos em cada registo
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  3. Dados pessoais contidos em cada registo
+                </div>
               </div>
-            </div>
 
-            <div class="col-md-12"><br /></div>
-            <div class="col">
-              <label class="form-check-label"> Dados registrados </label>
-             
+              <div class="col-md-12"><br /></div>
+              <div class="col">
+                <label class="form-check-label"> Dados registrados </label>
+
                 <treeselect
                   :multiple="true"
                   :options="dadosRegistrados"
                   placeholder="-Dados Pessoais contidos em cada registro -"
                   v-model="dadosRegistrado"
-                /> 
+                />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
-            </div>
+              </div>
 
-            <div class="col">
-              <label class="form-check-label"> Outros dados </label>
-              <treeselect
+              <div class="col">
+                <label class="form-check-label"> Outros dados </label>
+                <treeselect
                   :multiple="true"
                   :options="outrosDados"
                   placeholder="-Outros Dados Tratados -"
                   v-model="outrosDado"
-                /> 
+                />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
-             
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                4. Forma de armazenamento do dado biométrico
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  4. Forma de armazenamento do dado biométrico
+                </div>
               </div>
-            </div>
-      
-          <div class="col-md-12"><br /></div>
-          <label class="form-check-label"> Forma de registro </label>
-          <div class="col">
-            <treeselect
+
+              <div class="col-md-12"><br /></div>
+              <label class="form-check-label"> Forma de registro </label>
+              <div class="col">
+                <treeselect
                   :multiple="true"
                   :options="formasRegistros"
                   placeholder="-Forma de registos dos dados -"
                   v-model="formasRegistro"
-                /> 
+                />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
-             
-          </div>
-          <div class="col-md-12"><br /></div>
-        </div>
-      </div>
-      </div>
-
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                5. Tratamento da informação
               </div>
-            </div> 
-          <div class="col-md-12"><br /></div>
-          <label class="form-check-label">
-            Forma de tratamento da informação
-          </label>
-          <div class="col">
-            <treeselect
+              <div class="col-md-12"><br /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  5. Tratamento da informação
+                </div>
+              </div>
+              <div class="col-md-12"><br /></div>
+              <label class="form-check-label">
+                Forma de tratamento da informação
+              </label>
+              <div class="col">
+                <treeselect
                   :multiple="true"
                   :options="tratamentoInfos"
                   placeholder="-De que forma a informação é tratada -"
                   v-model="tratamentoInfo"
-                />  
-          </div>
-          <div class="col-md-12"><br /></div>
-        </div>
-      </div>
-      </div>
-
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                6. Exercício do direito de Acesso
+                />
               </div>
-            </div> 
-            <div class="col-md-12"><br /></div>
-            <div class="col">
-              <label class="form-check-label">
-                Morada do local do exercício do direito de acesso é a mesma
-                indicada em 1 ?
-              </label>
-              <buttom
-                @click="changeDireitoAcesso"
-                type="button"
-                class="btn btn-outline-primary"
-                name="morada"
-                id="moradasimbotton"
-              >
-                {{ checkDireitoAcesso ? "Sim" : "Não" }}
-              </buttom>
+              <div class="col-md-12"><br /></div>
             </div>
-            <div class="col-md-12" v-if="checkDireitoAcesso">
-              
-                  <div class="col-md-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="ruaDireitoAcesso"
-                      id="ruaDireitoAcesso"
-                      placeholder=" Rua"
-                      
-                    />
-                    
-                  </div>
-                  <div class="col-md-12">
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="caixaPostalDireitoAcesso"
-                      id="caixaPostalDireitoAcesso"
-                      placeholder=" Caixa Postal"
-                     
-                    />
-                    
-                  </div>
-                  <div class="col-md-12">
-                    <Field
-                      type="text"
-                      class="form-control"
-                      name="localDireitoAcesso"
-                      id="localDireitoAcesso"
-                      placeholder=" Local - Cidade/Vila/Lugar/Zona"
-                      :rules="validateText"
-                      
-                    />
-                    <ErrorMessage class="errorMessage" name="localDireitoAcesso"/>
+          </div>
+        </div>
 
-                  </div>
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  6. Exercício do direito de Acesso
+                </div>
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="col">
+                <label class="form-check-label">
+                  Morada do local do exercício do direito de acesso é a mesma
+                  indicada em 1 ?
+                </label>
+                <buttom
+                  @click="changeDireitoAcesso"
+                  type="button"
+                  class="btn btn-outline-primary"
+                  name="morada"
+                  id="moradasimbotton"
+                >
+                  {{ checkDireitoAcesso ? "Sim" : "Não" }}
+                </buttom>
+              </div>
+              <div class="col-md-12" v-if="checkDireitoAcesso">
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="ruaDireitoAcesso"
+                    id="ruaDireitoAcesso"
+                    placeholder=" Rua"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="caixaPostalDireitoAcesso"
+                    id="caixaPostalDireitoAcesso"
+                    placeholder=" Caixa Postal"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <Field
+                    type="text"
+                    class="form-control"
+                    name="localDireitoAcesso"
+                    id="localDireitoAcesso"
+                    placeholder=" Local - Cidade/Vila/Lugar/Zona"
+                    :rules="validateText"
+                  />
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="localDireitoAcesso"
+                  />
+                </div>
 
-                  <div class="col-md-12">
-                    <div class="row">
-                      <div class="col">
-                        <Field
-                          as="select"
-                          class="form-select"
-                          v-model="ilhaDirAcess"
-                          name="ilhaDirAcess"
-                          id=" ilhaDirAcess"
-                          for=" ilhaDirAcess"
-                          placeholder="- Seleciona uma ilha-"
-                          :rules="validateRadio"
+                <div class="col-md-12">
+                  <div class="row">
+                    <div class="col">
+                      <Field
+                        as="select"
+                        class="form-select"
+                        v-model="ilhaDirAcess"
+                        name="ilhaDirAcess"
+                        id=" ilhaDirAcess"
+                        for=" ilhaDirAcess"
+                        placeholder="- Seleciona uma ilha-"
+                        :rules="validateRadio"
+                      >
+                        <option value="">- selecione uma ilha -</option>
+                        <option
+                          v-for="option in ilhas"
+                          :key="option.value"
+                          :value="option.value"
                         >
-                          <option value="">- selecione uma ilha -</option>
-                          <option
-                            v-for="option in ilhas"
-                            :key="option.value"
-                            :value="option.value"
-                          >
-                            {{ option.label }}
-                          </option>
-                        </Field>
-                        <ErrorMessage class="errorMessage" name="ilhaDirAcess" />
-                      </div>
-                      <div class="col">
-                        <Field
-                          as="select"
-                          class="form-select"
-                          v-model="concelhoDirAcess"
-                          name="concelhoDirAcess"
-                          id="concelhoDirAcess"
-                          for="concelhoDirAcess"
-                          placeholder="- Seleciona um concelho -"
-                          :rules="validateRadio"
+                          {{ option.label }}
+                        </option>
+                      </Field>
+                      <ErrorMessage class="errorMessage" name="ilhaDirAcess" />
+                    </div>
+                    <div class="col">
+                      <Field
+                        as="select"
+                        class="form-select"
+                        v-model="concelhoDirAcess"
+                        name="concelhoDirAcess"
+                        id="concelhoDirAcess"
+                        for="concelhoDirAcess"
+                        placeholder="- Seleciona um concelho -"
+                        :rules="validateRadio"
+                      >
+                        <option value="">- selecione um concelho -</option>
+                        <option
+                          v-for="option in concelhos[ilhaDirAcess]"
+                          :key="option.value"
+                          :value="option.value"
                         >
-                          <option value="">
-                            - selecione um concelho -
-                          </option>
-                          <option
-                            v-for="option in concelhos[ilhaDirAcess]"
-                            :key="option.value"
-                            :value="option.value"
-                          >
-                            {{ option.label }}
-                          </option>
-                        </Field>
-                        <ErrorMessage class="errorMessage" name="concelhoDirAcess" />
-                      </div>
-                      <div class="col-md-12"><br /></div>
+                          {{ option.label }}
+                        </option>
+                      </Field>
+                      <ErrorMessage
+                        class="errorMessage"
+                        name="concelhoDirAcess"
+                      />
+                    </div>
+                    <div class="col-md-12"><br /></div>
 
-                      <div class="col-md-12">
-                        <div class="row">
-                          <div class="col">
-                            <Field
-                              type="email"
-                              class="form-control"
-                              name="emailDireitoAcesso"
-                              id="emailDireitoAcesso"
-                              placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
-                              :rules="validateEmail"
-                            />
-                            <ErrorMessage class="errorMessage" name="emailDireitoAcesso" />
-                          </div>
-                          <div class="col">
-                            <Field
-                              type="number"
-                              class="form-control"
-                              name="telefoneDireitoAcesso"
-                              id="telefoneDireitoAcesso"
-                              placeholder="Contato: Telefone/Telemovel"
-                              :rules="validateNumber"
-                            />
-                            <ErrorMessage class="errorMessage" name="telefoneDireitoAcesso" />
-                          </div>
+                    <div class="col-md-12">
+                      <div class="row">
+                        <div class="col">
+                          <Field
+                            type="email"
+                            class="form-control"
+                            name="emailDireitoAcesso"
+                            id="emailDireitoAcesso"
+                            placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
+                            :rules="validateEmail"
+                          />
+                          <ErrorMessage
+                            class="errorMessage"
+                            name="emailDireitoAcesso"
+                          />
+                        </div>
+                        <div class="col">
+                          <Field
+                            type="number"
+                            class="form-control"
+                            name="telefoneDireitoAcesso"
+                            id="telefoneDireitoAcesso"
+                            placeholder="Contato: Telefone/Telemovel"
+                            :rules="validateNumber"
+                          />
+                          <ErrorMessage
+                            class="errorMessage"
+                            name="telefoneDireitoAcesso"
+                          />
                         </div>
                       </div>
                     </div>
-                  </div> 
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-md-12" id="divg">
+        <div class="col-md-12" id="divg">
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="separacao">
@@ -808,7 +832,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Presencial"
@@ -819,7 +843,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Escrita"
@@ -837,23 +861,22 @@
                   name="outraFormaDireitoAcesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso" 
+                  v-model="outraFormaDireitoAcesso"
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
-                /> 
+                />
               </div>
             </div>
           </div>
         </div>
 
-
-      <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                7. Medidas de segurança a implementar
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  7. Medidas de segurança a implementar
+                </div>
               </div>
-            </div>  
 
               <div class="col-md-12">
                 <label
@@ -871,7 +894,10 @@
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                   :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="outraFormaDireitoAcessoFisica" />
+                <ErrorMessage
+                  class="errorMessage"
+                  name="outraFormaDireitoAcessoFisica"
+                />
               </div>
               <div class="col-md-12"><br /></div>
               <div class="col-md-12">
@@ -890,73 +916,72 @@
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                   :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="outraFormaDireitoAcessoLogica" />
-
+                <ErrorMessage
+                  class="errorMessage"
+                  name="outraFormaDireitoAcessoLogica"
+                />
               </div>
             </div>
           </div>
         </div>
-
 
         <div class="col-md-12" id="divg">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12" id="divloco">
-              <div class="col-md-12" id="separacao">
-                8. Representante dos trabalhadores
-              </div>
-            </div>   
-          <div class="col-md-12"><br /></div>
-          <div class="row">
-            <div class="col">
-              <div class="col">
-                <label class="form-check-label">
-                  Existe representante dos trabalhadores?
-                </label>
-                <buttom
-                  @click="changeRepTrab"
-                  type="button"
-                  class="btn btn-outline-primary"
-                  name="morada"
-                  id="moradasimbotton"
-                >
-                  {{ checkRepTrab ? "Não" : "Sim" }}
-                </buttom>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  8. Representante dos trabalhadores
+                </div>
               </div>
               <div class="col-md-12"><br /></div>
-              <div class="col-md-12" v-if="checkRepTrab">
-                <label for="formFile" class="form-label"
-                  >Se sim, juntar a cópia do parecer ou comprovativo do
-                  pedido.</label
-                >
-                <input class="form-control" type="file" id="formFile" />
+              <div class="row">
+                <div class="col">
+                  <div class="col">
+                    <label class="form-check-label">
+                      Existe representante dos trabalhadores?
+                    </label>
+                    <buttom
+                      @click="changeRepTrab"
+                      type="button"
+                      class="btn btn-outline-primary"
+                      name="morada"
+                      id="moradasimbotton"
+                    >
+                      {{ checkRepTrab ? "Não" : "Sim" }}
+                    </buttom>
+                  </div>
+                  <div class="col-md-12"><br /></div>
+                  <div class="col-md-12" v-if="checkRepTrab">
+                    <label for="formFile" class="form-label"
+                      >Se sim, juntar a cópia do parecer ou comprovativo do
+                      pedido.</label
+                    >
+                    <input class="form-control" type="file" id="formFile" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      </div> 
-      <div class="col-md-12"><br></div>
-     
-      <div class="col-12" id="divsave">
-        <button
-          @click="submitForm"
-          id="buttonsave"
-          class="btn btn-primary"
-          type="submit"
-        >
-        <IconAwe class="icon-color" icon="paper-plane"
-                    /> Submeter Dados
-        </button>
-      </div>
+        <div class="col-md-12"><br /></div>
+
+        <div class="col-12" id="divsave">
+          <button
+            @click="submitForm"
+            id="buttonsave"
+            class="btn btn-primary"
+            type="submit"
+          >
+            <IconAwe class="icon-color" icon="paper-plane" /> Submeter Dados
+          </button>
+        </div>
       </Form>
     </div>
   </section>
 </template>
 
-<script>  
-/*
-import Multiselect from "@vueform/multiselect";*/
+<script>
+//import Multiselect from "@vueform/multiselect";
 
 import { Form, Field, ErrorMessage } from "vee-validate";
 
@@ -967,12 +992,11 @@ import "vue3-treeselect/dist/vue3-treeselect.css";
 
 export default {
   components: {
-    /*Multiselect,*/
+    // Multiselect,
     Treeselect,
     Form,
     Field,
     ErrorMessage,
-    
   },
   name: "BiometriaForms",
 
@@ -983,7 +1007,7 @@ export default {
       checkDireitoAcesso: false,
       checkRepTrab: false,
       /** *********************Finalidade de tratamento ************************************** */
-      finalidadeTratamento:null,
+      finalidadeTratamento: null,
       finalidadeTratamentos: [
         { id: "Controlo de assiduidade", label: "Controlo de assiduidade" },
         {
@@ -1090,7 +1114,7 @@ export default {
         "Seguros",
         "Transporte (Aéreo, Marítimo, Terrestre)",
       ],
-      dadosRegistrado:null,
+      dadosRegistrado: null,
       dadosRegistrados: [
         { id: "Impressão digital", label: "Impressão digital" },
         { id: "Contorno da mão", label: "Contorno da mão" },
@@ -1100,21 +1124,23 @@ export default {
         { id: "Assinatura", label: "Assinatura" },
         { id: "Voz", label: "Voz" },
       ],
-      outrosDado:null,
+      outrosDado: null,
       outrosDados: [
         { id: "Nº de empregado", label: "Nº do empregado" },
         { id: "Nome", label: "Nome" },
         { id: "Telefone", label: "Telefone" },
         { id: "Horário", label: "Horário" },
         {
-          id: "Escalas de serviço",label: "Cargo/categoria/função desempenhada",
+          id: "Escalas de serviço",
+          label: "Cargo/categoria/função desempenhada",
         },
         { id: "Departamento/secção", label: "Departamento/secção" },
         {
-          id: "Data e hora de entrada e saida",label: "Data e hora de entrada e saida",
+          id: "Data e hora de entrada e saida",
+          label: "Data e hora de entrada e saida",
         },
       ],
-      formasRegistro:null,
+      formasRegistro: null,
       formasRegistros: [
         { id: "Templete", label: "Templete" },
         { id: "Imagem", label: "Imagem" },
@@ -1122,7 +1148,7 @@ export default {
         { id: "Terminal local", label: "Terminal local" },
         { id: "Cartão", label: "Cartão" },
       ],
-      tratamentoInfo:null,
+      tratamentoInfo: null,
       tratamentoInfos: [
         {
           id: "Central num estabelecimento único",
@@ -1147,7 +1173,7 @@ export default {
     };
   },
   methods: {
-     validateText(value) {
+    validateText(value) {
       // if the field is empty
       if (!value) {
         return "Campo obrigatório!";
@@ -1164,17 +1190,15 @@ export default {
     },
     async dadosBackend() {
       const req = await fetch("http://localhost:3000/dadosBackend");
-      const data = await req.json(); 
+      const data = await req.json();
       this.atividadesDesenvolvidas = data.atividadesDesenvolvidas;
-      this.tipoNotificacoes = data.tipoNotificacoes; 
+      this.tipoNotificacoes = data.tipoNotificacoes;
     },
-      onSubmit(values) {
+    onSubmit(values) {
       console.log(values, null, 2);
       console.log("Clckado");
     },
-   
-   
-    
+
     validateEmail(value) {
       // if the field is empty
       if (!value) {
@@ -1188,7 +1212,7 @@ export default {
       // All is good
       return true;
     },
-   
+
     validateNumber(value) {
       // if the field is empty
       if (!value) {
@@ -1253,7 +1277,6 @@ input {
   margin-bottom: 10px;
 }
 
-
 option:hover {
   background-color: yellow;
 }
@@ -1317,6 +1340,4 @@ button#buttonsave:focus {
   text-transform: uppercase;
   border-radius: 50px;
 }
-
- 
 </style>

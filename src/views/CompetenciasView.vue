@@ -2,18 +2,18 @@
 
   <div class="main-container"> 
   <br> <br>
-    <CompetenciaField/>
+    <CompetenciaCnpd/>
   </div>
 </template>
 
 <script>
-import CompetenciaField from "../components/CompetenciaField.vue";
+import CompetenciaCnpd from "../components/CompetenciaCnpd.vue";
 
 export default{
   name:"CompetenciaView",
 
   components: {
-    CompetenciaField
+    CompetenciaCnpd
   }
 }
 </script>

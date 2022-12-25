@@ -315,7 +315,7 @@ const routes = [{
     {
         path: '/biometria',
         meta:{
-            title: "Biometria",
+            title: "BIOMETRIA - CNPD",
             },
         name: 'BiometriaFormsView',
         component: () =>
@@ -324,7 +324,7 @@ const routes = [{
     {
         path: '/formsgeral',
         meta:{
-            title: "Formulario Geral",
+            title: "TRATAMENTO DE DADOS GERAL - CNPD",
             },
         name: 'GeralFormsView',
         component: () =>
@@ -377,6 +377,15 @@ const routes = [{
         component: () =>
             import ('../views/IsencaoView.vue')
     }, 
+    {
+        path: '/teste',
+        meta:{
+            title: "Teste API",
+            },
+        name: 'teste',
+        component: () =>
+            import ('../views/TesteView.vue')
+    },
 
 
 ]

@@ -1,6 +1,22 @@
 <template>
   <section id="Interconexao" class="Interconexao">
     <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formularios">
+            <b>Formulários</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formsinter">
+            <b>Formulário de Interconexão de Dados</b>
+          </router-link>
+        </h5>
+      </div>
       <Form @submit="onSubmit">
         <!-- FORMS Interconexao-->
         <div class="section-title">
@@ -1721,7 +1737,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Presencial"
@@ -1732,7 +1748,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Escrita"

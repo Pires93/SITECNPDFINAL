@@ -445,6 +445,7 @@ a:hover {
   justify-content: space-between;
   font-family: "Times New Roman", Times, serif; 
   color: #fff;
+  font-weight: bold;
   font-size: 16px;
   padding: 0 4px;
   white-space: nowrap;
@@ -480,7 +481,7 @@ a:hover {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover > a {
-  color: #fff;
+  color: #cfac0b;
 }
 .navbar .dropdown ul {
   display: block;
@@ -495,7 +496,7 @@ a:hover {
   background: #013370;
   color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 0px 5px #cfac0b; /*cor de sombra de dropdown ul*/
+  box-shadow: 0px 0px 10px #cfac0b; /*cor de sombra de dropdown ul*/
   transition: 0.3s;
 }
 .navbar .dropdown ul li {

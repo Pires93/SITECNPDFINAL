@@ -127,7 +127,10 @@
                 id="message" 
                 placeholder="Descreva a sua queixa em detalhes ..."
               />
-              <ErrorMessage class="errorMessage" name="message" />  
+              <ErrorMessage class="errorMessage" name="message" /> 
+              <div><br></div>
+              <p>Se tiver algum anexo para enviar, anexe-o aqui</p> 
+              <input class="form-control" type="file" id="formFile" />
             </div>
           </div>
           <br>
@@ -139,7 +142,7 @@
             type="submit"
           >
           <IconAwe class="icon-color" icon="paper-plane"
-                    /> Submeter Dados
+                    /> Enviar Queixa
           </button>
         </div> 
         </Form>

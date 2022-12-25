@@ -1,25 +1,45 @@
 <template>
-  <div class="faqs">
-    <div class="section-title">
-      <h2>TAXAS & PAGAMENTOS</h2>
+  <section id="taxa" class="taxa">
+    <div class="faqs">
+      <div class="container">
+        <div class="section-bredcumbs">
+          <h5>
+            Onde estou?
+            <router-link style="text-decoration: none" to="/">
+              <b>Página Inicial</b>
+            </router-link>
+            <b> > </b>
+            <router-link style="text-decoration: none" to="#">
+              <b>Formulários</b>
+            </router-link>
+            <b> > </b>
+            <router-link style="text-decoration: none" to="/taxas">
+              <b>Taxas de Notificações</b>
+            </router-link>
+          </h5>
+        </div>
+        <div class="section-title">
+          <h2>TAXAS & PAGAMENTOS</h2>
+        </div>
+        <div class="row">
+          <p class="ptest">
+            O procedimento administrativo de notificação de tratamentos de dados
+            está sujeito ao pagamento de uma taxa, fixada pela CNPD, na
+            Deliberação N.º 1/2015, publicada no Boletim Oficial n.º 44, II
+            Série, de 18 de Setembro de 2015.
+          </p>
+          <TaxaCnpd
+            v-for="(faq, i) in faqs"
+            :faq="faq"
+            :index="i"
+            :key="i"
+            :open="faq.open"
+            @toggleOpen="toggleOpen"
+          />
+        </div>
+      </div>
     </div>
-    <div class="container">
-      <p class="ptest">
-        O procedimento administrativo de notificação de tratamentos de dados
-        está sujeito ao pagamento de uma taxa, fixada pela CNPD, na Deliberação
-        N.º 1/2015, publicada no Boletim Oficial n.º 44, II Série, de 18 de
-        Setembro de 2015.
-      </p>
-      <TaxaCnpd
-        v-for="(faq, i) in faqs"
-        :faq="faq"
-        :index="i"
-        :key="i"
-        :open="faq.open"
-        @toggleOpen="toggleOpen"
-      />
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -38,7 +58,7 @@ export default {
           mt1: "O registo de notificações de tratamento de dados pessoais, que não implique a concessão de autorização prévia, fica sujeito ao pagamento de uma taxa fixada no valor de 3.000$00 (três mil escudos.)",
           mt2: "O tratamento de dados pessoais que implique a concessão de autorização prévia, prevista na Lei n.º 133/V/2001, de 22 de janeiro, alterada pela Lei n.º 41/VIII/2013, de 17 de setembro, ou outra disposição legal, de acordo com os exemplos em anexo que faz parte integrante da presente deliberação, fica sujeito ao pagamento de uma taxa fixada no valor de 5.000$00 (cinco mil escudos).",
           mt3: "No caso referido no número anterior, havendo especial complexidade, devidamente fundamentada, a CNPD pode fixar, a final, o valor da taxa a pagar, com o limite máximo de 7.000$00 (sete mil escudos).",
-          open: false,
+          open: true,
         },
         {
           question:
@@ -87,6 +107,9 @@ export default {
 </script>
 
 <style>
+#taxa { 
+  margin-left: 30px;
+}
 .ptest {
   text-align: justify;
 }
@@ -113,7 +136,7 @@ export default {
   }
 }
 .faqs {
-  padding-top: 120px;
+  padding-top: 100px;
 }
 .faq {
   display: block;

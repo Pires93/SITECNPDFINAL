@@ -1,49 +1,70 @@
 <template>
-      <!-- ======= registo Section ======= -->
-        <section id="registo" class="registo">
-            <div class="container">  
-                <div v-if="user">
-                  <div class="section-title">
-                      <h2>Registo Nº.{{ user.id }} - {{ user.name }}</h2> 
-                  </div> 
-                  <p></p>
-                  <div class="post-img">  
-                     <embed class="borda" src="/img/auto.pdf" width="100%" height="800px" />
-                  </div> 
-                </div> 
-            </div>
-        </section>
-        <!-- End registo Section -->
+  <!-- ======= registo Section ======= -->
+  <section id="registo" class="registo">
+    <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b>Decisões</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/registos">
+            <b>Registos Publicados</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b v-if="lista">Registo Nº.{{ lista.id }} - {{ lista.name }}</b>
+          </router-link>
+        </h5>
+      </div>
+      <div v-if="lista">
+        <div class="section-title">
+          <h2>Registo Nº.{{ lista.id }} - {{ lista.name }}</h2>
+        </div>
+        <p></p>
+        <div class="post-img">
+          <embed
+            class="borda"
+            src="/img/auto.pdf"
+            width="100%"
+            height="800px"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End registo Section -->
 </template>
 
-<script> 
- 
+<script>
 export default {
-    name: 'RegistoId',
-    props: ["id"],  
+  name: "RegistoId",
+  props: ["id"],
 
-    data: function (){
-        return { 
-          user: null
-        }
-    },
-
-    mounted () {
-    fetch('https://jsonplaceholder.typicode.com/users/' + this.$route.params.id)
-      .then(response => response.json())
-      .then(data =>this.user = data)
-      .catch(err =>console.log(err.message)) 
+  data: function () {
+    return {
+      lista: null,
+    };
   },
 
-    
-}
+  mounted() {
+    fetch("https://jsonplaceholder.typicode.com/users/" + this.$route.params.id)
+      .then((response) => response.json())
+      .then((data) => (this.lista = data))
+      .catch((err) => console.log(err.message));
+  },
+};
 </script>
 
 <style scoped>
- .registo{
-    padding-top: 120px;
- }
-
+.registo {
+  padding-top: 120px;
+}
 
 .section-title {
   text-align: center;
@@ -56,12 +77,12 @@ export default {
   padding: 8px 20px;
   line-height: 1;
   margin: 0;
-  background: #BD9A13;
+  background: #bd9a13;
   color: #000;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 50px;
-} 
+}
 @media (min-width: 1024px) {
   .section-title p {
     width: 50%;
@@ -74,9 +95,9 @@ export default {
   position: relative;
   border: 1px solid #061536;
   border-radius: 25px;
-} 
+}
 
-.borda{
+.borda {
   border-radius: 25px;
 }
 </style>

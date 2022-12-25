@@ -1,6 +1,22 @@
 <template>
  <section id="decisoes" class="decisoes">
     <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b>Decisões</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/autorizacoes">
+            <b>Autorizações Publicadas</b>
+          </router-link>
+        </h5>
+      </div>
         <div class="section-title">
             <h2>Decisões da CNPD</h2> 
         </div> 
@@ -20,14 +36,14 @@
                            </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in (sortedActivity, filteredList)" :key="user.id">
+                        <tr v-for="(lista, index) in (sortedActivity, filteredList)" :key="lista.id">
                             <td>{{index + 1}}</td> 
                             <td> 
-                            <router-link :to="{name: 'autoview',params: { id: user.id}}">  
-                              {{user.name}} 
+                            <router-link :to="{name: 'autoview',params: { id: lista.id}}">  
+                              {{lista.name}} 
                             </router-link>
                             </td> 
-                            <td>{{user.address.zipcode}}</td>
+                            <td>{{lista.address.zipcode}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -53,7 +69,7 @@ import axios from 'axios';
 export default { 
     name:'AutorizacoesCnpd',
     data: () => ({
-    users: [],//meu array com os itens que vem do API
+    listas: [],//meu array com os itens que vem do API
     currentSort:'name',
     currentSortDir:'asc',
     search: '',
@@ -70,20 +86,20 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if((this.currentPage*this.pageSize) < this.users.length) this.currentPage++;
+      if((this.currentPage*this.pageSize) < this.listas.length) this.currentPage++;
     },
     prevPage() {
       if(this.currentPage > 1) this.currentPage--;
     },
 
     countNumbers(){
-      return this.users.length; 
+      return this.listas.length; 
     }
   },
 
   computed: { 
     sortedActivity() {
-      return this.users.sort((a,b) => {
+      return this.listas.sort((a,b) => {
         let modifier = 1;
         if(this.currentSortDir === 'desc') modifier = -1;
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
@@ -96,7 +112,7 @@ export default {
       });
     },
     filteredList () {
-      return this.users.filter((data) => {
+      return this.listas.filter((data) => {
         //let email = data.email.toLowerCase().match(this.search.toLowerCase());
         let name = data.name.toLowerCase().match(this.search.toLowerCase());
         let zipcode = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
@@ -113,7 +129,7 @@ export default {
   created () {
     axios.get('https://jsonplaceholder.typicode.com/users')
       .then(response => {
-        this.users = response.data  
+        this.listas = response.data  
       },)
   },
   mounted() {  

@@ -2,11 +2,34 @@
   <!-- ======= eventcoes Section ======= -->
   <section id="panfletid" class="panfletid">
     <div class="container">
-      <div v-if="event">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b>Publicações</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/panfletos">
+            <b>Panfletos Publicados</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b v-if="lista">Panfleto Nº.{{ lista.id }} - {{ lista.title }}</b>
+          </router-link>
+        </h5>
+      </div>
+      <div v-if="lista">
         <div class="section-title">
-          <h2>{{ event.title }}</h2>
+          <h2>{{ lista.title }}</h2> 
         </div>
         <div class="row content">
+          <a class="downloadpdf" href="/img/downloadpdf.png" download>
+            <img src="/img/downloadpdf.png"  style="width: 140px" />
+          </a>
           <!--FLIPBOOK-->
 
           <iframe
@@ -32,14 +55,14 @@ export default {
 
   data: function () {
     return {
-      event: null,
+      lista: null,
     };
   },
 
   mounted() {
     fetch("https://jsonplaceholder.typicode.com/posts/" + this.$route.params.id)
       .then((response) => response.json())
-      .then((data) => (this.event = data))
+      .then((data) => (this.lista = data))
       .catch((err) => console.log(err.message));
   },
 };
@@ -57,7 +80,7 @@ export default {
   background-color: red;
 }
 .panfletid {
-  padding-top: 120px;
+  padding-top: 100px;
 }
 
 .section-title {

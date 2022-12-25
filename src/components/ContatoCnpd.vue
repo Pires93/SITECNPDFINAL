@@ -2,6 +2,13 @@
   <!-- ======= Contact Section ======= -->
   <section id="contact" class="contact">
     <div class="container">
+      <div class="section-bredcumbs">
+        <h5>Onde estou? 
+          <router-link  style="text-decoration: none" to="/"> <b >Página Inicial</b> </router-link>
+          <b> > </b>  
+         <router-link  style="text-decoration: none" to="/contato"> <b>Contato</b> </router-link> 
+         </h5>
+      </div>
       <div class="section-title">
         <h2>Contato</h2>
       </div>
@@ -121,7 +128,7 @@
             type="submit"
           >
           <IconAwe class="icon-color" icon="paper-plane"
-                    /> Submeter Dados
+                    /> Enviar 
           </button>
         </div>
           </Form> 
@@ -223,13 +230,14 @@ button#buttonsave:focus {
   margin-top: 10px;
 }
 #contact {
-  padding-top: 60px;
+  padding-top: 50px;
 }
 #framemaps {
   border-radius: 1%;
   width: 100%;
   height: 400px;
 }
+
 .section-title {
   text-align: center;
   padding-bottom: 30px;

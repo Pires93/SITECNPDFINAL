@@ -1,19 +1,39 @@
 <template>
-  <div class="faqs">
-    <div class="section-title">
-      <h2>Conselhos Práticos</h2>
+  <section id="conselhos" class="conselhos">
+    <div class="faqs">
+      <div class="container">
+        <div class="section-bredcumbs">
+          <h5>
+            Onde estou?
+            <router-link style="text-decoration: none" to="/">
+              <b>Página Inicial</b>
+            </router-link>
+            <b> > </b>
+            <router-link style="text-decoration: none" to="#">
+              <b>Canal do Cidadão</b>
+            </router-link>
+            <b> > </b>
+            <router-link style="text-decoration: none" to="/conselhos">
+              <b>Conselhos Práticos </b>
+            </router-link>
+          </h5>
+        </div>
+        <div class="section-title">
+          <h2>Conselhos Práticos</h2>
+        </div>
+        <div class="container">
+          <ConselhoPratico
+            v-for="(faq, i) in faqs"
+            :faq="faq"
+            :index="i"
+            :key="i"
+            :open="faq.open"
+            @toggleOpen="toggleOpen"
+          />
+        </div>
+      </div>
     </div>
-    <div class="container">
-      <ConselhoPratico
-        v-for="(faq, i) in faqs"
-        :faq="faq"
-        :index="i"
-        :key="i"
-        :open="faq.open"
-        @toggleOpen="toggleOpen"
-      />
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -106,6 +126,9 @@ export default {
 </script>
 
 <style>
+#conselhos { 
+  margin-left: 30px;
+}
 .ptest {
   text-align: justify;
 }
@@ -132,7 +155,8 @@ export default {
   }
 }
 .faqs {
-  padding-top: 120px;
+  margin-left: 30px;
+  padding-top: 100px;
 }
 .faq {
   display: block;

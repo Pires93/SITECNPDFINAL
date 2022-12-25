@@ -8,40 +8,29 @@
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
      </div>
     <div class="carousel-inner">
       
-      <!-- CONDICAO SE EXISTIR NOTICIA NOVA A MENOS DE 5 DIAS MOSTRAR ESSA NOTICIA-->
-
-      <div v-if="pageSizenews < 2"><!-- countnews()-->
-        <div v-for="(conselho, index) in (noticias)" :key="index" class="carousel-item active">
+        <div v-for="(news, index) in (noticias)" :key="index" class="carousel-item active">
            
           <div class="post-img"><img  src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png" class="img-fluid" alt=""></div>
-          <div id="titlemob" class="carousel-caption d-none d-md-block">
-            <h5>news -{{ countnews() }}   {{conselho.title}}</h5>
-            <p id="textoslide">{{conselho.title}}</p>
+          <div id="titlemob" class="carousel-caption d-none d-md-block"> 
+            <router-link :to="{name: 'eventview',params: { id: news.id}}" style="text-decoration: none">
+              <h5>Ultima Noticia - {{ countnews() }}   {{news.title}}</h5>
+            </router-link> 
+            <p id="textoslide">{{news.title}}</p> 
           </div>
         </div>
-      </div>
-      <!-- SLIDE DE AVISO -->
-      <div v-else>
-        <div class="carousel-item active">  
-           <div class="post-img"><img  src="/img/b.jpg" class="img-fluid" alt=""></div>
-             
-         <!--<video autoplay class="responsive">
-            <source src="/img/aviso.mp4" type="video/mp4"> 
-          </video>-->
-          <div class="carousel-caption d-none d-md-block">
-            <h5>MODELO DE AVISO DE CCTV</h5>
-            <p id="textoslide">ESTE E O MODELO DE AVISO UE DEVE SER AFIXADO</p>
-          </div>
-        </div>
-      </div> 
+        
       <!-- MOSTRAR 3 CONSELHOS PRATICOS-->
       <div v-for="(conselho, index) in (conselhospraticos)" :key="index" class="carousel-item">
-          <div class="post-img"><img  src="/img/passwordforte.png" class="img-fluid" alt=""></div>
+          <div class="post-img"><img  :src="conselho.url"  class="img-fluid" alt=""></div><!--src="/img/passwordforte.png" -->
           <div class="carousel-caption d-none d-md-block">
-            <h5>conselho {{conselho.id}}- {{conselho.title}}</h5>
+            <router-link to="/conselhos" style="text-decoration: none">
+              <h5>Conselho -  {{conselho.id}}- {{conselho.title}}</h5>
+            </router-link> 
             <p id="textoslide">{{conselho.title}}</p>
         </div>
       </div> 
@@ -62,7 +51,7 @@ export default {
     currentSortDir:'asc',// ordenar ascendente
     search: '', //search 
     searchSelection: '',
-    pageSizeconselhos: 3, //paginacao
+    pageSizeconselhos: 6, //paginacao
     pageSizenews:1,
     currentPage: 1
   }),
@@ -121,6 +110,9 @@ export default {
 </script>
 
 <style scoped>
+#link{
+  color: #BD9A13; 
+}
  .post-img {  
 }
 .post-img img { 

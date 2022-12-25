@@ -1,7 +1,22 @@
 <template>
   <section id="decisoes" class="decisoes">
     <div class="container">
-     
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formularios">
+            <b>Formulários</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formscctv">
+            <b>Formulário de Tratamento de Dados Geral </b>
+          </router-link>
+        </h5>
+      </div>
       <Form @submit="2" >
       <div class="section-title">
         <h2>NOTIFICAÇÃO DE TRATAMENTO DE DADOS</h2>
@@ -1242,7 +1257,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Presencial"
@@ -1253,7 +1268,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Escrita"
@@ -2123,6 +2138,7 @@ export default {
 </script>
 
 <style>
+ 
 #buttonsave {
   background-color: #061536;
 }

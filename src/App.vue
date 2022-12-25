@@ -31,6 +31,9 @@ data(){
 </script>
 
 <style >
+ .downloadpdf{
+  text-align: right;
+ }
   *{
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   padding: 0;
@@ -51,7 +54,24 @@ textarea.form-control:focus {
 #alignCenter{
   text-align: center;
 }
+.section-bredcumbs { 
+  text-align: left;
+  padding-bottom: 20px;
+}
+ 
+.section-bredcumbs b {
 
+  color: #BD9A13;
+} 
+.section-bredcumbs h5 {
+  font-size: 12px;
+  letter-spacing: 1px; 
+  padding: 2px 12px;
+  line-height: 1;  
+  font-family: "Times New Roman", Times, serif;
+  display: inline-block; 
+  border-radius: 5px;
+}
 
 /**
  * Skipped minification because the original files appears to be already minified.
@@ -140,14 +160,14 @@ textarea.form-control:focus {
   transition: transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1),
     -webkit-transform 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-/*
+
 .vue-treeselect:focus,
 .vue-treeselect:hover {
   outline: none !important;
   border-color: #061536;
   box-shadow: 0 0 10px #061536;
   font-family: "Times New Roman", Times, serif;;
-}*/
+}
 .vue-treeselect {
   position: relative;
   text-align: left;
@@ -188,7 +208,7 @@ textarea.form-control:focus {
 }
 .vue-treeselect--focused:not(.vue-treeselect--open) .vue-treeselect__control {
   border-color: #061536;
-  box-shadow: 0 0 0 3px rgba(3, 155, 229, 0.1);
+  box-shadow: 0 0 0 3px #061536;
 }
 .vue-treeselect--disabled .vue-treeselect__control {
   background-color: #f9f9f9;

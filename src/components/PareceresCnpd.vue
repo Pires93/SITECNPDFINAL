@@ -1,6 +1,22 @@
 <template>
  <section id="decisoes" class="decisoes">
     <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="#">
+            <b>Decisões</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/pareceres">
+            <b>Pareceres Publicados</b>
+          </router-link>
+        </h5>
+      </div>
         <div class="section-title">
             <h2>Pareceres da CNPD</h2> 
         </div> 
@@ -186,7 +202,7 @@ export default {
  
 .decisoes {
   background: #fff; 
-  padding-top: 120px;
+  padding-top: 100px;
    font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

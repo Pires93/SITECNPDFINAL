@@ -13,7 +13,8 @@
             <div class="icon-box">
               <div class="icon"><IconAwe class="icon-color" icon="calendar-days" /></div>
               <h4 class="title"><a href="">Orientações da CNPD</a></h4>
-              <p class="description">Consulte aqui os Conselhos Práticos recomendados pela CNPD</p>
+              <p class="description">Consulte aqui os <router-link to="/conselhos">  
+                <b id="linkqueixa">Conselhos Práticos</b> </router-link> recomendados pela CNPD</p>
             </div>
           </div>
 
@@ -21,7 +22,9 @@
             <div class="icon-box">
               <div class="icon"><IconAwe class="icon-color" icon="chart-pie" /></div>
               <h4 class="title"><a href="">Relatórios e Plano de Atividades</a></h4>
-              <p class="description">Consulte aqui <router-link to="/relatorios">  Relatórios Anuais </router-link> e <router-link to="/planos">  Plano de Atividades </router-link></p>
+              <p class="description">Consulte aqui <router-link to="/relatorios"> 
+                <b id="linkqueixa">Relatórios Anuais</b> </router-link> e <router-link to="/planos">
+                <b id="linkqueixa">Plano de Atividades </b></router-link></p>
             </div>
           </div>
 
@@ -37,9 +40,10 @@
             <div class="icon-box">
               <div class="icon"><IconAwe class="icon-color" icon="file-waveform"/></div>
               <h4 class="title"><a href="">Notificação/Formulários</a></h4>
-              <p class="description"><router-link to="/formularios">  Formulários </router-link>, 
-              <router-link to="/taxas">  Taxas </router-link>, <router-link to="/isencoes">  Isenções de Notificações </router-link>
-               e <router-link to="/obrigacoes">  Obrigações do Responsável </router-link></p>
+              <p class="description"><router-link to="/formularios">  <b id="linkqueixa">Formulários</b> </router-link>, 
+              <router-link to="/taxas"> <b id="linkqueixa">Taxas</b>  </router-link>, <router-link to="/isencoes">  
+                <b id="linkqueixa">Isenções de Notificações</b> </router-link>
+               e <router-link to="/obrigacoes">  <b id="linkqueixa">Obrigações do Responsável</b> </router-link></p>
             </div>
           </div>
           

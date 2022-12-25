@@ -1,6 +1,22 @@
 <template>
   <section id="cctv" class="cctv">
     <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formularios">
+            <b>Formulários</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/formscctv">
+            <b>Formulário de Videovigilância - CCTV</b>
+          </router-link>
+        </h5>
+      </div>
       <Form @submit="onSubmit">
         <!-- FORMS CCTV-->
         <div class="section-title">
@@ -125,14 +141,14 @@
               </div>
 
               <div class="col-md-12">
-                <Field 
+                <Field
                   type="text"
                   class="form-control"
                   name="nomeComercial"
                   id="nomeComercial"
                   alt="Nome comercial: Pode ser a sigla ou designação em relação ao qual a instituição é mais conhecida."
                   placeholder=" Nome/Comercial"
-                /> 
+                />
               </div>
               <div class="col">
                 <Field
@@ -171,14 +187,14 @@
               <div class="col-md-12">
                 <div class="row">
                   <div class="col">
-                    <Field 
+                    <Field
                       type="text"
                       class="form-control"
                       name="ruaResp"
                       id="ruaResp"
                       alt="RUA"
                       placeholder="Entre o nome da Rua"
-                    /> 
+                    />
                   </div>
                   <div class="col">
                     <Field
@@ -243,14 +259,14 @@
               <div class="col-md-12" id="divloco">
                 <div class="row">
                   <div class="col">
-                    <Field 
+                    <Field
                       type="text"
                       class="form-control"
                       name="caixaPostalResp"
                       id="caixaPostalResp"
                       alt="Caixa Postal"
                       placeholder="Entre o número da Caixa Postal"
-                    /> 
+                    />
                   </div>
                   <div class="col">
                     <Field
@@ -391,40 +407,40 @@
               </div>
               <div class="col-md-12" id="divg2" v-if="checkMorada">
                 <div class="col-md-12">
-                  <Field 
+                  <Field
                     type="text"
                     class="form-control"
                     name="moradaLocalInstalacao"
                     id="moradaLocalInstalacao"
                     placeholder=" Representante da Morada de Instalação"
-                  /> 
+                  />
                 </div>
                 <div class="col-md-12">
-                  <Field 
+                  <Field
                     type="text"
                     class="form-control"
                     name="NomeComercialLocalInstalacao"
                     id="NomeComercialLocalInstalacao"
                     placeholder=" Nome Comercial da Morada de Instalação"
-                  /> 
+                  />
                 </div>
                 <div class="col-md-12">
-                  <Field 
+                  <Field
                     type="text"
                     class="form-control"
                     name="ruaMoradaInstalacao"
                     id="ruaMoradaInstalacao"
                     placeholder=" Rua do Local de instalação"
-                  /> 
-                 </div>
+                  />
+                </div>
                 <div class="col-md-12">
-                  <Field 
+                  <Field
                     type="text"
                     class="form-control"
                     name="caixaPostalMoradaInstalacao"
                     id="caixaPostalMoradaInstalacao"
                     placeholder=" Caixa Postal"
-                  /> 
+                  />
                 </div>
                 <div class="col-md-12">
                   <Field
@@ -445,45 +461,48 @@
                   <div class="row">
                     <div class="col">
                       <Field
-                      as="select"
-                      class="form-select"
-                      v-model="ilhaMorInst"
-                      name="ilhaMorInst"
-                      id="ilhaMorInst"
-                      for="ilhaMorInst"
-                      :rules="validateRadio"
-                    >
-                      <option value="">- selecione uma ilha -</option>
-                      <option
-                        v-for="ilha in ilhas"
-                        :key="ilha.value"
-                        :value="ilha.value"
+                        as="select"
+                        class="form-select"
+                        v-model="ilhaMorInst"
+                        name="ilhaMorInst"
+                        id="ilhaMorInst"
+                        for="ilhaMorInst"
+                        :rules="validateRadio"
                       >
-                        {{ ilha.value }}
-                      </option>
-                    </Field>
-                    <ErrorMessage class="errorMessage" name="ilhaMorInst" />
-                  </div>
-                  <div class="col">
-                    <Field
-                      as="select"
-                      class="form-select"
-                      v-model="concelhoMorInst"
-                      name="concelhoMorInst"
-                      id="concelhoMorInst"
-                      for="concelhoMorInst"
-                      :rules="validateRadio"
-                    >
-                      <option value="">- selecione um concelho -</option>
-                      <option
-                        v-for="concelho in concelhos[ilhaMorInst]"
-                        :key="concelho.value"
-                        :value="concelho.value"
+                        <option value="">- selecione uma ilha -</option>
+                        <option
+                          v-for="ilha in ilhas"
+                          :key="ilha.value"
+                          :value="ilha.value"
+                        >
+                          {{ ilha.value }}
+                        </option>
+                      </Field>
+                      <ErrorMessage class="errorMessage" name="ilhaMorInst" />
+                    </div>
+                    <div class="col">
+                      <Field
+                        as="select"
+                        class="form-select"
+                        v-model="concelhoMorInst"
+                        name="concelhoMorInst"
+                        id="concelhoMorInst"
+                        for="concelhoMorInst"
+                        :rules="validateRadio"
                       >
-                        {{ concelho.value }}
-                      </option>
-                    </Field>
-                    <ErrorMessage class="errorMessage" name="concelhoMorInst" /> 
+                        <option value="">- selecione um concelho -</option>
+                        <option
+                          v-for="concelho in concelhos[ilhaMorInst]"
+                          :key="concelho.value"
+                          :value="concelho.value"
+                        >
+                          {{ concelho.value }}
+                        </option>
+                      </Field>
+                      <ErrorMessage
+                        class="errorMessage"
+                        name="concelhoMorInst"
+                      />
                     </div>
                   </div>
                 </div>
@@ -593,13 +612,13 @@
                   <ErrorMessage class="errorMessage" name="ruaProcessInfo" />
                 </div>
                 <div class="col-md-12">
-                  <Field 
+                  <Field
                     type="text"
                     class="form-control"
                     name="caixaPostalProcessInfo"
                     id="caixaPostalProcessInfo"
                     placeholder=" Caixa Postal"
-                  /> 
+                  />
                 </div>
                 <div class="col-md-12">
                   <Field
@@ -672,7 +691,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="separacao">
-                2. Característica do sistema
+                2. Caraterísticas do sistema
               </div>
               <div class="col-md-12"><br /></div>
               <div class="col">
@@ -686,45 +705,28 @@
                 />
                 <ErrorMessage class="errorMessage" name="numeroCamaras" />
               </div>
-              <div class="col">
-               
-              
- <!-- 
-                <Field
-                name="zonas"
-                rules="required"
-                :value="zona"
-                v-slot="{ errors, field }"
-            >
-                <Multiselect
-                :multiple="true"
-                    v-model="zona"
-                    v-bind="field"
-                    track-by="name"
-                    label="name"
-                  placeholder="- selecione as zonas abrangidas -" 
-                    :options="zonasAbrangidas[tipoVideovigilancia]"
-                    :searchable="false"
-                    :allow-empty="true" 
-                >
-                <template v-slot:singleLabel="{ option }">
-                <strong>{{ option.value }} {{ option.label }}</strong>
-                </template>
-                </Multiselect>
-                 <p style="color: red">Errors: {{ errors }}</p>
-            </Field>
-
---> 
-
-
-                <Multiselect
+              <div class="col" v-if="tipoVideovigilancia != 'Formulário geral de videovigilância'">
+               <Multiselect 
                   v-model="zona"
                   :options="zonasAbrangidas[tipoVideovigilancia]"
                   mode="tags"
-                  placeholder="- selecione as zonas abrangidas -"  
+                  placeholder="- selecione as zonas abrangidas -"
+                />  
+              </div>
+              <div class="col" v-if="tipoVideovigilancia == 'Formulário geral de videovigilância'">
+                <Field
+                    name="zonasGenericas"
+                    id="zonasGenericas"
+                    as="textarea"
+                    class="form-control"
+                    v-model="zonasGenericas"
+                    :rules="validateText"
+                    placeholder="Indique quais são as zonas abrangidas pelas câmaras. Por ex:  corredores, pontos exteriores, parque estacionamento, zonas internas de circulação, etc..."
+                  />
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="zonasGenericas"
                 />
-                
-                <p class="errorMessage">{{message}}</p>
               </div>
               <div class="col-md-12"><br /></div>
 
@@ -817,36 +819,36 @@
               </div>
               <div class="col-md-12" id="divg2" v-if="checkDireitoAcesso">
                 <div class="col-md-12">
-                  <Field 
-                        type="text"
-                        class="form-control"
-                        name="ruaDireitoAcesso"
-                        id="ruaDireitoAcesso"
-                        placeholder="Rua do Responsável pelo tratamento"
-                      /> 
-                </div>
-                <div class="col-md-12">
-                  <Field 
-                        type="text"
-                        class="form-control"
-                        name="caixaPostalDireitoAcesso"
-                        id="caixaPostalDireitoAcesso"
-                    placeholder=" Caixa Postal"
-                      />  
+                  <Field
+                    type="text"
+                    class="form-control"
+                    name="ruaDireitoAcesso"
+                    id="ruaDireitoAcesso"
+                    placeholder="Rua do Responsável pelo tratamento"
+                  />
                 </div>
                 <div class="col-md-12">
                   <Field
-                        :rules="validateText"
-                        type="text"
-                        class="form-control"
-                        name="localDireitoAcesso"
-                        id="localDireitoAcesso"
+                    type="text"
+                    class="form-control"
+                    name="caixaPostalDireitoAcesso"
+                    id="caixaPostalDireitoAcesso"
+                    placeholder=" Caixa Postal"
+                  />
+                </div>
+                <div class="col-md-12">
+                  <Field
+                    :rules="validateText"
+                    type="text"
+                    class="form-control"
+                    name="localDireitoAcesso"
+                    id="localDireitoAcesso"
                     placeholder=" Local - Cidade/Vila/Lugar/Zona"
-                      />
-                      <ErrorMessage
-                        class="errorMessage"
-                        name="localDireitoAcesso"
-                      />   
+                  />
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="localDireitoAcesso"
+                  />
                 </div>
 
                 <div class="col-md-12">
@@ -896,8 +898,6 @@
                         class="errorMessage"
                         name="concelhoDirAcess"
                       />
-
- 
                     </div>
                   </div>
                 </div>
@@ -916,7 +916,7 @@
                       <ErrorMessage
                         class="errorMessage"
                         name="emailDireitoAcesso"
-                      />   
+                      />
                     </div>
                     <div class="col">
                       <Field
@@ -930,7 +930,7 @@
                       <ErrorMessage
                         class="errorMessage"
                         name="telefoneDireitoAcesso"
-                      />   
+                      />
                     </div>
                   </div>
                 </div>
@@ -949,7 +949,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Presencial"
@@ -960,7 +960,7 @@
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
-                  type="radio"
+                  type="checkbox"
                   id="formaDireitoAcesso"
                   name="formaDireitoAcesso"
                   value="Escrita"
@@ -978,9 +978,9 @@
                   name="outraFormaDireitoAcesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso" 
+                  v-model="outraFormaDireitoAcesso"
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
-                /> 
+                />
               </div>
             </div>
           </div>
@@ -1059,7 +1059,15 @@
                   >Se sim, juntar a cópia do parecer ou comprovativo do
                   pedido.</label
                 >
-                <input class="form-control" type="file" id="formFile" />
+                <Field
+                v-model="file"
+                 name="file"
+                 class="form-control" 
+                 type="file" 
+                 ref="file" 
+                 :rules="validateText"
+                 />
+                 <ErrorMessage class="errorMessage" name="file" />
               </div>
             </div>
           </div>
@@ -1073,8 +1081,7 @@
             class="btn btn-primary"
             type="submit"
           >
-          <IconAwe class="icon-color" icon="paper-plane"
-                    /> Submeter Dados
+            <IconAwe class="icon-color" icon="paper-plane" /> Submeter Dados
           </button>
         </div>
       </Form>
@@ -1096,12 +1103,8 @@ export default {
   },
 
   data() {
-    return {
-      rules: { 
-      select2: [(v) =>  v.length>0 || "Item is required in select 2"],
-      
-    },
-
+    return { 
+      file:null,
       checkMorada: false,
       checkMorada1: true,
       checkServico: false,
@@ -1118,9 +1121,10 @@ export default {
       tipoVideovigilancia: null,
       tiposVideovigilancias: null,
       /******************************ZONAS ABRANGIDAS*******************************/
-      message:null,
-      zona: null, 
-      selected:null,
+      message: null,
+      zona: null,
+      zonasGenericas:null,
+      selected: null,
       zonasAbrangidas: {
         "Centros Comerciais": [
           {
@@ -1740,16 +1744,18 @@ export default {
     };
   },
 
-  methods: {  
+  methods: {
+      
+
     onSubmit(values) {
-      if (this.zona==null) {
+      if (this.zona == null) {
         this.message = "Campo obrigatório!";
-      }else{
-      this.message = "Ok!";
+      } else {
+        this.message = "Ok!";
       }
       console.log(values, null, 2);
       console.log("Clckado");
-    }, 
+    },
     validateText(value) {
       // if the field is empty
       if (!value) {
@@ -1839,7 +1845,7 @@ export default {
 <style>
 .cctv {
   font-family: "Times New Roman", Times, serif;
-  padding-top: 110px;
+  padding-top: 100px;
 }
 .container {
   font-family: "Times New Roman", Times, serif;

@@ -1,110 +1,146 @@
 <template>
-      <!-- ======= legislacao Section ======= -->
-        <section id="legislacao" class="legislacao">
-            <div class="container">
+  <!-- ======= legislacao Section ======= -->
+  <section id="legislacao" class="legislacao">
+    <div class="container">
+      <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link> 
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/legislacao">
+            <b>Legislação</b>
+          </router-link>
+        </h5>
+      </div>
+      <div class="section-title">
+        <h2>LEGISLAÇÃO</h2>
+      </div>
 
-                <div class="section-title">
-                    <h2>LEGISLAÇÃO </h2> 
-                </div>
-                  
-                <div class="row"> 
-                  <div class="form-group">  
-                    <p class="pleft">Legislações disponíveis: {{countNumbers()}}</p> <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ...">
-               
-                  </div> 
-                  <p><br></p> 
-                  <div id="box" v-for="(user, index) in (filteredList)" :key="index" class="col-lg-3"> 
-                    <div class="post-box"> <!-- :src="user.url" src="/img/lei.png"-->
-                      <div class="post-img"><img src="/img/law1.png" class="img-fluid" alt=""></div> 
-                      <h5 class="post-title">
-                         {{ user.title }} 
-                      </h5>
-                      <router-link :to="{name: 'leiview',params: { id: user.id}}">
-                        <div class="passarato">
-                          <div class="descricao"> 
-                           {{ user.title }} 
-                          </div>
-                        </div>
-                      </router-link>
-                    </div>
-                  </div>
-                  <p><br></p>
-                  <div id="idpage">
-                   <button id="button" @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> </button> 
-                   <button id="button" @click="nextPage" class="float-right btn btn-outline-info btn-sm"> <i class="fas fa-arrow-right"></i></button>
-                  </div>
-                  
-                </div>
-
+      <div class="row">
+        <div class="form-group">
+          <p class="pleft">Legislações disponíveis: {{ countNumbers() }}</p>
+          <input
+            id="idsearch"
+            type="text"
+            class="form-control"
+            v-model="search"
+            placeholder="Procurar por entidades ..."
+          />
+        </div>
+        <p><br /></p>
+        <div
+          id="box"
+          v-for="(user, index) in filteredList"
+          :key="index"
+          class="col-lg-3"
+        >
+          <div class="post-box">
+            <!-- :src="user.url" src="/img/lei.png"-->
+            <div class="post-img">
+              <img src="/img/law1.png" class="img-fluid" alt="" />
             </div>
-        </section>
-        <!-- End legislacao Section -->
+            <h5 class="post-title">
+              {{ user.title }}
+            </h5>
+            <router-link :to="{ name: 'leiview', params: { id: user.id } }">
+              <div class="passarato">
+                <div class="descricao">
+                  {{ user.title }}
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+        <p><br /></p>
+        <div id="idpage">
+          <button
+            id="button"
+            @click="prevPage"
+            class="float-left btn btn-outline-info btn-sm"
+          >
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button
+            id="button"
+            @click="nextPage"
+            class="float-right btn btn-outline-info btn-sm"
+          >
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End legislacao Section -->
 </template>
 
 <script>
-  
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-    name:'LegislacaoCnpd', 
+  name: "LegislacaoCnpd",
   data: () => ({
     photos: [], //array com os itens
-    currentSort:'title', //ordenar por title
-    currentSortDir:'asc',// ordenar ascendente
-    search: '', //search 
-    searchSelection: '',
+    currentSort: "title", //ordenar por title
+    currentSortDir: "asc", // ordenar ascendente
+    search: "", //search
+    searchSelection: "",
     pageSize: 12, //paginacao
-    currentPage: 1
+    currentPage: 1,
   }),
 
-  methods:{
+  methods: {
     sort(s) {
-      if(s === this.currentSort) {
-        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === "asc" ? "desc" : "asc";
       }
       this.currentSort = s;
     },
     nextPage() {
-      if((this.currentPage*this.pageSize) < this.photos.length) this.currentPage++;
+      if (this.currentPage * this.pageSize < this.photos.length)
+        this.currentPage++;
     },
     prevPage() {
-      if(this.currentPage > 1) this.currentPage--;
+      if (this.currentPage > 1) this.currentPage--;
     },
 
-    countNumbers(){
-      return this.photos.length; 
-    }
+    countNumbers() {
+      return this.photos.length;
+    },
   },
 
-  computed: { 
+  computed: {
+    filteredList() {
+      return this.photos
+        .filter((data) => {
+          let title = data.title.toLowerCase().match(this.search.toLowerCase());
+          return title;
+        })
+        .filter((row, index) => {
+          let start = (this.currentPage - 1) * this.pageSize;
+          let end = this.currentPage * this.pageSize;
+          if (index >= start && index < end) return true;
+        });
+    },
+  },
 
-    filteredList () {
-      return this.photos.filter((data) => { 
-        let title = data.title.toLowerCase().match(this.search.toLowerCase());  
-        return title;
-      }).filter((row, index) => {
-        let start = (this.currentPage-1)*this.pageSize;
-        let end = this.currentPage*this.pageSize;
-        if(index >= start && index < end) return true;
+  created() {
+    axios
+      .get("https://jsonplaceholder.typicode.com/photos")
+      .then((response) => {
+        this.photos = response.data;
       });
-    }
   },
-
-  created () {
-    axios.get('https://jsonplaceholder.typicode.com/photos')
-      .then(response => {
-        this.photos = response.data
-      })
-  },
-
-}
-</script> 
+};
+</script>
 
 <style scoped>
-  #box{
+#box {
   margin-bottom: 15px;
 }
- img {
+img {
   width: 200px;
   height: 200px;
 }
@@ -119,36 +155,36 @@ export default {
   padding: 8px 20px;
   line-height: 1;
   margin: 0;
-  background: #BD9A13;
+  background: #bd9a13;
   color: #000;
   display: inline-block;
   text-transform: uppercase;
   border-radius: 50px;
-} 
+}
 @media (min-width: 1024px) {
   .section-title p {
     width: 50%;
   }
 }
- 
+
 .legislacao {
-  background: #fff; 
-  padding-top: 120px;
-} 
-#idsearch{
+  background: #fff;
+  padding-top: 100px;
+}
+#idsearch {
   width: 40%;
   height: 30px;
   text-align: center;
-  box-shadow: 1px 1px  #061536;
+  box-shadow: 1px 1px #061536;
 }
-.form-group{
+.form-group {
   display: flex;
   justify-content: space-between;
 }
- 
-.pleft{
-    text-align: left;  
-    font-weight: bold
+
+.pleft {
+  text-align: left;
+  font-weight: bold;
 }
 .legislacao .icon-box {
   padding: 20px 30px;
@@ -179,7 +215,7 @@ export default {
 .legislacao .icon .icon-color {
   font-size: 35px;
   line-height: 1;
-  color:#013365;
+  color: #013365;
   transition: all 0.9s ease-in-out;
 }
 .legislacao .title {
@@ -196,13 +232,12 @@ export default {
   margin-bottom: 0;
 }
 
-
 .legislacao .post-box {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
   transition: 0.3s;
   height: 100%;
   overflow: hidden;
-  padding: 10px; 
+  padding: 10px;
   border-radius: 8px;
   position: relative;
   display: flex;
@@ -214,12 +249,10 @@ export default {
   position: relative;
 }
 .legislacao .post-box .post-img img {
-  transition: 0.5s; 
+  transition: 0.5s;
   width: 100%;
-
 }
- 
- 
+
 .legislacao .post-box .post-title {
   font-size: 16px;
   color: #374253;
@@ -228,9 +261,8 @@ export default {
   position: relative;
   text-align: center;
   transition: 0.3s;
-  
 }
- 
+
 .legislacao .post-box .readmore {
   display: flex;
   align-items: center;
@@ -245,18 +277,15 @@ export default {
   font-size: 18px;
   color: #013365;
 }
- 
+
 .legislacao .post-box:hover .post-img img {
   /*transform: rotate(6deg) scale(1.2);*/
-  
-} 
-a{
+}
+a {
   text-decoration: none;
   color: #fff;
   transition: ease-in-out 0.3s;
 }
-
- 
 
 .passarato {
   position: absolute;
@@ -267,7 +296,7 @@ a{
   height: 70%;
   width: 140%;
   opacity: 0;
-  transition: .5s ease;
+  transition: 0.5s ease;
   background-color: #bd9a13;
 }
 
@@ -288,22 +317,20 @@ a{
   text-align: justify;
 }
 
-#idpage{ 
+#idpage {
   display: flex;
   justify-content: space-between;
 }
-#button{
-   
+#button {
   color: #061536;
   border: 2px solid #061536;
   box-shadow: 1px 1px #061536;
   height: 30px;
-  width: 30px; 
+  width: 30px;
 }
-#button:hover{
-  box-shadow: 1px 1px  3px 3px black;
+#button:hover {
+  box-shadow: 1px 1px 3px 3px black;
   color: #fff;
   background-color: #061536;
 }
 </style>
-

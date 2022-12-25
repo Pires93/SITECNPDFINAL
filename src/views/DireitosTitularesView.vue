@@ -1,5 +1,20 @@
 <template>
   <div class="faqs">
+    <div class="container">
+    <div class="section-bredcumbs">
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link> 
+          <b> > </b>
+          <router-link  style="text-decoration: none" to="#"> <b >Canal do Cidadão</b> </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/obrigacoes">
+            <b>Obrigações do Responsável</b>
+          </router-link>
+        </h5>
+      </div>
     <div class="section-title">
       <h2>DIREITOS DO TITULAR DOS DADOS</h2>
     </div>
@@ -14,6 +29,7 @@
         @toggleOpen="toggleOpen"
       />
     </div>
+  </div>
   </div>
 </template>
 
@@ -118,7 +134,7 @@ export default {
   }
 }
 .faqs {
-  padding-top: 120px;
+  padding-top: 100px;
 }
 .faq {
   display: block;
