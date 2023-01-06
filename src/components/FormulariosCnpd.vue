@@ -23,7 +23,7 @@
       </div>
 
       <p id="forms">
-        Os tratamentos de dados pessoais têm de ser previamente notificados à
+        O tratamento de dados pessoais têm de ser previamente notificados à
         CNPD, isto é, antes de se iniciarem, o que já inclui a recolha de dados.
         A notificação é feita por via eletrónica , através da submissão dos
         formulários online, consoante o tipo de formulário que será notificado.

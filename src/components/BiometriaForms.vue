@@ -663,7 +663,7 @@
               </label>
               <div class="col">
                 <treeselect
-                  :multiple="true"
+                  :multiple="false"
                   :options="tratamentoInfos"
                   placeholder="-De que forma a informação é tratada -"
                   v-model="tratamentoInfo"

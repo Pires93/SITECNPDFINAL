@@ -710,7 +710,7 @@
                   v-model="zona"
                   :options="zonasAbrangidas[tipoVideovigilancia]"
                   mode="tags"
-                  placeholder="- selecione as zonas abrangidas -"
+                  placeholder="- Selecione as áreas abrangidas pelas câmaras -"
                 />  
               </div>
               <div class="col" v-if="tipoVideovigilancia == 'Formulário geral de videovigilância'">
@@ -728,7 +728,7 @@
                     name="zonasGenericas"
                 />
               </div>
-              <div class="col-md-12"><br /></div>
+              <div class="col-md-12"><br /> </div>
 
               <div class="col">
                 <div class="col">
@@ -790,6 +790,25 @@
                     class="errorMessage"
                     name="visualizacaoTempoReal"
                   />
+                </div>
+              </div>
+              <div class="col-md-12"><br></div>
+              <div class="col">
+                <div class="col">
+                  <label class="form-check-label">
+                   Caso as zonas abrangidas pelas câmaras não se encontram na lista acima, 
+                   mencione aqui todas as áreas abrangidas pelo circuito de videovigilância.
+                  </label> 
+                </div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12" >
+                  <Field
+                    name="zonasAbrangidasOutras"
+                    as="textarea"
+                    class="form-control"
+                    v-model="zonasAbrangidasOutras" 
+                    placeholder=" Solicita-se que se indique todas as zonas que ficam sob o alcance das câmaras de videovigilância, no exterior e/ou no interior. "
+                  /> 
                 </div>
               </div>
             </div>

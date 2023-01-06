@@ -20,7 +20,8 @@
             <div class="col-md-12">
                 <div class="form-group">
                <p class="pleft">Planos de Atividades disponíveis: {{countNumbers()}}</p> 
-               <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por planos de atividades ...">
+               <input id="idsearch" type="text" class="form-control" v-model="search" 
+               placeholder="Procurar por título ou por Ano ...">
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -28,19 +29,20 @@
                     <thead width="400px"  class="trcabecalho">
                         <tr>
                             <th scope="col">#</th>  
-                            <th scope="col" @click="sort('name')">Anexo<i class="fas fa-sort-alpha-down float-right"></i></th>
-                            <th scope="col">Ano</th>
+                            <th scope="col" @click="sort('name')">Título<i class="fas fa-sort-alpha-down float-right"></i></th>
+                            <th scope="col" @click="sort('phone')">Ano<i class="fas fa-sort-alpha-down float-right"></i></th>
+                          
                            </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(lista, index) in  (sortedActivity, filteredList)" :key="index">
-                            <td>{{index + 1}}</td>
-                            <td>
-                             <router-link :to="{name: 'planoview',params: { id: lista.id}}">  
+                        <tr v-for="(lista, index) in (sortedActivity, filteredList)" :key="lista.id">
+                            <td>{{index + 1}}</td> 
+                            <td> 
+                            <router-link :to="{name: 'autoview',params: { id: lista.id}}">  
                               {{lista.name}} 
                             </router-link>
                             </td> 
-                            <td>{{lista.address.zipcode}}</td>
+                            <td>{{lista.phone}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -63,10 +65,10 @@
 /*eslint-disable*/
 import axios from 'axios';
 
-export default {
-    name:'PlanosCnpd',
-  data: () => ({
-    listas: [],
+export default { 
+    name:'AutorizacoesCnpd',
+    data: () => ({
+    listas: [],//meu array com os itens que vem do API
     currentSort:'name',
     currentSortDir:'asc',
     search: '',
@@ -112,9 +114,9 @@ export default {
       return this.listas.filter((data) => {
         //let email = data.email.toLowerCase().match(this.search.toLowerCase());
         let name = data.name.toLowerCase().match(this.search.toLowerCase());
-        let zipcode = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
-       // let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
-        return name || zipcode/* || city || phone*/;
+        //let id = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
+        let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
+        return name || phone/* || city || phone*/;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSize;
         let end = this.currentPage*this.pageSize;
@@ -126,9 +128,12 @@ export default {
   created () {
     axios.get('https://jsonplaceholder.typicode.com/users')
       .then(response => {
-        this.listas = response.data
-      })
+        this.listas = response.data  
+      },)
   },
+  mounted() {  
+    document.title = "Autorizações | CNPD";  
+  }, 
 
 }
 </script>

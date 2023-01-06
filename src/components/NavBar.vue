@@ -51,6 +51,7 @@
               <ul class="ulid">
                 <li><a href="/direitos">Direitos dos Titulares</a></li>
                 <li><a href="/conselhos">Conselhos Práticos</a></li>
+                <li><a href="/queixa">Apresentar Queixa</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -151,6 +152,7 @@
               <div v-show="showcanalcidadao" id="showcanalcidadao">
                 <li><a href="#">Direitos dos Titulares</a></li>
                 <li><a href="/conselhos">Conselhos Práticos</a></li>
+                <li><a href="/queixa">Apresentar Queixa</a></li>
               </div>
             </li>
 

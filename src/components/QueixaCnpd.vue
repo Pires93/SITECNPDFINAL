@@ -212,9 +212,9 @@ export default {
 --------------------------------------------------------------*/
 #divg {
   font-family: "Times New Roman", Times, serif;
+  padding: 10px;/*
   border: 1px solid #061536;
-  padding: 10px;
-  border-radius: 10px;
+  border-radius: 10px;*/
 }
 #buttonsave {
   background-color: #061536;

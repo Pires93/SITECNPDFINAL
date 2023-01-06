@@ -23,7 +23,7 @@
  
             <div class="col-md-12">
                 <div class="form-group">
-               <p class="pleft">Autorizações disponíveis: {{countNumbers()}}</p> <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ...">
+               <p class="pleft">Autorizações disponíveis: {{countNumbers()}}</p> <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ou Ano publicação ...">
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -32,7 +32,8 @@
                         <tr>
                             <th scope="col">#</th>  
                             <th scope="col" @click="sort('name')">Entidade<i class="fas fa-sort-alpha-down float-right"></i></th>
-                            <th scope="col">Ano</th>
+                            <th scope="col" @click="sort('phone')">Ano<i class="fas fa-sort-alpha-down float-right"></i></th>
+                          
                            </tr>
                     </thead>
                     <tbody>
@@ -43,7 +44,7 @@
                               {{lista.name}} 
                             </router-link>
                             </td> 
-                            <td>{{lista.address.zipcode}}</td>
+                            <td>{{lista.phone}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -115,9 +116,9 @@ export default {
       return this.listas.filter((data) => {
         //let email = data.email.toLowerCase().match(this.search.toLowerCase());
         let name = data.name.toLowerCase().match(this.search.toLowerCase());
-        let zipcode = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
-       // let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
-        return name || zipcode/* || city || phone*/;
+        //let id = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
+        let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
+        return name || phone/* || city || phone*/;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSize;
         let end = this.currentPage*this.pageSize;

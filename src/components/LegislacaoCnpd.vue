@@ -1,7 +1,7 @@
 <template>
   <!-- ======= legislacao Section ======= -->
   <section id="legislacao" class="legislacao">
-    <div class="container">
+    <div class="container" id="geral">
       <div class="section-bredcumbs">
         <h5>
           Onde estou?
@@ -32,7 +32,7 @@
         <p><br /></p>
         <div
           id="box"
-          v-for="(user, index) in filteredList"
+          v-for="(lei, index) in filteredList"
           :key="index"
           class="col-lg-3"
         >
@@ -42,12 +42,12 @@
               <img src="/img/law1.png" class="img-fluid" alt="" />
             </div>
             <h5 class="post-title">
-              {{ user.title }}
+              {{ lei.titulo }}
             </h5>
-            <router-link :to="{ name: 'leiview', params: { id: user.id } }">
+            <router-link :to="{ name: 'leiview', params: { id: lei.id } }">
               <div class="passarato">
                 <div class="descricao">
-                  {{ user.title }}
+                  {{ lei.descricao }}
                 </div>
               </div>
             </router-link>
@@ -82,12 +82,12 @@ import axios from "axios";
 export default {
   name: "LegislacaoCnpd",
   data: () => ({
-    photos: [], //array com os itens
+    legislacaos: [], //array com os itens
     currentSort: "title", //ordenar por title
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
     searchSelection: "",
-    pageSize: 12, //paginacao
+    pageSize: 8, //paginacao por pagina
     currentPage: 1,
   }),
 
@@ -99,7 +99,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.photos.length)
+      if (this.currentPage * this.pageSize < this.legislacaos.length)
         this.currentPage++;
     },
     prevPage() {
@@ -107,16 +107,16 @@ export default {
     },
 
     countNumbers() {
-      return this.photos.length;
+      return this.legislacaos.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.photos
+      return this.legislacaos
         .filter((data) => {
-          let title = data.title.toLowerCase().match(this.search.toLowerCase());
-          return title;
+          let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
+          return titulo;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
@@ -128,17 +128,21 @@ export default {
 
   created() {
     axios
-      .get("https://jsonplaceholder.typicode.com/photos")
+      .get("http://127.0.0.1:8000/api/legislacaos")
       .then((response) => {
-        this.photos = response.data;
+        this.legislacaos = response.data;
       });
-  },
+  }, 
 };
 </script>
 
 <style scoped>
+#geral{
+
+  font-family: "Times New Roman", Times, serif;
+}
 #box {
-  margin-bottom: 15px;
+  margin-bottom: 15px; 
 }
 img {
   width: 200px;
@@ -184,7 +188,8 @@ img {
 
 .pleft {
   text-align: left;
-  font-weight: bold;
+  font-weight: bold; 
+  font-family: "Times New Roman", Times, serif;
 }
 .legislacao .icon-box {
   padding: 20px 30px;
@@ -238,10 +243,11 @@ img {
   height: 100%;
   overflow: hidden;
   padding: 10px;
+  border: 1px solid #013365;
   border-radius: 8px;
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
 }
 .legislacao .post-box .post-img {
   overflow: hidden;
@@ -260,7 +266,8 @@ img {
   margin-bottom: 18px;
   position: relative;
   text-align: center;
-  transition: 0.3s;
+  transition: 0.3s; 
+  font-family: "Times New Roman", Times, serif;
 }
 
 .legislacao .post-box .readmore {
@@ -296,8 +303,8 @@ a {
   height: 70%;
   width: 140%;
   opacity: 0;
-  transition: 0.5s ease;
-  background-color: #bd9a13;
+  transition: 0.5s ease; 
+  background-color: #fff; 
 }
 
 #box:hover .passarato {
@@ -315,11 +322,14 @@ a {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: justify;
+  color:#013365;
+  background-color: #fff;
+  font-family: "Times New Roman", Times, serif;
 }
 
 #idpage {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 #button {
   color: #061536;

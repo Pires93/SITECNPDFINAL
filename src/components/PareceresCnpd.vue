@@ -23,7 +23,9 @@
  
             <div class="col-md-12">
                 <div class="form-group">
-               <p class="pleft">Pareceres disponíveis: {{countNumbers()}}</p> <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ...">
+               <p class="pleft">Pareceres disponíveis: {{countNumbers()}}</p> 
+               <input id="idsearch" type="text" class="form-control" v-model="search" 
+               placeholder="Procurar por título ou por Ano ...">
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -31,22 +33,24 @@
                     <thead width="400px"  class="trcabecalho">
                         <tr>
                             <th scope="col">#</th>  
-                            <th scope="col" @click="sort('name')">Entidade<i class="fas fa-sort-alpha-down float-right"></i></th>
-                            <th scope="col">Ano</th>
+                            <th scope="col" @click="sort('name')">Título<i class="fas fa-sort-alpha-down float-right"></i></th>
+                            <th scope="col" @click="sort('phone')">Ano<i class="fas fa-sort-alpha-down float-right"></i></th>
+                          
                            </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in  (sortedActivity, filteredList)" :key="index">
-                            <td>{{index + 1}}</td>
-                            <td>
-                            <router-link :to="{name: 'parecerview',params: { id: user.id}}">  
-                              {{user.name}} 
-                            </router-link> 
+                        <tr v-for="(lista, index) in (sortedActivity, filteredList)" :key="lista.id">
+                            <td>{{index + 1}}</td> 
+                            <td> 
+                            <router-link :to="{name: 'autoview',params: { id: lista.id}}">  
+                              {{lista.name}} 
+                            </router-link>
                             </td> 
-                            <td>{{user.address.zipcode}}</td>
+                            <td>{{lista.phone}}</td>
                         </tr>
                     </tbody>
                 </table>
+                 
                 </div>
                 <div id="idpage">
                    <button id="button" @click="prevPage" class="float-left btn btn-outline-info btn-sm"><i class="fas fa-arrow-left"></i> </button> 
@@ -65,10 +69,10 @@
 /*eslint-disable*/
 import axios from 'axios';
 
-export default {
-    name:'PareceresCnpd',
-  data: () => ({
-    users: [],
+export default { 
+    name:'AutorizacoesCnpd',
+    data: () => ({
+    listas: [],//meu array com os itens que vem do API
     currentSort:'name',
     currentSortDir:'asc',
     search: '',
@@ -85,20 +89,20 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if((this.currentPage*this.pageSize) < this.users.length) this.currentPage++;
+      if((this.currentPage*this.pageSize) < this.listas.length) this.currentPage++;
     },
     prevPage() {
       if(this.currentPage > 1) this.currentPage--;
     },
 
     countNumbers(){
-      return this.users.length; 
+      return this.listas.length; 
     }
   },
 
-  computed: {
+  computed: { 
     sortedActivity() {
-      return this.users.sort((a,b) => {
+      return this.listas.sort((a,b) => {
         let modifier = 1;
         if(this.currentSortDir === 'desc') modifier = -1;
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
@@ -111,12 +115,12 @@ export default {
       });
     },
     filteredList () {
-      return this.users.filter((data) => {
+      return this.listas.filter((data) => {
         //let email = data.email.toLowerCase().match(this.search.toLowerCase());
         let name = data.name.toLowerCase().match(this.search.toLowerCase());
-        let zipcode = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
-       // let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
-        return name || zipcode/* || city || phone*/;
+        //let id = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
+        let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
+        return name || phone/* || city || phone*/;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSize;
         let end = this.currentPage*this.pageSize;
@@ -128,9 +132,12 @@ export default {
   created () {
     axios.get('https://jsonplaceholder.typicode.com/users')
       .then(response => {
-        this.users = response.data
-      })
+        this.listas = response.data  
+      },)
   },
+  mounted() {  
+    document.title = "Autorizações | CNPD";  
+  }, 
 
 }
 </script>
@@ -202,7 +209,7 @@ export default {
  
 .decisoes {
   background: #fff; 
-  padding-top: 100px;
+  padding-top: 120px;
    font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

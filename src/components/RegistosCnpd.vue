@@ -29,7 +29,7 @@
             type="text"
             class="form-control"
             v-model="search"
-            placeholder="Procurar por entidades ..."
+            placeholder="Procurar por entidades ou por Ano ..."
           />
         </div>
         <br />
@@ -41,7 +41,9 @@
                 <th scope="col" @click="sort('name')">
                   Entidade<i class="fas fa-sort-alpha-down float-right"></i>
                 </th>
-                <th scope="col">Ano</th>
+                <th scope="col" @click="sort('phone')">
+                  Ano<i class="fas fa-sort-alpha-down float-right"></i>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -58,7 +60,7 @@
                   </router-link>
                 </td>
 
-                <td>{{ user.address.zipcode }}</td>
+                <td>{{ user.phone }}</td>
               </tr>
             </tbody>
           </table>
@@ -142,11 +144,11 @@ export default {
         .filter((data) => {
           //let email = data.email.toLowerCase().match(this.search.toLowerCase());
           let name = data.name.toLowerCase().match(this.search.toLowerCase());
-          let zipcode = data.address.zipcode
+          let phone = data.phone
             .toLowerCase()
             .match(this.search.toLowerCase());
           // let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
-          return name || zipcode /* || city || phone*/;
+          return name || phone /* || city || phone*/;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
