@@ -47,18 +47,18 @@
         </div>
 
         <div class="col-lg-8 mt-5 mt-lg-0" id="divg">
-          <Form @submit="onSubmit">
+          <Form @submit="onSubmit" ><!-- action="{{ route('http://127.0.0.1:8000/api/contatos/create')}}"-->
             <div class="row">
               <div class="col-md-6"  id="divloco">
                 <Field
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="name"
-                  id="name"
+                  name="nome"
+                  id="nome"
                   placeholder="Seu Nome"
                 />
-                <ErrorMessage class="errorMessage" name="name" />
+                <ErrorMessage class="errorMessage" name="nome" />
               </div>
               <div class="col-md-6"  id="divloco">
                 <Field
@@ -78,22 +78,22 @@
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="address"
-                  id="address"
+                  name="morada"
+                  id="morada"
                   placeholder="Sua morada ..."
                 />
-                <ErrorMessage class="errorMessage" name="address" />
+                <ErrorMessage class="errorMessage" name="morada" />
               </div>
               <div class="col-md-6"  id="divloco">
                 <Field
                   :rules="validateNumber"
                   type="text"
                   class="form-control"
-                  name="phone"
-                  id="phone"
+                  name="telefone"
+                  id="telefone"
                   placeholder="Nº de telefone Ex: 5900000"
                 />
-                <ErrorMessage class="errorMessage" name="phone" />
+                <ErrorMessage class="errorMessage" name="telefone" />
               </div>
             </div>
             <div class="col-md-12" id="divloco">
@@ -101,11 +101,11 @@
                 :rules="validateText"
                 type="text"
                 class="form-control"
-                name="subject"
-                id="subject"
+                name="assunto"
+                id="assunto"
                 placeholder="Assunto"
               />
-              <ErrorMessage class="errorMessage" name="subject" />
+              <ErrorMessage class="errorMessage" name="assunto" />
             </div>
             <div class="col-md-12" id="divloco">
               <Field
@@ -113,11 +113,11 @@
                 type="text"
                 as="textarea"
                 class="form-control"
-                name="message"
-                id="message"
+                name="duvida"
+                id="duvida"
                 placeholder="Qual a sua dúvida ..."
               />
-              <ErrorMessage class="errorMessage" name="message" />
+              <ErrorMessage class="errorMessage" name="duvida" />
             </div>
 
             <div class="col-md-12" id="divsave">
@@ -148,6 +148,7 @@
 import ContatoMaps from "./ContatoMaps.vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
+//import axios from "axios";
 export default {
   name: "ContatoCnpd",
   components: {
@@ -158,10 +159,27 @@ export default {
   }, 
 
   methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-      console.log("Clckado");
-    },
+    async onSubmit(values) { 
+      const datas = {
+        nome:this.nome,
+        morada:this.morada,
+        email:this.email,
+        assunto:this.assunto,
+        telefone:this.telefone,
+        duvida:this.duvida,
+      }
+      const dataJson = JSON.stringify(datas);
+      const req = await fetch("http://127.0.0.1:8000/api/contatos/create",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: dataJson 
+        });
+        const res = await req.json();
+
+        console.log(res,values, null, 2);
+      },
+
+
     validateText(value) {
       // if the field is empty
       if (!value) {
