@@ -3,11 +3,16 @@
   <section id="contact" class="contact">
     <div class="container">
       <div class="section-bredcumbs">
-        <h5>Onde estou? 
-          <router-link  style="text-decoration: none" to="/"> <b >Página Inicial</b> </router-link>
-          <b> > </b>  
-         <router-link  style="text-decoration: none" to="/contato"> <b>Contato</b> </router-link> 
-         </h5>
+        <h5>
+          Onde estou?
+          <router-link style="text-decoration: none" to="/">
+            <b>Página Inicial</b>
+          </router-link>
+          <b> > </b>
+          <router-link style="text-decoration: none" to="/contato">
+            <b>Contato</b>
+          </router-link>
+        </h5>
       </div>
       <div class="section-title">
         <h2>Envie um Email à CNPD</h2>
@@ -47,50 +52,55 @@
         </div>
 
         <div class="col-lg-8 mt-5 mt-lg-0" id="divg">
-          <Form @submit="onSubmit" ><!-- action="{{ route('http://127.0.0.1:8000/api/contatos/create')}}"-->
+          <Form @submit="onSubmit"
+            ><!-- action="{{ route('http://127.0.0.1:8000/api/contatos/create')}}"-->
             <div class="row">
-              <div class="col-md-6"  id="divloco">
+              <div class="col-md-6" id="divloco">
                 <Field
                   :rules="validateText"
                   type="text"
                   class="form-control"
                   name="nome"
                   id="nome"
+                  v-model="nome"
                   placeholder="Seu Nome"
                 />
                 <ErrorMessage class="errorMessage" name="nome" />
               </div>
-              <div class="col-md-6"  id="divloco">
+              <div class="col-md-6" id="divloco">
                 <Field
                   :rules="validateEmail"
                   type="email"
                   class="form-control"
                   name="email"
                   id="email"
+                  v-model="email"
                   placeholder="Entre seu email Ex: cnpd@cnpd.cv"
                 />
                 <ErrorMessage class="errorMessage" name="email" />
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6"  id="divloco">
+              <div class="col-md-6" id="divloco">
                 <Field
                   :rules="validateText"
                   type="text"
                   class="form-control"
                   name="morada"
                   id="morada"
+                  v-model="morada"
                   placeholder="Sua morada ..."
                 />
                 <ErrorMessage class="errorMessage" name="morada" />
               </div>
-              <div class="col-md-6"  id="divloco">
+              <div class="col-md-6" id="divloco">
                 <Field
                   :rules="validateNumber"
                   type="text"
                   class="form-control"
                   name="telefone"
                   id="telefone"
+                  v-model="telefone"
                   placeholder="Nº de telefone Ex: 5900000"
                 />
                 <ErrorMessage class="errorMessage" name="telefone" />
@@ -103,6 +113,7 @@
                 class="form-control"
                 name="assunto"
                 id="assunto"
+                v-model="assunto"
                 placeholder="Assunto"
               />
               <ErrorMessage class="errorMessage" name="assunto" />
@@ -115,25 +126,25 @@
                 class="form-control"
                 name="duvida"
                 id="duvida"
+                v-model="duvida"
                 placeholder="Qual a sua dúvida ..."
               />
               <ErrorMessage class="errorMessage" name="duvida" />
             </div>
 
             <div class="col-md-12" id="divsave">
-          <button
-            @click="submitForm"
-            id="buttonsave"
-            class="btn btn-primary"
-            type="submit"
-          >
-          <IconAwe class="icon-color" icon="paper-plane"
-                    /> Enviar 
-          </button>
+              <button
+                @click="submitForm"
+                id="buttonsave"
+                class="btn btn-primary"
+                type="submit"
+              >
+                <IconAwe class="icon-color" icon="paper-plane" /> Enviar
+              </button>
+            </div>
+          </Form>
         </div>
-          </Form> 
-        </div>
-        <div class="col-md-12"><br></div>
+        <div class="col-md-12"><br /></div>
         <div>
           <ContatoMaps />
         </div>
@@ -148,26 +159,45 @@
 import ContatoMaps from "./ContatoMaps.vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
-//import axios from "axios";
+import axios from "axios";
 export default {
   name: "ContatoCnpd",
   components: {
     Form,
     Field,
     ErrorMessage,
-    ContatoMaps
-  }, 
+    ContatoMaps,
+  },
+  data() {
+    return {
+      form: {
+        nome: "",
+        email: "",
+        telefone: "",
+        assunto: "",
+        duvida: "",
+        morada: "",
+      },
+    };
+  },
 
   methods: {
-    async onSubmit(values) { 
+    async onSubmit(/*values*/) {
       const datas = {
-        nome:this.nome,
-        morada:this.morada,
-        email:this.email,
-        assunto:this.assunto,
-        telefone:this.telefone,
-        duvida:this.duvida,
-      }
+        nome: this.nome,
+        morada: this.morada,
+        email: this.email,
+        assunto: this.assunto,
+        duvida: this.duvida,
+        telefone: this.telefone,
+      };
+      //SUBMIT FORM WITH AXIOS
+      axios.post("http://127.0.0.1:8000/api/contatos/store", datas, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      });
+      // console.log(values);
+
+      /* SUBMISSAO COM FECTH
       const dataJson = JSON.stringify(datas);
       const req = await fetch("http://127.0.0.1:8000/api/contatos/create",{
           method:"POST",
@@ -175,10 +205,8 @@ export default {
           body: dataJson 
         });
         const res = await req.json();
-
-        console.log(res,values, null, 2);
-      },
-
+        console.log(res,values);*/
+    },
 
     validateText(value) {
       // if the field is empty
@@ -187,7 +215,7 @@ export default {
       }
       return true;
     },
- 
+
     validateNumber(value) {
       // if the field is empty
       if (!value) {
@@ -213,9 +241,8 @@ export default {
       }
       // All is good
       return true;
-    }
-  }
-  
+    },
+  },
 };
 </script>
 
@@ -225,7 +252,7 @@ export default {
 --------------------------------------------------------------*/
 #divg {
   font-family: "Times New Roman", Times, serif;
-  padding: 10px;/*
+  padding: 10px; /*
   border: 1px solid #061536;
   border-radius: 10px;*/
 }

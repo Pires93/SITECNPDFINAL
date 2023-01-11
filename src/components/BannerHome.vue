@@ -137,6 +137,10 @@ export default {
 @media screen and (max-width: 600px) {
   h5{ 
     font-size:16px;   
+    color: #fff;  
+    font-weight: 500;
+    display: block;
+    line-height: 1.1;
 }
 #textoslide{
   font-size: 10px;

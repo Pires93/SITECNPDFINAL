@@ -49,9 +49,10 @@
             <li class="dropdown">
               <router-link to="#"> Canal do Cidadão</router-link> 
               <ul class="ulid">
-                <li><a href="/direitos">Direitos dos Titulares</a></li>
-                <li><a href="/conselhos">Conselhos Práticos</a></li>
-                <li><a href="/queixa">Apresentar Queixa</a></li>
+                <li><router-link to="/direitos"> Direitos dos Titulares </router-link></li>
+                <li><router-link to="/conselhos"> Conselhos Práticos </router-link></li>
+                <li><router-link to="/faq"> Perguntas Frequentes </router-link></li> 
+                <li><router-link to="/queixa"> Apresentar Queixa </router-link></li> 
               </ul>
             </li>
             <li class="dropdown">
@@ -150,9 +151,10 @@
                 <span id="menuiten1">Canal do Cidadão</span></router-link
               >
               <div v-show="showcanalcidadao" id="showcanalcidadao">
-                <li><a href="#">Direitos dos Titulares</a></li>
-                <li><a href="/conselhos">Conselhos Práticos</a></li>
-                <li><a href="/queixa">Apresentar Queixa</a></li>
+               <li><router-link to="/direitos"> Direitos dos Titulares </router-link></li>
+                <li><router-link to="/conselhos"> Conselhos Práticos </router-link></li>
+                <li><router-link to="/faq"> Perguntas Frequentes </router-link></li> 
+                <li><router-link to="/queixa"> Apresentar Queixa </router-link></li> 
               </div>
             </li>
 
