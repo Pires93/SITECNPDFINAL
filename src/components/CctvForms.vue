@@ -34,7 +34,10 @@
                   type="text"
                   placeholder="Proteção de Pessoas e Bens"
                   aria-label="Disabled input example"
-                  disabled
+                  disabled 
+                  name="finalidade_cctv"
+                  id="finalidade_cctv"
+                  v-model="finalidade_cctv"
                 />
               </div>
               <div class="col">
@@ -132,20 +135,22 @@
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="nomeDenominacao"
-                  id="nomeDenominacao"
+                  name="nome_denominacao"
+                  id="nome_denominacao"
+                  v-model="nome_denominacao"
                   alt="Nome Denominação: Refere-se à designação oficial de uma instituição pública ou privada"
                   placeholder=" Nome/Denominação"
                 />
-                <ErrorMessage class="errorMessage" name="nomeDenominacao" />
+                <ErrorMessage class="errorMessage" name="nome_denominacao" />
               </div>
 
               <div class="col-md-12">
                 <Field
                   type="text"
                   class="form-control"
-                  name="nomeComercial"
-                  id="nomeComercial"
+                  name="nome_comercial"
+                  id="nome_comercial"
+                  v-model="nome_comercial"
                   alt="Nome comercial: Pode ser a sigla ou designação em relação ao qual a instituição é mais conhecida."
                   placeholder=" Nome/Comercial"
                 />
@@ -175,14 +180,15 @@
               <div class="col">
                 <Field
                   :rules="validateNumber"
-                  type="text"
+                  type="number"
                   class="form-control"
-                  name="nifResp"
-                  id="nifResp"
+                  name="numero_nif"
+                  id="numero_nif"
+                  v-model="numero_nif"
                   alt="NIF"
                   placeholder="Número de NIF"
                 />
-                <ErrorMessage class="errorMessage" name="nifResp" />
+                <ErrorMessage class="errorMessage" name="numero_nif" />
               </div>
               <div class="col-md-12">
                 <div class="row">
@@ -190,9 +196,9 @@
                     <Field
                       type="text"
                       class="form-control"
-                      name="ruaResp"
-                      id="ruaResp"
-                      alt="RUA"
+                      name="rua_responsavel_tratamento"
+                      id="rua_responsavel_tratamento"
+                      v-model="rua_responsavel_tratamento"
                       placeholder="Entre o nome da Rua"
                     />
                   </div>
@@ -201,12 +207,15 @@
                       :rules="validateText"
                       type="text"
                       class="form-control"
-                      name="localResp"
-                      id="localResp"
-                      alt="Local"
+                      name="local_responsavel_tratamento"
+                      id="local_responsavel_tratamento"
+                      v-model="local_responsavel_tratamento"
                       placeholder="Cidade/Vila/Lugar/Zona"
                     />
-                    <ErrorMessage class="errorMessage" name="localResp" />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="local_responsavel_tratamento"
+                    />
                   </div>
                 </div>
               </div>
@@ -262,24 +271,26 @@
                     <Field
                       type="text"
                       class="form-control"
-                      name="caixaPostalResp"
-                      id="caixaPostalResp"
-                      alt="Caixa Postal"
+                      name="caixapostal_responsavel_tratamento"
+                      id="caixapostal_responsavel_tratamento"
+                      v-model="caixapostal_responsavel_tratamento"
                       placeholder="Entre o número da Caixa Postal"
                     />
                   </div>
                   <div class="col">
                     <Field
                       :rules="validateNumber"
-                      v-model="telefoneResp"
-                      type="text"
+                      v-model="telefone_responsavel_tratamento"
+                      type="number"
                       class="form-control"
-                      name="telefoneResp"
-                      id="telefoneResp"
-                      alt="Telefone/Telemovel"
+                      name="telefone_responsavel_tratamento"
+                      id="telefone_responsavel_tratamento"
                       placeholder="Contato: Telefone/Telemovel"
                     />
-                    <ErrorMessage class="errorMessage" name="telefoneResp" />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="telefone_responsavel_tratamento"
+                    />
                   </div>
                 </div>
               </div>
@@ -290,21 +301,25 @@
                       :rules="validateEmail"
                       type="email"
                       class="form-control"
-                      name="emailResp"
-                      id="emailResp"
+                      name="email_responsavel_tratamento"
+                      id="email_responsavel_tratamento"
+                      v-model="email_responsavel_tratamento"
                       placeholder="Entre o seu email: example@cnpd.cv"
                     />
-                    <ErrorMessage class="errorMessage" name="emailResp" />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="email_responsavel_tratamento"
+                    />
                   </div>
                   <div class="col">
                     <div class="col">
                       <Field
                         :rules="validateRadio"
                         type="radio"
-                        id="paisResp"
-                        name="paisResp"
+                        id="pais_responsavel_tratamento"
+                        name="pais_responsavel_tratamento"
                         value="Cabo Verde"
-                        v-model="paisResp"
+                        v-model="pais_responsavel_tratamento"
                       />
                       <label for="Pessoa Singular"> Cabo Verde</label>
                     </div>
@@ -312,16 +327,19 @@
                       <Field
                         :rules="validateRadio"
                         type="radio"
-                        id="paisResp"
-                        name="paisResp"
+                        id="pais_responsavel_tratamento"
+                        name="pais_responsavel_tratamento"
                         value=" Fora do Território Nacional"
-                        v-model="paisResp"
+                        v-model="pais_responsavel_tratamento"
                       />
                       <label for=" Fora do Território Nacional">
                         Fora do Território Nacional</label
                       >
                     </div>
-                    <ErrorMessage class="errorMessage" name="paisResp" />
+                    <ErrorMessage
+                      class="errorMessage"
+                      name="pais_responsavel_tratamento"
+                    />
                   </div>
                 </div>
               </div>
@@ -359,13 +377,14 @@
                           :rules="validateText"
                           type="text"
                           class="form-control"
-                          name="nomePessoaContato"
-                          id="nomePessoaContato"
+                          name="nome_pessoa_contato_representante_instalacao"
+                          id="nome_pessoa_contato_representante_instalacao"
+                          v-model="nome_pessoa_contato_representante_instalacao"
                           placeholder="Nome da pessoa de contato"
                         />
                         <ErrorMessage
                           class="errorMessage"
-                          name="nomePessoaContato"
+                          name="nome_pessoa_contato_representante_instalacao"
                         />
                       </div>
 
@@ -376,27 +395,29 @@
                               :rules="validateEmail"
                               type="email"
                               class="form-control"
-                              name="emailMoradaInstalacao"
-                              id="emailMoradaInstalacao"
+                              name="email_pessoa_representante_instalacao"
+                              id="email_pessoa_representante_instalacao"
+                              v-model="email_pessoa_representante_instalacao"
                               placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
                             />
                             <ErrorMessage
                               class="errorMessage"
-                              name="emailMoradaInstalacao"
+                              name="email_pessoa_representante_instalacao"
                             />
                           </div>
                           <div class="col">
                             <Field
                               :rules="validateNumber"
-                              type="text"
+                              type="number"
                               class="form-control"
-                              name="telefoneMoradaInstalacao"
-                              id="telefoneMoradaInstalacao"
+                              name="contato_representante_instalacao"
+                              id="contato_representante_instalacao"
+                              v-model="contato_representante_instalacao"
                               placeholder="Contato: Telefone/Telemovel"
                             />
                             <ErrorMessage
                               class="errorMessage"
-                              name="telefoneMoradaInstalacao"
+                              name="contato_representante_instalacao"
                             />
                           </div>
                         </div>
@@ -408,28 +429,26 @@
               <div class="col-md-12" id="divg2" v-if="checkMorada">
                 <div class="col-md-12">
                   <Field
+                    :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="moradaLocalInstalacao"
-                    id="moradaLocalInstalacao"
+                    name="nome_representante_instalacao"
+                    id="nome_representante_instalacao"
+                    v-model="nome_representante_instalacao"
                     placeholder=" Representante da Morada de Instalação"
                   />
-                </div>
-                <div class="col-md-12">
-                  <Field
-                    type="text"
-                    class="form-control"
-                    name="NomeComercialLocalInstalacao"
-                    id="NomeComercialLocalInstalacao"
-                    placeholder=" Nome Comercial da Morada de Instalação"
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="nome_representante_instalacao"
                   />
                 </div>
                 <div class="col-md-12">
                   <Field
                     type="text"
                     class="form-control"
-                    name="ruaMoradaInstalacao"
-                    id="ruaMoradaInstalacao"
+                    name="rua_representante_instalacao"
+                    id="rua_representante_instalacao"
+                    v-model="rua_representante_instalacao"
                     placeholder=" Rua do Local de instalação"
                   />
                 </div>
@@ -437,8 +456,9 @@
                   <Field
                     type="text"
                     class="form-control"
-                    name="caixaPostalMoradaInstalacao"
-                    id="caixaPostalMoradaInstalacao"
+                    name="caixapostal_representante_instalacao"
+                    id="caixapostal_representante_instalacao"
+                    v-model="caixapostal_representante_instalacao"
                     placeholder=" Caixa Postal"
                   />
                 </div>
@@ -447,13 +467,14 @@
                     :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="localMoradaInstalacao"
-                    id="localMoradaInstalacao"
+                    name="local_representante_instalacao"
+                    id="local_representante_instalacao"
+                    v-model="local_representante_instalacao"
                     placeholder=" Local de instalação - Cidade/Vila/Lugar/Zona"
                   />
                   <ErrorMessage
                     class="errorMessage"
-                    name="localMoradaInstalacao"
+                    name="local_representante_instalacao"
                   />
                 </div>
 
@@ -513,13 +534,14 @@
                         :rules="validateText"
                         type="text"
                         class="form-control"
-                        name="nomePessoaContato"
-                        id="nomePessoaContato"
+                        name="nome_pessoa_contato_representante_instalacao"
+                        id="nome_pessoa_contato_representante_instalacao"
+                        v-model="nome_pessoa_contato_representante_instalacao"
                         placeholder="Nome da pessoa de contato"
                       />
                       <ErrorMessage
                         class="errorMessage"
-                        name="nomePessoaContato"
+                        name="nome_pessoa_contato_representante_instalacao"
                       />
                     </div>
 
@@ -530,27 +552,29 @@
                             :rules="validateEmail"
                             type="email"
                             class="form-control"
-                            name="emailMoradaInstalacao"
-                            id="emailMoradaInstalacao"
+                            name="email_pessoa_representante_instalacao"
+                            id="email_pessoa_representante_instalacao"
+                            v-model="email_pessoa_representante_instalacao"
                             placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
                           />
                           <ErrorMessage
                             class="errorMessage"
-                            name="emailMoradaInstalacao"
+                            name="email_pessoa_representante_instalacao"
                           />
                         </div>
                         <div class="col">
                           <Field
-                            :rules="validateEmail"
-                            type="text"
+                            :rules="validateNumber"
+                            type="number"
                             class="form-control"
-                            name="telefoneMoradaInstalacao"
-                            id="telefoneMoradaInstalacao"
+                            name="contato_representante_instalacao"
+                            id="contato_representante_instalacao"
+                            v-model="contato_representante_instalacao"
                             placeholder="Contato: Telefone/Telemovel"
                           />
                           <ErrorMessage
                             class="errorMessage"
-                            name="telefoneMoradaInstalacao"
+                            name="contato_representante_instalacao"
                           />
                         </div>
                       </div>
@@ -584,20 +608,20 @@
                   {{ checkServico ? "Não" : "Sim" }}
                 </buttom>
               </div>
-
               <div class="col-md-12" id="divg2" v-if="checkServico">
                 <div class="col-md-12">
                   <Field
                     :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="entidadeProcessInfo"
-                    id="entidadeProcessInfo"
+                    name="entidade_processamento_informacao"
+                    id="entidade_processamento_informacao"
+                    v-model="entidade_processamento_informacao"
                     placeholder=" Qual a Entidade Encarregue pelo proccessamento das imagens"
                   />
                   <ErrorMessage
                     class="errorMessage"
-                    name="entidadeProcessInfo"
+                    name="entidade_processamento_informacao"
                   />
                 </div>
                 <div class="col-md-12">
@@ -605,8 +629,9 @@
                     :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="ruaProcessInfo"
-                    id="ruaProcessInfo"
+                    name="rua_processamento_informacao"
+                    id="rua_processamento_informacao"
+                    v-model="rua_processamento_informacao"
                     placeholder=" Rua"
                   />
                   <ErrorMessage class="errorMessage" name="ruaProcessInfo" />
@@ -615,8 +640,9 @@
                   <Field
                     type="text"
                     class="form-control"
-                    name="caixaPostalProcessInfo"
-                    id="caixaPostalProcessInfo"
+                    name="caixapostal_processamento_informacao"
+                    id="caixapostal_processamento_informacao"
+                    v-model="caixapostal_processamento_informacao"
                     placeholder=" Caixa Postal"
                   />
                 </div>
@@ -625,13 +651,16 @@
                     :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="lugarProcessInfo"
-                    id="lugarProcessInfo"
+                    name="local_processamento_informacao"
+                    id="local_processamento_informacao"
+                    v-model="local_processamento_informacao"
                     placeholder="Cidade/Vila/Lugar/Zona da Entidade"
                   />
-                  <ErrorMessage class="errorMessage" name="lugarProcessInfo" />
+                  <ErrorMessage
+                    class="errorMessage"
+                    name="local_processamento_informacao"
+                  />
                 </div>
-
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col">
@@ -686,7 +715,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-12" id="divg">
           <div class="container">
             <div class="row">
@@ -697,39 +725,46 @@
               <div class="col">
                 <Field
                   :rules="validateNumber"
-                  type="text"
+                  type="number"
                   class="form-control"
-                  name="numeroCamaras"
-                  id="numeroCamaras"
+                  name="numero_camaras"
+                  id="numero_camaras"
+                  v-model="numero_camaras"
                   placeholder=" Nº total de câmaras instaladas"
                 />
-                <ErrorMessage class="errorMessage" name="numeroCamaras" />
+                <ErrorMessage class="errorMessage" name="numero_camaras" />
               </div>
-              <div class="col" v-if="tipoVideovigilancia != 'Formulário geral de videovigilância'">
-               <Multiselect 
+              <div
+                class="col"
+                v-if="
+                  tipoVideovigilancia != 'Formulário geral de videovigilância'
+                "
+              >
+                <Multiselect
                   v-model="zona"
                   :options="zonasAbrangidas[tipoVideovigilancia]"
                   mode="tags"
                   placeholder="- Selecione as áreas abrangidas pelas câmaras -"
-                />  
-              </div>
-              <div class="col" v-if="tipoVideovigilancia == 'Formulário geral de videovigilância'">
-                <Field
-                    name="zonasGenericas"
-                    id="zonasGenericas"
-                    as="textarea"
-                    class="form-control"
-                    v-model="zonasGenericas"
-                    :rules="validateText"
-                    placeholder="Indique quais são as zonas abrangidas pelas câmaras. Por ex:  corredores, pontos exteriores, parque estacionamento, zonas internas de circulação, etc..."
-                  />
-                  <ErrorMessage
-                    class="errorMessage"
-                    name="zonasGenericas"
                 />
               </div>
-              <div class="col-md-12"><br /> </div>
-
+              <div
+                class="col"
+                v-if="
+                  tipoVideovigilancia == 'Formulário geral de videovigilância'
+                "
+              >
+                <Field
+                  name="zona"
+                  id="zona"
+                  as="textarea"
+                  class="form-control"
+                  v-model="zona"
+                  :rules="validateText"
+                  placeholder="Indique quais são as zonas abrangidas pelas câmaras. Por ex:  corredores, pontos exteriores, parque estacionamento, zonas internas de circulação, etc..."
+                />
+                <ErrorMessage class="errorMessage" name="zona" />
+              </div>
+              <div class="col-md-12"><br /></div>
               <div class="col">
                 <div class="col">
                   <label class="form-check-label">
@@ -748,16 +783,16 @@
                 <div class="col-md-12"><br /></div>
                 <div class="col-md-12" v-if="checkTransmissao">
                   <Field
-                    name="transmissaoParaFora"
+                    name="local_transmissao_imagens"
                     as="textarea"
                     class="form-control"
-                    v-model="transmissaoParaFora"
+                    v-model="local_transmissao_imagens"
                     :rules="validateText"
                     placeholder=" Local para onde é realizada a transmissão: Ex: Por telemóvel, etc, ... "
                   />
                   <ErrorMessage
                     class="errorMessage"
-                    name="transmissaoParaFora"
+                    name="local_transmissao_imagens"
                   />
                 </div>
               </div>
@@ -779,42 +814,42 @@
                 <div class="col-md-12"><br /></div>
                 <div class="col-md-12" v-if="checkTempoReal">
                   <Field
-                    name="visualizacaoTempoReal"
+                    name="quem_tem_acesso_imagens"
                     as="textarea"
                     class="form-control"
-                    v-model="visualizacaoTempoReal"
+                    v-model="quem_tem_acesso_imagens"
                     :rules="validateText"
                     placeholder=" Quem tem acesso às imagens em tempo real? Indicar todas as pessoas quem têm acesso ás imagens"
                   />
                   <ErrorMessage
                     class="errorMessage"
-                    name="visualizacaoTempoReal"
+                    name="quem_tem_acesso_imagens"
                   />
                 </div>
               </div>
-              <div class="col-md-12"><br></div>
+              <div class="col-md-12"><br /></div>
               <div class="col">
                 <div class="col">
                   <label class="form-check-label">
-                   Caso as zonas abrangidas pelas câmaras não se encontram na lista acima, 
-                   mencione aqui todas as áreas abrangidas pelo circuito de videovigilância.
-                  </label> 
+                    Caso as zonas abrangidas pelas câmaras não se encontram na
+                    lista acima, mencione aqui todas as áreas abrangidas pelo
+                    circuito de videovigilância.
+                  </label>
                 </div>
                 <div class="col-md-12"></div>
-                <div class="col-md-12" >
+                <div class="col-md-12">
                   <Field
-                    name="zonasAbrangidasOutras"
+                    name="outraszonas_abrangidas"
                     as="textarea"
                     class="form-control"
-                    v-model="zonasAbrangidasOutras" 
+                    v-model="outraszonas_abrangidas"
                     placeholder=" Solicita-se que se indique todas as zonas que ficam sob o alcance das câmaras de videovigilância, no exterior e/ou no interior. "
-                  /> 
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
         <div class="col" id="divg">
           <div class="container">
             <div class="row">
@@ -841,8 +876,9 @@
                   <Field
                     type="text"
                     class="form-control"
-                    name="ruaDireitoAcesso"
-                    id="ruaDireitoAcesso"
+                    name="rua_direito_acesso"
+                    id="rua_direito_acesso"
+                    v-model="rua_direito_acesso"
                     placeholder="Rua do Responsável pelo tratamento"
                   />
                 </div>
@@ -850,8 +886,9 @@
                   <Field
                     type="text"
                     class="form-control"
-                    name="caixaPostalDireitoAcesso"
-                    id="caixaPostalDireitoAcesso"
+                    name="caixapostal_direito_acesso"
+                    id="caixapostal_direito_acesso"
+                    v-model="caixapostal_direito_acesso"
                     placeholder=" Caixa Postal"
                   />
                 </div>
@@ -860,16 +897,16 @@
                     :rules="validateText"
                     type="text"
                     class="form-control"
-                    name="localDireitoAcesso"
-                    id="localDireitoAcesso"
+                    name="local_direito_acesso"
+                    id="local_direito_acesso"
+                    v-model="local_direito_acesso"
                     placeholder=" Local - Cidade/Vila/Lugar/Zona"
                   />
                   <ErrorMessage
                     class="errorMessage"
-                    name="localDireitoAcesso"
+                    name="local_direito_acesso"
                   />
                 </div>
-
                 <div class="col-md-12">
                   <div class="row">
                     <div class="col">
@@ -928,8 +965,9 @@
                         :rules="validateEmail"
                         type="email"
                         class="form-control"
-                        name="emailDireitoAcesso"
-                        id="emailDireitoAcesso"
+                        name="email_direito_acesso"
+                        id="email_direito_acesso"
+                        v-model="email_direito_acesso"
                         placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
                       />
                       <ErrorMessage
@@ -940,15 +978,16 @@
                     <div class="col">
                       <Field
                         :rules="validateNumber"
-                        type="text"
+                        type="number"
                         class="form-control"
-                        name="telefoneDireitoAcesso"
-                        id="telefoneDireitoAcesso"
+                        name="contato_direito_acesso"
+                        id="contato_direito_acesso"
+                        v-model="contato_direito_acesso"
                         placeholder="Contato: Telefone/Telemovel"
                       />
                       <ErrorMessage
                         class="errorMessage"
-                        name="telefoneDireitoAcesso"
+                        name="contato_direito_acesso"
                       />
                     </div>
                   </div>
@@ -957,7 +996,6 @@
             </div>
           </div>
         </div>
-
         <div class="col-md-12" id="divg">
           <div class="container">
             <div class="row">
@@ -969,35 +1007,34 @@
                 <Field
                   :rules="validateRadio"
                   type="checkbox"
-                  id="formaDireitoAcesso"
-                  name="formaDireitoAcesso"
+                  id="forma_direito_acesso"
+                  name="forma_direito_acesso"
                   value="Presencial"
-                  v-model="formaDireitoAcesso"
+                  v-model="forma_direito_acesso"
                 />
-                <label for="formaDireitoAcesso"> Presencial</label>
+                <label> Presencial</label>
               </div>
               <div class="col-md-2" id="alignCenter">
                 <Field
                   :rules="validateRadio"
                   type="checkbox"
-                  id="formaDireitoAcesso"
-                  name="formaDireitoAcesso"
+                  id="forma_direito_acesso"
+                  name="forma_direito_acesso"
                   value="Escrita"
-                  v-model="formaDireitoAcesso"
+                  v-model="forma_direito_acesso"
                 />
-                <label for="formaDireitoAcesso"> Escrita</label>
+                <label> Escrita</label>
               </div>
-              <div class="col-md-4"></div>
+               
               <div class="col-md-12" id="alignCenter">
-                <ErrorMessage class="errorMessage" name="formaDireitoAcesso" />
+                <ErrorMessage class="errorMessage" name="forma_direito_acesso" />
               </div>
-
               <div class="col-md-12">
                 <Field
-                  name="outraFormaDireitoAcesso"
+                  name="outraforma_direito_acesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso"
+                  v-model="outraforma_direito_acesso"
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                 />
               </div>
@@ -1010,43 +1047,40 @@
               <div class="col-md-12" id="separacao">
                 4. Medidas de segurança a implementar
               </div>
-
               <div class="col-md-12">
                 <label
                   id="labelleft"
-                  class="form-check-label"
-                  for="formaDireitoAcesso"
+                  class="form-check-label" 
                 >
                   Especifique as medidas físicas de segurança do sistema:
                 </label>
                 <Field
-                  name="medidasFisica"
+                  name="medidas_fisicas_seguranca"
                   as="textarea"
                   class="form-control"
-                  v-model="medidasFisica"
+                  v-model="medidas_fisicas_seguranca"
                   :rules="validateText"
                   placeholder="Ocorre quando temos barreiras físicas que impeçam que pessoas não autorizadas tenham acesso a espaços onde os dados estão guardados"
                 />
-                <ErrorMessage class="errorMessage" name="medidasFisica" />
+                <ErrorMessage class="errorMessage" name="medidas_fisicas_seguranca" />
               </div>
               <div class="col-md-12"><br /></div>
               <div class="col-md-12">
                 <label
                   id="labelleft"
-                  class="form-check-label"
-                  for="formaDireitoAcesso"
+                  class="form-check-label" 
                 >
                   Especifique as medidas lógica de segurança do sistema:
                 </label>
                 <Field
-                  name="medidasLogica"
+                  name="medidas_logicas_seguranca"
                   as="textarea"
                   class="form-control"
-                  v-model="medidasLogica"
+                  v-model="medidas_logicas_seguranca"
                   :rules="validateText"
                   placeholder="Consiste na implementação de chaves de acesso, encriptação do conteúdo e registos de operações efectuadas no sistema"
                 />
-                <ErrorMessage class="errorMessage" name="medidasFisica" />
+                <ErrorMessage class="errorMessage" name="medidas_logicas_seguranca" />
               </div>
             </div>
           </div>
@@ -1057,7 +1091,6 @@
               <div class="col-md-12" id="separacao">
                 5. Representante dos trabalhadores
               </div>
-
               <div class="col">
                 <label class="form-check-label">
                   Existe representante dos trabalhadores?
@@ -1076,17 +1109,17 @@
               <div class="col-md-12" v-if="checkRepTrab">
                 <label for="formFile" class="form-label"
                   >Se sim, juntar a cópia do parecer ou comprovativo do
-                  pedido.</label
+                  pedido em formato PDF.</label
                 >
                 <Field
-                v-model="file"
-                 name="file"
-                 class="form-control" 
-                 type="file" 
-                 ref="file" 
-                 :rules="validateText"
-                 />
-                 <ErrorMessage class="errorMessage" name="file" />
+                  v-model="parecer_representante_trabalhadores"
+                  name="parecer_representante_trabalhadores"
+                  class="form-control"
+                  type="file"
+                  ref="file"
+                  :rules="validateText"
+                />
+                <ErrorMessage class="errorMessage" name="parecer_representante_trabalhadores" />
               </div>
             </div>
           </div>
@@ -1110,8 +1143,8 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-
 import { Form, Field, ErrorMessage } from "vee-validate";
+import axios from "axios";
 
 export default {
   components: {
@@ -1120,10 +1153,9 @@ export default {
     Field,
     ErrorMessage,
   },
-
   data() {
-    return { 
-      file:null,
+    return {
+      
       checkMorada: false,
       checkMorada1: true,
       checkServico: false,
@@ -1131,18 +1163,15 @@ export default {
       checkTransmissao: false,
       checkDireitoAcesso: false,
       checkRepTrab: false,
-
       /**************************TIPO NOTIFICACAO *********************************** */
       tipoNotificacoes: null,
       tipoNotificacao: null,
-
       /******************************ZTIPOS DE CCTV*******************************/
       tipoVideovigilancia: null,
       tiposVideovigilancias: null,
       /******************************ZONAS ABRANGIDAS*******************************/
       message: null,
-      zona: null,
-      zonasGenericas:null,
+      zona: null, 
       selected: null,
       zonasAbrangidas: {
         "Centros Comerciais": [
@@ -1183,7 +1212,6 @@ export default {
             label: "Zonas técnicas",
           },
         ],
-
         "Edifícios de habitação Condomínios": [
           {
             value: "Áreas comuns ",
@@ -1227,7 +1255,6 @@ export default {
             value: "Zonas das caixas registadoras",
             label: "Zonas das caixas registadoras",
           },
-
           {
             value: "Parque de estacionamento",
             label: "Parque de estacionamento",
@@ -1447,7 +1474,6 @@ export default {
             value: "Pontos de acesso a partir do exterior ",
             label: "Pontos de acesso a partir do exterior ",
           },
-
           {
             value: "Parque de estacionamento",
             label: "Parque de estacionamento",
@@ -1758,23 +1784,120 @@ export default {
         ],
         Brava: [{ value: "Brava", label: "Brava" }],
       },
-
       /** *********************************************************** */
+      nome_denominacao:"",
+      nome_comercial:"",
+      tipo_notificacao:"",
+      finalidade_cctv:"",
+      tipo_pessoa:"",
+      atividade_desenvolvida:"",
+      numero_nif:"",
+      rua_responsavel_tratamento:"",
+      local_responsavel_tratamento:"",
+      telefone_responsavel_tratamento:"",
+      email_responsavel_tratamento:"",
+      pais_responsavel_tratamento:"",
+      nome_representante_instalacao:"",
+      email_pessoa_representante_instalacao:"",
+      contato_representante_instalacao:"",
+      rua_representante_instalacao:"",
+      caixapostal_representante_instalacao:"",
+      local_representante_instalacao:"",
+      nome_pessoa_contato_representante_instalacao:"",
+      ilha_responsavel_tratamento:"",
+      concelho_responsavel_tratamento:"",
+      caixapostal_responsavel_tratamento:"",
+      entidade_processamento_informacao:"",
+      rua_processamento_informacao:"",
+      caixapostal_processamento_informacao:"",
+      local_processamento_informacao:"",
+      ilha_processamento_informacao:"",
+      concelho_processamento_informacao:"",
+      numero_camaras:"",
+      zonas_abrangidas:"", 
+      local_transmissao_imagens:"",
+      quem_tem_acesso_imagens:"",
+      outraszonas_abrangidas:"",
+      rua_direito_acesso:"",
+      caixapostal_direito_acesso:"",
+      local_direito_acesso:"", 
+      email_direito_acesso:"",
+      contato_direito_acesso:"",
+      ilha_direito_acesso:"",
+      concelho_direito_acesso:"",
+      forma_direito_acesso:"",
+      outraforma_direito_acesso:"",
+      medidas_fisicas_seguranca:"",
+      medidas_logicas_seguranca:"",
+      parecer_representante_trabalhadores:"",
+
     };
   },
-
   methods: {
-      
 
-    onSubmit(values) {
-      if (this.zona == null) {
-        this.message = "Campo obrigatório!";
-      } else {
-        this.message = "Ok!";
-      }
-      console.log(values, null, 2);
-      console.log("Clckado");
+    async onSubmit(values) {
+      const datas = {
+
+           tipo_notificacao: this.tipoNotificacao,
+           finalidade_cctv: this.finalidade_cctv,
+           tipo_cctv: this.tipoVideovigilancia,
+           tipo_pessoa: this.tipoPessoa,
+           nome_denominacao: this.nome_denominacao,
+           nome_comercial: this.nome_comercial,
+           atividade_desenvolvida: this.atividadeDesenvolvida,
+           numero_nif: this.numero_nif,
+           rua_responsavel_tratamento: this.rua_responsavel_tratamento,
+           local_responsavel_tratamento: this.local_responsavel_tratamento,
+           ilha_responsavel_tratamento: this.ilhaResp,
+           concelho_responsavel_tratamento: this.concelhoResp,
+           caixapostal_responsavel_tratamento: this.caixapostal_responsavel_tratamento,
+           telefone_responsavel_tratamento: this.telefone_responsavel_tratamento,
+           email_responsavel_tratamento: this.email_responsavel_tratamento,
+           pais_responsavel_tratamento: this.pais_responsavel_tratamento,
+           nome_representante_instalacao: this.nome_representante_instalacao,
+           rua_representante_instalacao: this.rua_representante_instalacao,
+           caixapostal_representante_instalacao: this.caixapostal_representante_instalacao,
+           local_representante_instalacao: this.local_representante_instalacao,
+           ilha_representante_instalacao: this.ilhaMorInst,
+           concelho_representante_instalacao: this.concelhoMorInst,
+           nome_pessoa_contato_representante_instalacao: this.nome_pessoa_contato_representante_instalacao,
+           email_pessoa_representante_instalacao: this.email_pessoa_representante_instalacao,
+           contato_representante_instalacao: this.contato_representante_instalacao,
+           entidade_processamento_informacao: this.entidade_processamento_informacao,
+           rua_processamento_informacao: this.rua_processamento_informacao,
+           caixapostal_processamento_informacao: this.caixapostal_processamento_informacao,
+           local_processamento_informacao: this.local_processamento_informacao,
+           ilha_processamento_informacao: this.ilhaServExt,
+           concelho_processamento_informacao: this.concelhoServExt, 
+           numero_camaras: this.numero_camaras,
+           zonas_abrangidas: this.zona,
+          // zonasFormGenerica: this.zonasGenericas,
+           local_transmissao_imagens: this.local_transmissao_imagens,
+           quem_tem_acesso_imagens: this.quem_tem_acesso_imagens,
+           outraszonas_abrangidas: this.outraszonas_abrangidas,
+           rua_direito_acesso: this.rua_direito_acesso,
+           caixapostal_direito_acesso: this.caixapostal_direito_acesso,
+           local_direito_acesso: this.local_direito_acesso,
+           ilha_direito_acesso: this.ilhaDirAcess,
+           concelho_direito_acesso: this.concelhoDirAcess,
+           email_direito_acesso: this.email_direito_acesso,
+           contato_direito_acesso: this.contato_direito_acesso,
+           forma_direito_acesso: this.forma_direito_acesso,
+           outraforma_direito_acesso: this.outraforma_direito_acesso,
+           medidas_fisicas_seguranca: this.medidas_fisicas_seguranca,
+           medidas_logicas_seguranca: this.medidas_logicas_seguranca,
+           parecer_representante_trabalhadores: this.parecer_representante_trabalhadores,
+ 
+      };
+      //SUBMIT FORM WITH AXIOS
+      axios.post("http://127.0.0.1:8000/api/videovigilancia/create", datas, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      });
+      console.log(values);
+
     },
+
+
     validateText(value) {
       // if the field is empty
       if (!value) {
@@ -1782,7 +1905,6 @@ export default {
       }
       return true;
     },
-
     validateRadio(value) {
       // if the field is empty
       if (!value) {
@@ -1800,7 +1922,6 @@ export default {
       if (!regex.test(value)) {
         return "Carater inválido, precisa ser um número!";
       }
-
       return true;
     },
     validateEmail(value) {
@@ -1816,7 +1937,6 @@ export default {
       // All is good
       return true;
     },
-
     async dadosBackend() {
       const req = await fetch("http://localhost:3000/dadosBackend");
       const data = await req.json();
@@ -1825,7 +1945,6 @@ export default {
       this.atividadesDesenvolvidas = data.atividadesDesenvolvidas;
       this.tipoNotificacoes = data.tipoNotificacoes;
     },
-
     changeServico() {
       this.checkServico = !this.checkServico;
     },
@@ -1846,7 +1965,6 @@ export default {
       this.checkRepTrab = !this.checkRepTrab;
     },
   },
-
   mounted() {
     this.dadosBackend();
   },
@@ -1918,18 +2036,15 @@ textarea {
 input {
   margin-bottom: 10px;
 }
-
 option:hover {
   background-color: #061536;
 }
 .form-check-input:checked {
   background-color: #061536;
 }
-
 .form-check-input:checked + label {
   color: #061536;
 }
-
 #separacao {
   font-family: "Times New Roman", Times, serif;
   padding-left: 10px;
@@ -1955,7 +2070,6 @@ option:hover {
   color: #fff;
   border: 2px solid #bd9a13;
 }
-
 .icon-box {
   background-color: white;
 }
@@ -1973,7 +2087,6 @@ button#buttonsave:focus {
   color: #bd9a13;
   box-shadow: 0 0 10px #061536;
 }
-
 .multiselect {
   font-family: "Times New Roman", Times, serif;
 }

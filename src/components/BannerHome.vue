@@ -51,7 +51,7 @@ export default {
     currentSortDir:'asc',// ordenar ascendente
     search: '', //search 
     searchSelection: '',
-    pageSizeconselhos: 6, //paginacao
+    pageSizeconselhos: 5, //paginacao
     pageSizenews:1,
     currentPage: 1
   }),

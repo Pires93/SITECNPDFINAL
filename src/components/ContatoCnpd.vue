@@ -169,15 +169,13 @@ export default {
     ContatoMaps,
   },
   data() {
-    return {
-      form: {
+    return { 
         nome: "",
         email: "",
         telefone: "",
         assunto: "",
         duvida: "",
-        morada: "",
-      },
+        morada: ""
     };
   },
 
