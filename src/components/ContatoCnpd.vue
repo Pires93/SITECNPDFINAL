@@ -14,12 +14,11 @@
           </router-link>
         </h5>
       </div>
-      <div class="section-title">
-        <h2>Envie um Email à CNPD</h2>
+      <div class="section-title"> 
       </div>
 
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div class="info">
             <div class="address">
               <i class="circle"><IconAwe class="icon-color" icon="house" /></i>
@@ -28,7 +27,7 @@
                 Av. da China, Rampa Terra Branca Praia, Santiago, Cabo Verde
               </p>
             </div>
-
+            <br>
             <div class="address">
               <i class="circle"><IconAwe class="icon-color" icon="fax" /></i>
               <h4>Caixa Postal:</h4>
@@ -51,9 +50,12 @@
           </div>
         </div>
 
-        <div class="col-lg-8 mt-5 mt-lg-0" id="divg">
+        <div class="col-lg-7 mt-5 mt-lg-0" id="divg">
+          <div class="section-title">
+        <h2>Envie um Email à CNPD</h2>
+      </div>
           <Form @submit="onSubmit"
-            ><!-- action="{{ route('http://127.0.0.1:8000/api/contatos/create')}}"-->
+            >
             <div class="row">
               <div class="col-md-6" id="divloco">
                 <Field
@@ -96,7 +98,7 @@
               <div class="col-md-6" id="divloco">
                 <Field
                   :rules="validateNumber"
-                  type="text"
+                  type="number"
                   class="form-control"
                   name="telefone"
                   id="telefone"
@@ -139,9 +141,62 @@
                 class="btn btn-primary"
                 type="submit"
               >
-                <IconAwe class="icon-color" icon="paper-plane" /> Enviar
+                <IconAwe class="icon-color" icon="envelope" /> Enviar Mensagem
               </button>
             </div>
+            <!------------------MODAL SHOW ------------------------->
+            <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                   <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>     
+                  <div class="modalFooter">
+                    <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!------------------FIM DE MODAL SHOW------------------------->
           </Form>
         </div>
         <div class="col-md-12"><br /></div>
@@ -175,7 +230,9 @@ export default {
         telefone: "",
         assunto: "",
         duvida: "",
-        morada: ""
+        morada: "",
+        showModal: false,
+        ErrorModal: false,
     };
   },
 
@@ -189,23 +246,29 @@ export default {
         duvida: this.duvida,
         telefone: this.telefone,
       };
-      //SUBMIT FORM WITH AXIOS
-      axios.post("http://127.0.0.1:8000/api/contatos/store", datas, {
+
+       //SUBMIT FORM WITH AXIOS
+    try {
+     await axios.post("http://127.0.0.1:8000/api/contatos/store", datas, {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
-      });
-      // console.log(values);
+      }); 
+      this.showModal = !this.showModal; 
+      setTimeout(function(){
+        window.location.reload();
+      }, 5000)
 
-      /* SUBMISSAO COM FECTH
-      const dataJson = JSON.stringify(datas);
-      const req = await fetch("http://127.0.0.1:8000/api/contatos/create",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body: dataJson 
-        });
-        const res = await req.json();
-        console.log(res,values);*/
+      }catch(error){
+        this.ErrorModal = !this.ErrorModal; 
+        setTimeout(function(){
+        window.location.reload();
+      }, 5000)
+      } 
+        
     },
-
+    closeModal() {
+      this.showModal = !this.showModal; 
+      window.location.reload();
+    },
     validateText(value) {
       // if the field is empty
       if (!value) {
@@ -245,6 +308,8 @@ export default {
 </script>
 
 <style scoped>
+
+ 
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/

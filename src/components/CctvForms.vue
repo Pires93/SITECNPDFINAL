@@ -1136,6 +1136,59 @@
             <IconAwe class="icon-color" icon="paper-plane" /> Submeter Dados
           </button>
         </div>
+         <!------------------MODAL SHOW ------------------------->
+         <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                    <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>        
+                  <div class="modalFooter">
+                    <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!------------------FIM DE MODAL SHOW------------------------->
       </Form>
     </div>
   </section>
@@ -1155,7 +1208,8 @@ export default {
   },
   data() {
     return {
-      
+      showModal: false,
+      ErrorModal: false,
       checkMorada: false,
       checkMorada1: true,
       checkServico: false,
@@ -1963,7 +2017,7 @@ export default {
   },
   methods: {
 
-    async onSubmit(values) {
+    async onSubmit(/*values*/) {
       const datas = {
 
            tipo_notificacao: this.tipoNotificacao,
@@ -2016,20 +2070,29 @@ export default {
            parecer_representante_trabalhadores: this.parecer_representante_trabalhadores,
  
       };
-      //SUBMIT FORM WITH AXIOS
-      try {
-      await axios("http://127.0.0.1:8000/api/videovigilancia/create", datas, {
+       
+  //SUBMIT FORM WITH AXIOS
+    try { 
+     await axios.post("http://127.0.0.1:8000/api/videovigilancia/create", datas, {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
-      });
-      console.log(values);
-      return alert("Success!");
+      }); 
+      this.showModal = !this.showModal; 
+      setTimeout(function(){
+        window.location.reload();
+      }, 5000)
 
       }catch(error){
-        return alert("Error: " + error);
-      }  
-      
+        this.ErrorModal = !this.ErrorModal; 
+        setTimeout(function(){
+        window.location.reload();
+      }, 5000)
+      } 
+        
     },
-
+    closeModal() {
+      this.showModal = !this.showModal; 
+      //window.location.reload();
+    },
 
     validateText(value) {
       // if the field is empty

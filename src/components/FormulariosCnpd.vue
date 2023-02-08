@@ -53,7 +53,7 @@
                 <IconAwe class="icon-color" icon="camera" />
               </div>
               <h4 class="title">
-                <a href="">Formulários de Videovigilância</a>
+                <a href="">Formulários <br> de <br> Videovigilância</a>
               </h4>
             </div>
           </router-link>
@@ -66,7 +66,7 @@
                 <IconAwe class="icon-color" icon="list-check" />
               </div>
               <h4 class="title">
-                <a href="">Formulário Geral de Notificação</a>
+                <a href="">Formulário de Tratamento de Dados Geral</a>
               </h4>
             </div>
           </router-link>
@@ -76,9 +76,9 @@
           <router-link to="/formstic">
             <div class="icon-box">
               <div class="icon">
-                <IconAwe class="icon-color" icon="phone" />
+                <IconAwe class="icon-color" icon="phone" /> 
               </div>
-              <h4 class="title"><a href="">Formulário de controlo TIC</a></h4>
+              <h4 class="title"><a href="">Formulário de controlo da utilização de TIC</a></h4>
             </div>
           </router-link>
         </div>
@@ -89,7 +89,7 @@
               <div class="icon">
                 <IconAwe class="icon-color" icon="fingerprint" />
               </div>
-              <h4 class="title"><a href="">Formulário de Biometria</a></h4>
+              <h4 class="title"><a href="">Formulário de Tratamento de Dados Biométricos</a></h4>
             </div>
           </router-link>
         </div>
@@ -99,7 +99,7 @@
               <div class="icon">
                 <IconAwe class="icon-color" icon="car-on" />
               </div>
-              <h4 class="title"><a href="">Formulário de Geolocalização</a></h4>
+              <h4 class="title"><a href="">Formulário de Geolocalização de Viaturas</a></h4>
             </div>
           </router-link>
         </div>
@@ -110,14 +110,14 @@
               <div class="icon">
                 <IconAwe class="icon-color" icon="retweet" />
               </div>
-              <h4 class="title"><a href="">Formulário Interconexão</a></h4>
+              <h4 class="title"><a href="">Formulário Interconexão Unilateral</a></h4>
             </div>
           </router-link>
         </div>
       </div>
       <p></p>
       <p id="forms">
-        NB: Consulte <router-link to="/isencoes"> aqui </router-link>quais os
+        <b>NB: </b>Consulte <router-link to="/isencoes"> aqui </router-link>quais os
         tratamentos de dados pessoais que estão isentos de notificação à CNPD.
       </p>
 
@@ -129,7 +129,36 @@
         <div class="col-lg-3 mb-5 mb-lg-0">
           <div class="card">
             <div class="card-img">
-              <img src="/img/f.jpg" class="img-fluid" alt="" />
+              <video
+                width="420"
+                height="240"
+                controls 
+              >
+                <source
+                  src="https://vjs.zencdn.net/v/oceans.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="card-info">
+              <span>Como preencher, ver o video!</span> 
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 mb-5 mb-lg-0">
+          <div class="card">
+            <div class="card-img">
+              <video
+                width="420"
+                height="240"
+                controls 
+              >
+                <source
+                  src="https://vjs.zencdn.net/v/oceans.mp4"
+                  type="video/mp4"
+                />
+              </video>
             </div>
             <div class="card-info">
               <span>Como preencher, ver o video!</span>
@@ -140,28 +169,35 @@
         <div class="col-lg-3 mb-5 mb-lg-0">
           <div class="card">
             <div class="card-img">
-              <img src="/img/f.jpg" class="img-fluid" alt="" />
+              <video
+                width="420"
+                height="240"
+                controls 
+              >
+                <source
+                  src="https://vjs.zencdn.net/v/oceans.mp4"
+                  type="video/mp4"
+                />
+              </video>
             </div>
             <div class="card-info">
               <span>Como preencher, ver o video!</span>
             </div>
           </div>
         </div>
-
         <div class="col-lg-3 mb-5 mb-lg-0">
           <div class="card">
             <div class="card-img">
-              <img src="/img/f.jpg" class="img-fluid" alt="" />
-            </div>
-            <div class="card-info">
-              <span>Como preencher, ver o video!</span>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 mb-5 mb-lg-0">
-          <div class="card">
-            <div class="card-img">
-              <img src="/img/f.jpg" class="img-fluid" alt="" />
+              <video
+                width="420"
+                height="240"
+                controls 
+              >
+                <source
+                  src="https://vjs.zencdn.net/v/oceans.mp4"
+                  type="video/mp4"
+                />
+              </video>
             </div>
             <div class="card-info">
               <span>Como preencher, ver o video!</span>
@@ -225,6 +261,7 @@ export default {
     width: 50%;
   }
 }
+ 
 
 .formnot {
   background: #fff;

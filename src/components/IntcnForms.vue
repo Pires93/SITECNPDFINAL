@@ -1862,6 +1862,59 @@
             <IconAwe class="icon-color" icon="paper-plane" /> Submeter Dados
           </button>
         </div>
+          <!------------------MODAL SHOW ------------------------->
+          <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                    <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>     
+                  <div class="modalFooter">
+                    <!-- <button
+                        @click="closeModal"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                        type="submit"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>--->
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!------------------FIM DE MODAL SHOW------------------------->
       </Form>
     </div>
   </section>
@@ -1883,7 +1936,7 @@ export default {
   },
   data() {
     return {
-       
+      
       checkMorada: false,
       checkServico: false,
       checkServicoSR: false,
@@ -2605,16 +2658,29 @@ export default {
         medidas_logicas_seguranca: this.medidas_logicas_seguranca,
 
       };
-      //SUBMIT FORM WITH AXIOS
-      axios.post("http://127.0.0.1:8000/api/interconexao/create", datas, {
+       
+         //SUBMIT FORM WITH AXIOS
+    try {
+     await axios.post("http://127.0.0.1:8000/api/interconexao/create", datas, {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
-      });
-     // console.log(this.finalidadiCategory);
-     // console.log(this.comunicacao);
-     // console.log(this.internacional);
-    
+      }); 
+      this.showModal = !this.showModal; 
+      setTimeout(function(){
+        window.location.reload();
+      }, 5000)
+
+      }catch(error){
+        this.ErrorModal = !this.ErrorModal; 
+        setTimeout(function(){
+        window.location.reload();
+      }, 5000)
+      } 
+        
     },
-    
+    closeModal() {
+      this.showModal = !this.showModal; 
+      //window.location.reload();
+    },
  
     validateText(value) {
       // if the field is empty
