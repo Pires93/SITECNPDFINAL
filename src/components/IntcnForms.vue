@@ -24,7 +24,6 @@
         </div>
         <div class="col-md-12"></div>
        
-
         <div class="col-md-12" id="divg">
           <div class="container">
             <div class="row"> 
@@ -1177,6 +1176,8 @@
           </div>
         </div>
 
+      
+
         <!---- ----------------- FINALIDADE DO TRATAMENTO-------------------------------------------------------------------->
         <div class="col" id="divg">
           <div class="container">
@@ -1364,8 +1365,6 @@
             </div>
           </div>
         </div>
-        <!---- ----------------- Comunicaçao dos dados a terceiros-------------------------------------------------------------------->
-
         <!---- ----------------- Comunicaçao dos dados a terceiros-------------------------------------------------------------------->
         <div class="col" id="divg">
           <div class="container">
@@ -1875,14 +1874,14 @@
                   </div>
                   <p id="success">O seu formulário foi submetido com Sucesso.</p>   
                   <div class="modalFooter">
-                    <!-- <button
-                        @click="closeModal"
+                    <!---  <button
+                        @click="closeSuccess"
                         id="buttonsave"
                         class="btn btn-primary"
                         type="submit"
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
-                    </button>--->
+                    </button>----->
                   </div>
                 </div>
               </div>
@@ -1901,14 +1900,14 @@
                   <p id="error">O seu formulário não foi submetido.</p>
                   <p id="error1">Por favor tente novamente!</p>     
                   <div class="modalFooter">
-                    <!-- <button
-                        @click="closeModal"
+                      <button
+                        @click="closeError"
                         id="buttonsave"
                         class="btn btn-primary"
                         type="submit"
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
-                    </button>--->
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2671,14 +2670,19 @@ export default {
 
       }catch(error){
         this.ErrorModal = !this.ErrorModal; 
-        setTimeout(function(){
+       /* setTimeout(function(){
         window.location.reload();
-      }, 5000)
+      }, 5000)*/
       } 
         
     },
-    closeModal() {
-      this.showModal = !this.showModal; 
+    
+    closeError() {
+      this.ErrorModal = !this.ErrorModal; 
+      window.location.reload();
+    },
+    closeSuccess() {
+    //  this.showModal = !this.showModal; 
       //window.location.reload();
     },
  

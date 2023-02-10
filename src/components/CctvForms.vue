@@ -1150,7 +1150,7 @@
                   <p id="success">O seu formulário foi submetido com Sucesso.</p>   
                   <div class="modalFooter">
                     <!-- <button
-                        @click="closeModal"
+                        @click="closeSuccess"
                         id="buttonsave"
                         class="btn btn-primary"
                         type="submit"
@@ -1175,14 +1175,14 @@
                   <p id="error">O seu formulário não foi submetido.</p>
                   <p id="error1">Por favor tente novamente!</p>        
                   <div class="modalFooter">
-                    <!-- <button
-                        @click="closeModal"
+                   <button
+                        @click="closeError"
                         id="buttonsave"
                         class="btn btn-primary"
                         type="submit"
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
-                    </button>--->
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2081,16 +2081,21 @@ export default {
         window.location.reload();
       }, 5000)
 
-      }catch(error){
-        this.ErrorModal = !this.ErrorModal; 
-        setTimeout(function(){
-        window.location.reload();
-      }, 5000)
+    }catch(error){
+          this.ErrorModal = !this.ErrorModal; 
+        /* setTimeout(function(){
+          window.location.reload();
+        }, 5000)*/
       } 
         
     },
-    closeModal() {
-      this.showModal = !this.showModal; 
+    
+    closeError() {
+      this.ErrorModal = !this.ErrorModal; 
+      window.location.reload();
+    },
+    closeSuccess() {
+    //  this.showModal = !this.showModal; 
       //window.location.reload();
     },
 
