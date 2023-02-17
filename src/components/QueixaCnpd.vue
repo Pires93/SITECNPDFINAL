@@ -8,7 +8,7 @@
       <div class="col-md-12"  id="divg">
         <Form @submit="onSubmit">  
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6" id="divloco">
               <p class="pleft"> Dados do queixoso:</p>
                
               <div class="col-md-12" id="divloco"> 
@@ -16,33 +16,33 @@
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="name"
-                  id="name"
+                  name="nome"
+                  v-model="nome"
                   placeholder="Seu Nome"
                  />
-                <ErrorMessage class="errorMessage" name="name" /> 
+                <ErrorMessage class="errorMessage" name="nome" /> 
               </div>
               <div class="col-md-12" id="divloco">
               <Field
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="address"
-                  id="address"
+                  name="morada"
+                  v-model="morada"
                   placeholder="Sua morada ..."
                  />
-                <ErrorMessage class="errorMessage" name="address" /> 
+                <ErrorMessage class="errorMessage" name="morada" /> 
               </div>
               <div class="col-md-12" id="divloco"> 
                <Field
                   :rules="validateNumber"
-                  type="text"
+                  type="number"
                   class="form-control"
-                  name="phone"
-                  id="phone"
+                  name="telefone"
+                  v-model="telefone"
                   placeholder="Nº de telefone Ex: 5900000"
                  />
-                <ErrorMessage class="errorMessage" name="phone" /> 
+                <ErrorMessage class="errorMessage" name="telefone" /> 
               </div>
               <div class="col-md-12"  id="divloco"> 
                 <Field
@@ -65,8 +65,8 @@
                   type="text"
                   class="form-control"
                   name="entidade"
-                  id="entidade"
-                  placeholder="Queixa contra a Pessoa/Empresa/Entidade ... Ex: Empresa XPTO"
+                  v-model="entidade"
+                  placeholder="Queixa contra a Entidade ... Ex: Empresa XPTO"
                      />
                 <ErrorMessage class="errorMessage" name="entidade" /> 
               </div>
@@ -75,33 +75,31 @@
                   :rules="validateText"
                   type="text"
                   class="form-control"
-                  name="entidadeaAdress"
-                  id="entidadeaAdress"
-                  placeholder="Morada da Pessoa/Empresa/Entidade... Ex: Palmarejo"
+                  name="moradaEntidade"
+                  v-model="moradaEntidade"
+                  placeholder="Morada da Entidade... Ex: Palmarejo"
                     />
-                <ErrorMessage class="errorMessage" name="entidadeaAdress" /> 
+                <ErrorMessage class="errorMessage" name="moradaEntidade" /> 
               </div>
               <div class="col-md-12" id="divloco"> 
                 <Field
                   :rules="validateNumber"
-                  type="text"
+                  type="number"
                   class="form-control"
-                  name="entidadePhone"
-                  id="entidadePhone"
-                  placeholder="Nº de telefone da Pessoa/Empresa/Entidade... Ex: 5900000"
-                />
-                <ErrorMessage class="errorMessage" name="entidadePhone" /> 
+                  name="telefoneEntidade"
+                  v-model="telefoneEntidade"
+                  placeholder="Nº de telefone da Entidade... Ex: 5900000"
+                /> 
               </div>
               <div class="col-md-12" id="divloco">
                 <Field
                   :rules="validateEmail"
                   type="email"
                   class="form-control"
-                  name="entidadeEmail"
-                  id="entidadeEmail"
-                  placeholder="Entre o email da Pessoa/Empresa/Entidade...  Ex: xpto@xpto.cv"
-                  />
-                <ErrorMessage class="errorMessage" name="entidadeEmail" /> 
+                  name="emailEntidade"
+                  v-model="emailEntidade"
+                  placeholder="Entre o email da Entidade...  Ex: xpto@xpto.cv"
+                  /> 
               </div>
             </div>
             
@@ -111,11 +109,11 @@
                 :rules="validateText"
                 type="text"
                 class="form-control"
-                name="subject"
-                id="subject"
+                name="assunto"
+                v-model="assunto"
                 placeholder="Qual o assunto da sua queixa"
               />
-              <ErrorMessage class="errorMessage" name="subject" /> 
+              <ErrorMessage class="errorMessage" name="assunto" /> 
             </div>
             <div class="col-md-12" id="divloco"> 
               <Field
@@ -123,15 +121,48 @@
                 type="text"
                 as="textarea"
                 class="form-control"
-                name="message"
-                id="message" 
+                name="descricao"
+                v-model="descricao" 
+                rows="3"
                 placeholder="Descreva a sua queixa em detalhes ..."
               />
-              <ErrorMessage class="errorMessage" name="message" /> 
+              <ErrorMessage class="errorMessage" name="descricao" /> 
               <div><br></div>
-              <p>Se tiver algum anexo para enviar, anexe-o aqui</p> 
-              <input class="form-control" type="file" id="formFile" />
-            </div>
+  
+              
+              <div class="col">
+                <label class="form-check-label">
+                  Pretende anexar algum documento ou fotografia?
+                </label>
+                <buttom
+                  @click="changeAnexos"
+                  type="button"
+                  class="btn btn-outline-primary"
+                  name="morada"
+                  id="moradasimbotton"
+                >
+                  {{ checkAnexos ? "Não" : "Sim" }}
+                </buttom>
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="col-md-12" v-if="checkAnexos"> 
+                
+                <Field
+                  v-model="anexos"
+                  name="anexos"
+                  class="form-control"
+                  type="file"
+                  ref="file"
+                  :rules="validateText" 
+                  accept="application/pdf,image/png, image/gif, image/jpeg"
+                  
+                />
+                
+                <ErrorMessage class="errorMessage" name="anexos" />
+                <br>
+                <span style="color: #BC9913">Se tiver mais do que um anexo por favor entre em contato por email.</span>
+              </div>
+            </div> 
           </div>
           <br>
           <div class="col-md-12" id="divsave">
@@ -142,9 +173,60 @@
             type="submit"
           >
           <IconAwe class="icon-color" icon="paper-plane"
-                    /> Enviar Queixa
+                    /> Submeter Queixa
           </button>
         </div> 
+         <!------------------MODAL SHOW ------------------------->
+         <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                  <button
+                        @click="closeSuccess"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>     
+                  <div class="modalFooter">
+                    <button
+                        @click="closeError"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <!------------------FIM DE MODAL SHOW------------------------->
         </Form>
       </div>
     </div>
@@ -154,18 +236,59 @@
 
 <script> 
 import { Form, Field, ErrorMessage } from "vee-validate";
-
+import axios from "axios";
 export default { 
   components: {
     Form,
     Field,
     ErrorMessage, 
   }, 
+  data() {
+    return {
+      anexo:"",
+      checkAnexos: false,
+    }
+  },
 
   methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-      console.log("Clckado");
+    async onSubmit() {
+      const datas = {
+
+          nome_queixoso: this.nome,
+          morada_queixoso: this.morada,
+          telefone_queixoso: this.telefone,
+          email_queixoso: this.email,
+          entidade_queixa: this.entidade,
+          morada_queixa: this.moradaEntidade,
+          telefone_queixa: this.telefoneEntidade,
+          email_queixa: this.emailEntidade,
+          assunto_queixa: this.assunto,
+          descricao_queixa: this.descricao,
+          anexo_queixa: this.anexo,  
+      };
+       
+  //SUBMIT FORM WITH AXIOS
+    try { 
+     await axios.post("http://127.0.0.1:8000/api/queixa/create", datas, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      }); 
+      this.showModal = !this.showModal;   
+
+    }catch(error){
+          this.ErrorModal = !this.ErrorModal ;   
+      } 
+        
+    },
+    
+    closeError(event) {
+      this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
+      window.location.reload();
+    },
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
     },
     validateText(value) {
       // if the field is empty
@@ -200,7 +323,10 @@ export default {
       }
       // All is good
       return true;
-    }
+    },
+    changeAnexos() {
+      this.checkAnexos = !this.checkAnexos;
+    },
   }
   
 };

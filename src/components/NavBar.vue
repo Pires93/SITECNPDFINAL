@@ -207,7 +207,7 @@
             <li>
               <router-link to="/contato">
                 <IconAwe class="iconnavbarmob" icon="house" />
-                <span id="menuiten">COntato</span>
+                <span id="menuiten">Contato</span>
               </router-link>
             </li>
           </div>

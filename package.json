@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@bazumax/vue-multiselect": "^2.1.16",
+    "@braid/vue-formulate": "^2.5.3",
     "@coreui/coreui": "^4.2.2",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",

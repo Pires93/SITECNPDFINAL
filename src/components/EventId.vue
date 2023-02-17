@@ -14,27 +14,28 @@
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b v-if="lista">Notícia Nº.{{ lista.id }} - {{ lista.title }}</b>
+            <b v-if="lista"> {{ lista.titulo }}</b>
           </router-link>
         </h5>
       </div>
       <div v-if="lista">
         <div class="section-title">
-          <h2>{{ lista.title }}</h2>
+          <h2>{{ lista.titulo }}</h2>
         </div>
         <div class="row content">
           <div class="col-lg-4">
             <div class="post-img">
               <img
-                src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png"
+              :src="'http://localhost:8000/storage/capanoticia/'+ lista.imagem "
                 class="img-fluid"
                 alt=""
+                
               />
             </div>
           </div>
           <div class="col-lg-8" id="descricao">
-            <p class="date">Publicado em: {{ lista.id }} de Junho de 2022</p>
-            <p>{{ lista.body }}</p>
+            <p class="date">Publicado em: {{ lista.created_at }} </p>
+            <p>{{ lista.conteudo }}</p>
           </div>
         </div>
       </div>
@@ -55,7 +56,7 @@ export default {
   },
 
   mounted() {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + this.$route.params.id)
+    fetch("http://127.0.0.1:8000/api/noticia/" + this.$route.params.id)
       .then((response) => response.json())
       .then((data) => (this.lista = data))
       .catch((err) => console.log(err.message));

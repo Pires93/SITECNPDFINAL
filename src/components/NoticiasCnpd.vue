@@ -30,13 +30,13 @@
             <!--:src="event.url" src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png"  -->
             <div class="post-img">
               <img
-                src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png"
+               :src="'http://localhost:8000/storage/capanoticia/'+ event.imagem "
                 class="img-fluid"
-                alt=""
+                alt="" 
               />
             </div>
-            <span class="post-date">{{ event.id }}, Junho 2022</span>
-            <h3 class="post-title">{{ event.title }}</h3>
+            <span class="post-date">{{ event.created_at }}</span>
+            <h3 class="post-title">{{ event.titulo }}</h3>
             <router-link :to="{ name: 'eventview', params: { id: event.id } }">
               <button
                 id="vermais"
@@ -77,8 +77,8 @@ import axios from "axios";
 export default {
   name: "NoticiasCnpd",
   data: () => ({
-    photos: [], //array com os itens
-    currentSort: "title", //ordenar por title
+    noticias: [], //array com os itens
+    currentSort: "titulo", //ordenar por titulo
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
     searchSelection: "",
@@ -94,7 +94,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.photos.length)
+      if (this.currentPage * this.pageSize < this.noticias.length)
         this.currentPage++;
     },
     prevPage() {
@@ -102,16 +102,16 @@ export default {
     },
 
     countNumbers() {
-      return this.photos.length;
+      return this.noticias.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.photos
+      return this.noticias
         .filter((data) => {
-          let title = data.title.toLowerCase().match(this.search.toLowerCase());
-          return title;
+          let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
+          return titulo;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
@@ -123,15 +123,25 @@ export default {
 
   created() {
     axios
-      .get("https://jsonplaceholder.typicode.com/photos")
+      .get("http://127.0.0.1:8000/api/listarNoticias")
       .then((response) => {
-        this.photos = response.data;
+        this.noticias = response.data;
       });
   },
 };
 </script>
 
 <style scoped>
+img{
+  width: auto; 
+    height: auto;
+}
+
+.post-box{  
+    float: left;
+    margin: 3px;
+    padding: 3px;
+}
 #box {
   margin-bottom: 10px;
 }

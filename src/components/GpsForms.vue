@@ -936,6 +936,7 @@
                   type="file"
                   ref="file"
                   :rules="validateText"
+                  accept="application/pdf"
                 />
                 <ErrorMessage
                   class="errorMessage"
@@ -971,14 +972,13 @@
                   </div>
                   <p id="success">O seu formulário foi submetido com Sucesso.</p>   
                   <div class="modalFooter">
-                   <!-- <button
+                  <button
                         @click="closeSuccess"
                         id="buttonsave"
                         class="btn btn-primary"
-                        type="submit"
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
-                    </button>--->
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1001,7 +1001,6 @@
                         @click="closeError"
                         id="buttonsave"
                         class="btn btn-primary"
-                        type="submit"
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
                     </button>
@@ -1440,9 +1439,9 @@ export default {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
       }); 
       this.showModal = !this.showModal; 
-      setTimeout(function(){
+     /* setTimeout(function(){
         window.location.reload();
-      }, 5000)
+      }, 5000)*/
 
     }catch(error){
           this.ErrorModal = !this.ErrorModal; 
@@ -1453,13 +1452,15 @@ export default {
         
     },
     
-    closeError() {
+    closeError(event) {
       this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
       window.location.reload();
     },
-    closeSuccess() {
-    //  this.showModal = !this.showModal; 
-      //window.location.reload();
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
     },
 
 
@@ -1625,16 +1626,7 @@ option:hover {
 #divloco {
   margin-top: 10px;
 }
-#moradasimbotton {
-  margin-left: 10px;
-  color: #061536;
-  border-color: #061536;
-}
-#moradasimbotton:hover {
-  background-color: #061536;
-  color: #fff;
-  border: 2px solid #bd9a13;
-}
+ 
 
 .icon-box {
   background-color: white;

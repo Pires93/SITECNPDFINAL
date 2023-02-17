@@ -157,14 +157,13 @@
                   </div>
                   <p id="success">O seu formulário foi submetido com Sucesso.</p>   
                   <div class="modalFooter">
-                   <!-- <button
+                   <button
                         @click="closeSuccess"
                         id="buttonsave"
-                        class="btn btn-primary"
-                        type="submit"
+                        class="btn btn-primary" 
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
-                    </button>--->
+                    </button> 
                   </div>
                 </div>
               </div>
@@ -186,8 +185,7 @@
                      <button
                         @click="closeError"
                         id="buttonsave"
-                        class="btn btn-primary"
-                        type="submit"
+                        class="btn btn-primary" 
                       >
                         <IconAwe class="icon-color" icon="circle-check" /> Fechar
                     </button>
@@ -253,11 +251,11 @@ export default {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
       }); 
       this.showModal = !this.showModal; 
-      setTimeout(function(){
+     /* setTimeout(function(){
         window.location.reload();
-      }, 5000)
+      }, 5000)*/
 
-      }catch(error){
+    }catch(error){
           this.ErrorModal = !this.ErrorModal; 
         /* setTimeout(function(){
           window.location.reload();
@@ -266,13 +264,15 @@ export default {
         
     },
     
-    closeError() {
+    closeError(event) {
       this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
       window.location.reload();
     },
-    closeSuccess() {
-    //  this.showModal = !this.showModal; 
-      //window.location.reload();
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
     },
     validateText(value) {
       // if the field is empty

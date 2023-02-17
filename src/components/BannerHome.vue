@@ -1,4 +1,3 @@
-<!--   <img src="https://picsum.photos/1024/420/?image=10" alt="Nature" class="responsive"> -->
 <template>
   <div id="container">
     
@@ -13,14 +12,17 @@
      </div>
     <div class="carousel-inner">
       
-        <div v-for="(news, index) in (noticias)" :key="index" class="carousel-item active">
+        <div v-for="(news, index) in (filtrarNoticias)" :key="index" class="carousel-item active">
            
-          <div class="post-img"><img  src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png" class="img-fluid" alt=""></div>
+          <div class="post-img">
+            <img  :src="'http://localhost:8000/storage/capanoticia/'+news.imagem" class="img-fluid" alt="">
+          </div>
           <div id="titlemob" class="carousel-caption d-none d-md-block"> 
             <router-link :to="{name: 'eventview',params: { id: news.id}}" style="text-decoration: none">
-              <h5>Ultima Noticia - {{ countnews() }}   {{news.title}}</h5>
+              <h5>  {{news.titulo}}</h5>
+              <!--{{ countnews() }} -->
             </router-link> 
-            <p id="textoslide">{{news.title}}</p> 
+            <p id="textoslide">{{news.titulo}}</p> 
           </div>
         </div>
         
@@ -46,7 +48,8 @@ import axios from 'axios';
 export default {
   name: "BannerHome",
   data: () => ({
-    photos: [], //array com os itens
+    photos: [],
+    noticias:[], //array com os itens
     currentSort:'title', //ordenar por title
     currentSortDir:'asc',// ordenar ascendente
     search: '', //search 
@@ -71,7 +74,7 @@ export default {
     },
 
     countnews(){
-      return this.photos.length; 
+      return this.noticias.length; 
     }
   },
 
@@ -87,10 +90,10 @@ export default {
         if(index >= start && index < end) return true;
       });
     },
-    noticias () {
-      return this.photos.filter((data) => { 
-        let title = data.title.toLowerCase().match(this.search.toLowerCase());  
-        return title;
+    filtrarNoticias () {
+      return this.noticias.filter((data) => { 
+        let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());  
+        return titulo;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSizenews;
         let end = this.currentPage*this.pageSizenews;
@@ -103,6 +106,10 @@ export default {
     axios.get('https://jsonplaceholder.typicode.com/photos')
       .then(response => {
         this.photos = response.data
+      });
+      axios.get('http://127.0.0.1:8000/api/ultimaNoticia')
+      .then(response => {
+        this.noticias = response.data
       })
   },
 

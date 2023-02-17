@@ -12,9 +12,11 @@
         <div class="row"> 
           <div id="box" v-for="(event, index) in (filteredList)" :key="index" class="col-lg-4"> 
             <div class="post-box"> <!--:src="event.url" -->
-              <div class="post-img"><img  src="https://www.parlamento.cv/userfiles/Austelino%20FINAL(texto)(2).png" class="img-fluid" alt=""></div>
-              <span class="post-date">{{event.id}}, Junho 2022</span>
-              <h3 class="post-title">{{event.title}}</h3>
+              <div class="post-img">
+                <img  :src="'http://localhost:8000/storage/capanoticia/'+event.imagem" class="img-fluid" alt="">
+              </div>
+              <span class="post-date">{{event.created_at}}</span>
+              <h3 class="post-title">{{event.titulo}}</h3>
               <router-link :to="{name: 'eventview',params: { id: event.id}}">
                <span>Ler mais </span> <IconAwe class="icon-color" icon="arrow-right" />
               </router-link>  
@@ -36,8 +38,8 @@ import axios from 'axios';
 export default {
     name:"EventsCnpd",
     data: () => ({
-    photos: [], //array com os itens
-    currentSort:'title', //ordenar por title
+    noticias: [], //array com os itens
+    currentSort:'titulo', //ordenar por title
     currentSortDir:'asc',// ordenar ascendente
     search: '', //search 
     searchSelection: '',
@@ -53,23 +55,23 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if((this.currentPage*this.pageSize) < this.photos.length) this.currentPage++;
+      if((this.currentPage*this.pageSize) < this.noticias.length) this.currentPage++;
     },
     prevPage() {
       if(this.currentPage > 1) this.currentPage--;
     },
 
     countNumbers(){
-      return this.photos.length; 
+      return this.noticias.length; 
     }
   },
 
   computed: { 
 
     filteredList () {
-      return this.photos.filter((data) => { 
-        let title = data.title.toLowerCase().match(this.search.toLowerCase());  
-        return title;
+      return this.noticias.filter((data) => { 
+        let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());  
+        return titulo;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSize;
         let end = this.currentPage*this.pageSize;
@@ -79,9 +81,9 @@ export default {
   },
 
   created () {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    axios.get('http://127.0.0.1:8000/api/ultimosEventos')
       .then(response => {
-        this.photos = response.data
+        this.noticias = response.data
       })
   },
 

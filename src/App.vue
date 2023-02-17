@@ -31,6 +31,16 @@ data(){
 </script>
 
 <style >
+#moradasimbotton {
+  margin-left: 10px;
+  color: #061536;
+  border-color: #061536;
+}
+#moradasimbotton:hover {
+  background-color: #061536;
+  color: #fff;
+  border: 2px solid #bd9a13;
+}
  .downloadpdf{
   text-align: right;
  }
