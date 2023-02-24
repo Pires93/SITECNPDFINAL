@@ -25,7 +25,7 @@
                 <div class="form-group">
                <p class="pleft">Pareceres disponíveis: {{countNumbers()}}</p> 
                <input id="idsearch" type="text" class="form-control" v-model="search" 
-               placeholder="Procurar por título ou por Ano ...">
+               placeholder="Procurar por título ou por ano ...">
                 </div>
                 <br>
                 <div class="table-responsive">

@@ -20,6 +20,17 @@
         </div>
       </div>
       <div class="row">
+        <div class="form-group">
+          <p class="pleft">Eventos disponíveis: {{ countNumbers() }}</p>
+          <input
+            id="idsearch"
+            type="text"
+            class="form-control"
+            v-model="search"
+            placeholder="Procurar por eventos ..."
+          />
+        </div>
+        <p><br /></p>
         <div
           id="box"
           v-for="(event, index) in filteredList"
@@ -244,5 +255,20 @@ a:hover {
 #vermais:hover {
   color: #fff;
   background-color: #061536;
+}
+#idsearch {
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  box-shadow: 1px 1px #061536;
+}
+.pleft {
+  text-align: left;
+  font-weight: bold; 
+  font-family: "Times New Roman", Times, serif;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

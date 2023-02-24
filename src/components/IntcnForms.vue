@@ -1336,12 +1336,9 @@
                   name="outrosDadosArt8e11"
                   as="textarea"
                   class="form-control"
-                  v-model="outrosDadosArt8e11"
-                  :rules="validateText"
+                  v-model="outrosDadosArt8e11" 
                   placeholder=" Mencionar quais os outros dados tratados referentes aos artigos 8º e 11º da lei nº. 121/IX/2021 de 17 de março "
-                 />
-                <ErrorMessage class="errorMessage" name="outrosDadosArt8e11" />
-               
+                 /> 
                 <div class="col-md-12"><br /></div>
                 <label
                   id="labelleft"
@@ -2326,9 +2323,9 @@ export default {
 
       internacional: [
         {
-          //dadosTransferidos: "",
-          //entidadesInternacional: "",
-          //paisTransferido: "",
+          dadosTransferidos: "",
+          entidadesInternacional: "",
+          paisTransferido: "",
         },
       ],
       /************************************CATEGORIA DE FINALIDADE*********************************** */
@@ -2661,6 +2658,8 @@ export default {
      await axios.post("http://127.0.0.1:8000/api/interconexao/create", datas, {
         headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
       }); 
+      console.log(this.comunicacao);
+      console.log(this.internacional);
       this.showModal = !this.showModal; 
      /* setTimeout(function(){
         window.location.reload();
@@ -2738,8 +2737,8 @@ export default {
 
     addComunicTerce() {
       this.comunicacao.push({
-      //  condicoesComunicacao: "",
-      //  entidadesComunicadas: "",
+        condicoesComunicacao: "",
+        entidadesComunicadas: "",
       });
     },
     removeComunic(index) {

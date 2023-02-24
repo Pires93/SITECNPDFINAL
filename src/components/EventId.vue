@@ -35,7 +35,10 @@
           </div>
           <div class="col-lg-8" id="descricao">
             <p class="date">Publicado em: {{ lista.created_at }} </p>
-            <p>{{ lista.conteudo }}</p>
+            
+              <div class="col-md-12">
+                <p>{{ lista.conteudo }}</p>
+              </div> 
           </div>
         </div>
       </div>

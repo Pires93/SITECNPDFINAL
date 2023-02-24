@@ -29,7 +29,7 @@
             type="text"
             class="form-control"
             v-model="search"
-            placeholder="Procurar por entidades ou por Ano ..."
+            placeholder="Procurar por entidades ou por ano ..."
           />
         </div>
         <br />
@@ -169,7 +169,7 @@ export default {
 <style>
 #idpage {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 #button {
   color: #061536;

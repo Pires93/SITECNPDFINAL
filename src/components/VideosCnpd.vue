@@ -23,30 +23,40 @@
         </div>
       </div>
       <div class="row">
+        <div class="form-group">
+          <p class="pleft">Videos disponíveis: {{ countNumbers() }}</p>
+          <input
+            id="idsearch"
+            type="text"
+            class="form-control"
+            v-model="search"
+            placeholder="Procurar por videos ..."
+          />
+        </div>
+        <p><br></p>
         <div
           id="box"
-          v-for="(event, index) in filteredList"
+          v-for="(vide, index) in filteredList"
           :key="index"
           class="col-lg-4"
         >
           <div class="post-box">
-            <!--:src="event.url" -->
-            <div class="post-img">
-              <!--<img :src="event.url" class="img-fluid" alt=""> -->
-              <video
-                width="420"
-                height="240"
-                controls
-                v-bind:poster="event.thumbnailUrl"
-              >
-                <source
-                  src="https://vjs.zencdn.net/v/oceans.mp4"
-                  type="video/mp4"
-                />
-              </video>
+            <!--:src="vide.url" -->
+            <div class="post-img"> 
+              <video v-if="vide.type=='Outro'" width="420" height="240"  controls
+                :poster="'http://localhost:8000/storage/videos/'+ vide.capa ">
+                  <source :src="vide.link" type="video/mp4"> 
+              </video>  
+ 
+              <iframe v-if="vide.type=='Youtube'" width="420" height="240" allow="fullscreen;"
+               :poster="'http://localhost:8000/storage/videos/'+ vide.capa"
+               :src="'https://www.youtube.com/embed/'+vide.link+'?autoplay=0&mute=0'"
+                frameborder="0">
+              </iframe>
+               
             </div>
-            <span class="post-date">{{ event.id }}, Junho 2022</span>
-            <h3 class="post-title">{{ event.title }}</h3>
+            <span class="post-date">Publicado em: {{ vide.created_at }}</span>
+            <h3 class="post-title">{{ vide.titulo }}</h3>
           </div>
         </div>
         <div id="idpage">
@@ -76,7 +86,7 @@ import axios from "axios";
 export default {
   name: "VideosCnpd",
   data: () => ({
-    photos: [], //array com os itens
+    videos: [], //array com os itens
     currentSort: "title", //ordenar por title
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
@@ -93,7 +103,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.photos.length)
+      if (this.currentPage * this.pageSize < this.videos.length)
         this.currentPage++;
     },
     prevPage() {
@@ -101,16 +111,16 @@ export default {
     },
 
     countNumbers() {
-      return this.photos.length;
+      return this.videos.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.photos
+      return this.videos
         .filter((data) => {
-          let title = data.title.toLowerCase().match(this.search.toLowerCase());
-          return title;
+          let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
+          return titulo;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
@@ -122,9 +132,9 @@ export default {
 
   created() {
     axios
-      .get("https://jsonplaceholder.typicode.com/photos")
+      .get("http://127.0.0.1:8000/api/videos")
       .then((response) => {
-        this.photos = response.data;
+        this.videos = response.data;
       });
   },
 };
@@ -243,4 +253,21 @@ a:hover {
 video {
   object-fit: cover;
 }
+
+#idsearch {
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  box-shadow: 1px 1px #061536;
+}
+.pleft {
+  text-align: left;
+  font-weight: bold; 
+  font-family: "Times New Roman", Times, serif;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
+}
+ 
 </style>

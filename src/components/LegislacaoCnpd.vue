@@ -26,7 +26,7 @@
             type="text"
             class="form-control"
             v-model="search"
-            placeholder="Procurar por entidades ..."
+            placeholder="Procurar por legislação ..."
           />
         </div>
         <p><br /></p>
@@ -128,7 +128,7 @@ export default {
 
   created() {
     axios
-      .get("http://127.0.0.1:8000/api/legislacaos")
+      .get("http://127.0.0.1:8000/api/legislacao")
       .then((response) => {
         this.legislacaos = response.data;
       });

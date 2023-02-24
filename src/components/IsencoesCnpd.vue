@@ -23,22 +23,33 @@
       </div>
 
       <div class="row">
+        <div class="form-group">
+          <p class="pleft">Isenções disponíveis: {{ countNumbers() }}</p>
+          <input
+            id="idsearch"
+            type="text"
+            class="form-control"
+            v-model="search"
+            placeholder="Procurar por isenções ..."
+          />
+        </div>
+        <p><br /></p>
         <div
           id="box"
-          v-for="(user, index) in filteredList"
+          v-for="(pub, index) in filteredList"
           :key="index"
           class="row"
         >
-          <router-link :to="{ name: 'isencaoview', params: { id: user.id } }">
+          <router-link :to="{ name: 'isencaoid', params: { id: pub.id } }">
             <div class="post-box" alt="Abrir Isenção em PDF">
-              <!-- :src="user.url" src="/img/lei.png"-->
+              <!-- :src="pub.url" src="/img/lei.png"-->
 
               <div id="isencao" class="first">
                 <img src="/img/isencoes.jpg" alt="Avatar" style="width: 60px" />
               </div>
               <div id="isencao" class="second">
                 <h5 class="post-title">
-                  {{ user.title }}
+                  {{ pub.titulo }}
                 </h5>
               </div>
               <div id="isencao" class="third">
@@ -48,6 +59,22 @@
               </div>
             </div>
           </router-link>
+        </div>
+        <div id="idpage">
+          <button
+            id="button"
+            @click="prevPage"
+            class="float-left btn btn-outline-info btn-sm"
+          >
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button
+            id="button"
+            @click="nextPage"
+            class="float-right btn btn-outline-info btn-sm"
+          >
+            <i class="fas fa-arrow-right"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -61,12 +88,12 @@ import axios from "axios";
 export default {
   name: "IsencoesCnpd",
   data: () => ({
-    photos: [], //array com os itens
-    currentSort: "title", //ordenar por title
+    isencoes: [], //array com os itens
+    currentSort: "titulo", //ordenar por titulo
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
     searchSelection: "",
-    pageSize: 6, //paginacao
+    pageSize: 8, //paginacao
     currentPage: 1,
   }),
 
@@ -78,7 +105,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.photos.length)
+      if (this.currentPage * this.pageSize < this.isencoes.length)
         this.currentPage++;
     },
     prevPage() {
@@ -86,16 +113,16 @@ export default {
     },
 
     countNumbers() {
-      return this.photos.length;
+      return this.isencoes.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.photos
+      return this.isencoes
         .filter((data) => {
-          let title = data.title.toLowerCase().match(this.search.toLowerCase());
-          return title;
+          let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
+          return titulo;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
@@ -107,9 +134,9 @@ export default {
 
   created() {
     axios
-      .get("https://jsonplaceholder.typicode.com/photos")
+      .get("http://127.0.0.1:8000/api/isencoes")
       .then((response) => {
-        this.photos = response.data;
+        this.isencoes = response.data;
       });
   },
 };
@@ -197,7 +224,7 @@ img {
 
 #idpage {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 #button {
   color: #061536;
@@ -210,5 +237,20 @@ img {
   box-shadow: 1px 1px 3px 3px black;
   color: #fff;
   background-color: #061536;
+}
+#idsearch {
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  box-shadow: 1px 1px #061536;
+}
+.pleft {
+  text-align: left;
+  font-weight: bold; 
+  font-family: "Times New Roman", Times, serif;
+}
+.form-group {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -14,22 +14,22 @@
           </router-link> 
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b v-if="lista">Lei de {{ lista.title }}</b>
+            <b v-if="leis">Lei de {{ leis.titulo }}</b>
           </router-link>
            
         </h5>
       </div>
-      <div v-if="lista">
+      <div v-if="leis">
         <div class="section-title">
-          <h2>{{ lista.title }}</h2>
+          <h2>{{ leis.titulo }}</h2>
         </div>
         <div class="row content">
           <div class="col-lg-12" id="descricao">
-            <p class="date">Publicado em: {{ lista.id }} de Junho de 2022</p>
+            <p class="date">Publicado em: {{ leis.created_at }}</p>
             
             <p></p>
             <div class="post-img">
-              <embed class="borda" src="/img/auto.pdf" width="100%" height="800px" />
+              <embed class="borda" :src="'http://localhost:8000/storage/legislacaoPdf/'+ leis.anexo " width="100%" height="800px" /> 
             </div>
           </div>
         </div>
@@ -46,14 +46,14 @@ export default {
 
   data: function () {
     return {
-      lista: null,
+      leis: null,
     };
   },
 
   mounted() {
-    fetch("https://jsonplaceholder.typicode.com/photos/" + this.$route.params.id)
+    fetch("http://127.0.0.1:8000/api/legislacao/" + this.$route.params.id)
       .then((response) => response.json())
-      .then((data) => (this.lista = data))
+      .then((data) => (this.leis = data))
       .catch((err) => console.log(err.message));
   },
 };

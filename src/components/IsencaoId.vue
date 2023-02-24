@@ -7,42 +7,37 @@
           Onde estou?
           <router-link style="text-decoration: none" to="/">
             <b>Página Inicial</b>
-          </router-link>
+          </router-link> 
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
             <b>Formulários</b>
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="/isencoes">
-            <b>Isenções de Notificação</b>
+            <b>Isençoes Publicadas</b>
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b v-if="lista">Isenção Nº.{{ lista.id }} - {{ lista.title }}</b>
+            <b v-if="lista">{{ lista.titulo }}</b>
           </router-link>
         </h5>
       </div>
       <div v-if="lista">
         <div class="section-title">
-          <h2>{{ lista.title }}</h2>
+          <h2>{{ lista.titulo }} - Nº.{{ lista.num_doc }}</h2>
         </div>
         <div class="row content">
           <div class="col-lg-12" id="descricao">
-            <p class="date">Publicado em: {{ lista.id }} de Junho de 2022</p>
+            <p class="date">Publicado em: {{ lista.created_at }} </p>
 
             <p></p>
             <div class="post-img">
-              <embed
-                class="borda"
-                src="/img/auto.pdf"
-                width="100%"
-                height="800px"
-              />
+              <embed class="borda" :src="'http://localhost:8000/storage/publicacoesPdf/'+ lista.anexo " width="100%" height="800px" /> 
+            </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> 
   </section>
   <!-- End isencao Section -->
 </template>
@@ -60,12 +55,13 @@ export default {
 
   mounted() {
     fetch(
-      "https://jsonplaceholder.typicode.com/photos/" + this.$route.params.id
+      "http://127.0.0.1:8000/api/isencoes/" + this.$route.params.id
     )
       .then((response) => response.json())
       .then((data) => (this.lista = data))
       .catch((err) => console.log(err.message));
   },
+  
 };
 </script>
 

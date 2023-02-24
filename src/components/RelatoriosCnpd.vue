@@ -27,17 +27,17 @@
             type="text"
             class="form-control"
             v-model="search"
-            placeholder="Procurar por título ou por Ano ..."
+            placeholder="Procurar por título ou por ano ..."
           />
         </div>
         <br>
                 <div class="table-responsive">
-                <table class="table table-striped table-bordered" style="width:100%">
+                  <table class="table table-striped table-bordered" style="width:100%">
                     <thead width="400px"  class="trcabecalho">
                         <tr>
                             <th scope="col">#</th>  
-                            <th scope="col" @click="sort('name')">Título<i class="fas fa-sort-alpha-down float-right"></i></th>
-                            <th scope="col" @click="sort('phone')">Ano<i class="fas fa-sort-alpha-down float-right"></i></th>
+                            <th scope="col" @click="sort('titulo')">Título<i class="fas fa-sort-alpha-down float-right"></i></th>
+                            <th scope="col" @click="sort('num_doc')">Ano<i class="fas fa-sort-alpha-down float-right"></i></th>
                           
                            </tr>
                     </thead>
@@ -45,14 +45,15 @@
                         <tr v-for="(lista, index) in (sortedActivity, filteredList)" :key="lista.id">
                             <td>{{index + 1}}</td> 
                             <td> 
-                            <router-link :to="{name: 'autoview',params: { id: lista.id}}">  
-                              {{lista.name}} 
+                            <router-link :to="{name: 'relatorioview',params: { id: lista.id}}">  
+                              {{lista.titulo}} 
                             </router-link>
                             </td> 
-                            <td>{{lista.phone}}</td>
+                            <td>{{lista.num_doc}}</td>
                         </tr>
                     </tbody>
                 </table>
+                
                  
                 </div>
                 <div id="idpage">
@@ -73,10 +74,10 @@
 import axios from 'axios';
 
 export default { 
-    name:'AutorizacoesCnpd',
+    name:'RelatoriosCnpd',
     data: () => ({
     listas: [],//meu array com os itens que vem do API
-    currentSort:'name',
+    currentSort:'titulo',
     currentSortDir:'asc',
     search: '',
     searchSelection: '',
@@ -118,12 +119,10 @@ export default {
       });
     },
     filteredList () {
-      return this.listas.filter((data) => {
-        //let email = data.email.toLowerCase().match(this.search.toLowerCase());
-        let name = data.name.toLowerCase().match(this.search.toLowerCase());
-        //let id = data.address.zipcode.toLowerCase().match(this.search.toLowerCase());
-        let phone = data.phone.toLowerCase().match(this.search.toLowerCase());
-        return name || phone/* || city || phone*/;
+      return this.listas.filter((data) => { 
+        let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase()); 
+        let num_doc = data.num_doc.toLowerCase().match(this.search.toLowerCase());
+        return titulo || num_doc;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSize;
         let end = this.currentPage*this.pageSize;
@@ -133,22 +132,19 @@ export default {
   },
 
   created () {
-    axios.get('https://jsonplaceholder.typicode.com/users')
+    axios.get('http://127.0.0.1:8000/api/relatorios')
       .then(response => {
         this.listas = response.data  
       },)
-  },
-  mounted() {  
-    document.title = "Autorizações | CNPD";  
   }, 
 
 }
 </script>
 
 <style>
-#idpage{ 
+#idpage {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 #button{
    

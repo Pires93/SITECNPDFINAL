@@ -23,7 +23,8 @@
  
             <div class="col-md-12">
                 <div class="form-group">
-               <p class="pleft">Autorizações disponíveis: {{countNumbers()}}</p> <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ou Ano publicação ...">
+               <p class="pleft">Autorizações disponíveis: {{countNumbers()}}</p> 
+               <input id="idsearch" type="text" class="form-control" v-model="search" placeholder="Procurar por entidades ou ano publicação ...">
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -141,9 +142,9 @@ export default {
 </script>
 
 <style>
-#idpage{ 
+#idpage {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 #button{
    

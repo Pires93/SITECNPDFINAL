@@ -14,7 +14,7 @@
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="/panfletos">
-            <b>Panfletos</b>
+            <b>Panfletos Publicados</b>
           </router-link>
         </h5>
       </div>
@@ -24,24 +24,31 @@
         </div>
       </div>
       <div class="row">
+        <div class="form-group">
+          <p class="pleft">Panfletos disponíveis: {{countNumbers()}}</p> 
+          <input id="idsearch" type="text" class="form-control" v-model="search" 
+          placeholder="Procurar por título ...">
+         </div>
+
+        <p><br></p>
         <div
           id="box"
-          v-for="(event, index) in filteredList"
+          v-for="(panf, index) in filteredList"
           :key="index"
           class="col-lg-4"
         >
           <div class="post-box">
             <router-link
-              :to="{ name: 'panfletview', params: { id: event.id } }"
+              :to="{ name: 'panfletview', params: { id: panf.id } }"
             >
               <div class="post-img">
                 <img
-                  src="/img/panfletos/RedesSociais.png"
+                :src="'http://localhost:8000/storage/publicacoesPdf/'+ panf.imagem "
                   class="img-fluid"
                   alt=""
                 />
               </div>
-              <h3 class="post-title">{{ event.title }}</h3>
+              <h3 class="post-title">{{ panf.titulo }}</h3>
             </router-link>
           </div>
         </div>
@@ -73,8 +80,8 @@ import axios from "axios";
 export default {
   name: "PanfletosCnpd",
   data: () => ({
-    photos: [], //array com os itens
-    currentSort: "title", //ordenar por title
+    panfletos: [], //array com os itens
+    currentSort: "titulo", //ordenar por title
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
     searchSelection: "",
@@ -90,7 +97,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.photos.length)
+      if (this.currentPage * this.pageSize < this.panfletos.length)
         this.currentPage++;
     },
     prevPage() {
@@ -98,16 +105,16 @@ export default {
     },
 
     countNumbers() {
-      return this.photos.length;
+      return this.panfletos.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.photos
+      return this.panfletos
         .filter((data) => {
-          let title = data.title.toLowerCase().match(this.search.toLowerCase());
-          return title;
+          let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
+          return titulo;
         })
         .filter((row, index) => {
           let start = (this.currentPage - 1) * this.pageSize;
@@ -118,8 +125,9 @@ export default {
   },
 
   created() {
-    axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
-      this.photos = response.data;
+    axios.get("http://127.0.0.1:8000/api/panfletos")
+    .then((response) => {
+      this.panfletos = response.data;
     });
   },
 };
@@ -244,5 +252,32 @@ a:hover {
 #vermais:hover {
   color: #fff;
   background-color: #061536;
+}
+#idsearch{
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  box-shadow: 1px 1px  #061536;
+}
+.form-group{
+  display: flex;
+  justify-content: space-between;
+}
+
+.pcente{
+    text-align: center;
+    font-weight: bold;
+    margin-left: 10%;
+    margin-right:  10%;
+}
+.pcenter{
+    text-align: center; 
+    margin-left: 20%;
+    margin-right:  20%;
+    font-weight: bold
+}
+.pleft{
+    text-align: left;  
+    font-weight: bold
 }
 </style>

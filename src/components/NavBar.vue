@@ -74,7 +74,18 @@
                 </li>
               </ul>
             </li>
-            <li><router-link to="/noticias"> Notícias </router-link></li>
+            
+            <li class="dropdown">
+              <router-link to="#"> Relações Públicas</router-link>  
+              <ul class="ulid">
+                <li>
+                  <router-link to="/noticias"> Notícias </router-link>
+                </li>
+                <li>
+                  <router-link to="/comunicados">  Comunicados </router-link>
+                </li>
+              </ul>
+            </li>
             <li><router-link to="/legislacao"> Legislação </router-link></li>
             <li class="dropdown">
               <router-link to="#"> Publicações</router-link>  
@@ -180,11 +191,16 @@
                 </li>
               </div>
             </li>
-            <li>
-              <router-link to="/noticias">
+             
+            <li @click="showrelacoespublicasitens()" v-show="relacoes">
+              <router-link to="#">
                 <IconAwe class="iconnavbarmob" icon="newspaper" />
-                <span id="menuiten">Notícias</span>
-              </router-link>
+                <span id="menuiten">Relações Públicas</span></router-link
+              >
+              <div v-show="showrelacoespublicas" id="showrelacoespublicas">
+                 <li><router-link to="/noticias"> Notícias </router-link></li>
+                  <li><router-link to="/comunicados"> Comunicados </router-link></li> 
+              </div>
             </li>
             <li>
               <router-link to="/legislacao">
@@ -204,6 +220,8 @@
                 <li><router-link to="/videos"> Videos </router-link></li>
               </div>
             </li>
+            
+            
             <li>
               <router-link to="/contato">
                 <IconAwe class="iconnavbarmob" icon="house" />
@@ -238,6 +256,8 @@ export default {
       publicacoes: null,
       showformulario: null,
       showpublicacoes: null,
+      relacoes:null,
+      showrelacoespublicas:null,
     };
   },
   created() {
@@ -263,7 +283,9 @@ export default {
     showpublicacoesitens() {
       this.showpublicacoes = !this.showpublicacoes;
     },
-
+    showrelacoespublicasitens() {
+      this.showrelacoespublicas = !this.showrelacoespublicas;
+    },
     checkScreen() {
       this.windowWidth = window.innerWidth;
       if (this.windowWidth <= 750) {
@@ -273,6 +295,7 @@ export default {
         this.canalcidadao = true;
         this.formulario = true;
         this.publicacoes = true;
+        this.relacoes = true;
         return;
       }
       this.mobile = false;
@@ -333,7 +356,7 @@ export default {
     border-radius: 2px;
     color: white;
   }
-  #showpublicacoes {
+  #showpublicacoes,#showrelacoespublicas {
     padding-left: 10px;
     background-color: #0e214b;
     border-radius: 2px;

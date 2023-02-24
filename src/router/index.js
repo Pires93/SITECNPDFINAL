@@ -74,60 +74,6 @@ const routes = [{
             import ('../views/AutorizacoesView.vue')
     },
     {
-        path: '/registos',
-        meta:{
-            title: "Registos - CNPD",
-            },
-        name: 'RegistosView',
-        component: () =>
-            import ('../views/RegistosView.vue')
-    },
-    {
-        path: '/pareceres',
-        meta:{
-            title: "Pareceres - CNPD",
-            },
-        name: 'PareceresView',
-        component: () =>
-            import ('../views/PareceresView.vue')
-    },
-    {
-        path: '/deliberacoes',
-        meta:{
-            title: "Deliberações - CNPD",
-            },
-        name: 'DeliberacoesView',
-        component: () =>
-            import ('../views/DeliberacoesView.vue')
-    },
-    {
-        path: '/diretivas',
-        meta:{
-            title: "Diretivas - CNPD",
-            },
-        name: 'DiretivasView',
-        component: () =>
-            import ('../views/DiretivasView.vue')
-    },
-    {
-        path: '/planos',
-        meta:{
-            title: "Planos - CNPD",
-            },
-        name: 'PlanosView',
-        component: () =>
-            import ('../views/PlanosView.vue')
-    },
-    {
-        path: '/relatorios',
-        meta:{
-            title: "Relatórios - CNPD",
-            },
-        name: 'RelatoriosView',
-        component: () =>
-            import ('../views/RelatoriosView.vue')
-    },
-    {
         path: "/autoview/:id",
         meta:{
             title: "Autorização ID - CNPD",
@@ -136,6 +82,16 @@ const routes = [{
         component: () =>
             import ('../views/AutoView.vue')
     },
+    {
+        path: '/registos',
+        meta:{
+            title: "Registos - CNPD",
+            },
+        name: 'RegistosView',
+        component: () =>
+            import ('../views/RegistosView.vue')
+    },
+
     {
         path: "/regisview/:id",
         meta:{
@@ -146,6 +102,16 @@ const routes = [{
             import ('../views/RegisView.vue')
     },
     {
+        path: '/pareceres',
+        meta:{
+            title: "Pareceres - CNPD",
+            },
+        name: 'PareceresView',
+        component: () =>
+            import ('../views/PareceresView.vue')
+    },
+
+    {
         path: "/parecerview/:id",
         meta:{
             title: "Parecer ID - CNPD",
@@ -155,23 +121,53 @@ const routes = [{
             import ('../views/ParecerView.vue')
     },
     {
+        path: '/deliberacoes',
+        meta:{
+            title: "Deliberações - CNPD",
+            },
+        name: 'DeliberacoesView',
+        component: () =>
+            import ('../views/DeliberacoesView.vue')
+    },
+
+    {
         path: "/deliberaview/:id",
         meta:{
             title: "Deliberação ID - CNPD",
             },
-        name: 'deliberaview',
+        name: 'deliberaid',
         component: () =>
             import ('../views/DeliberaView.vue')
     },
+    {
+        path: '/diretivas',
+        meta:{
+            title: "Diretivas - CNPD",
+            },
+        name: 'DiretivasView',
+        component: () =>
+            import ('../views/DiretivasView.vue')
+    },
+
     {
         path: "/diretivaview/:id",
         meta:{
             title: "Diretiva ID - CNPD",
             },
-        name: 'diretivaview',
+        name: 'diretivaid',
         component: () =>
             import ('../views/Diretivaview.vue')
     },
+    {
+        path: '/planos',
+        meta:{
+            title: "Planos - CNPD",
+            },
+        name: 'PlanosView',
+        component: () =>
+            import ('../views/PlanosView.vue')
+    }, 
+    
     {
         path: "/planoview/:id",
         meta:{
@@ -181,25 +177,44 @@ const routes = [{
         component: () =>
             import ('../views/PlanoView.vue')
     },
+    {
+        path: '/relatorios',
+        meta:{
+            title: "Relatórios - CNPD",
+            },
+        name: 'RelatoriosView',
+        component: () =>
+            import ('../views/RelatoriosView.vue')
+    }, 
 
     {
-        path: "/relatorioView/:id",
+        path: "/relatorioview/:id",
         meta:{
             title: "Relatório ID - CNPD",
             },
-        name: 'relatorioView',
+        name: 'relatorioview',
         component: () =>
             import ('../views/RelatorioView.vue')
+    }, 
+    {
+        path: '/comunicados',
+        meta:{
+            title: "Comunicados - CNPD",
+            },
+        name: 'ComunicadosView',
+        component: () =>
+            import ('../views/ComunicadosView.vue')
     },
     {
-        path: '/eventview/:id',
+        path: "/comunicadoview/:id",
         meta:{
-            title: "Eventos ID - CNPD",
+            title: "Comunicado ID - CNPD",
             },
-        name: 'eventview',
+        name: 'comunicadoid',
         component: () =>
-            import ('../views/EventView.vue')
+            import ('../views/Comunicadoview.vue')
     },
+    
     {
         path: '/formularios',
         meta:{
@@ -274,6 +289,16 @@ const routes = [{
         name: 'NoticiasView',
         component: () =>
             import ('../views/NoticiasView.vue')
+    },
+
+    {
+        path: '/eventview/:id',
+        meta:{
+            title: "Eventos ID - CNPD",
+            },
+        name: 'eventview',
+        component: () =>
+            import ('../views/EventView.vue')
     },
     {
         path: '/formscctv',
@@ -369,11 +394,11 @@ const routes = [{
     },
 
     {
-        path: '/isencaoview/:id',
+        path: '/isencaoid/:id',
         meta:{
             title: "Isenção CNPD",
             },
-        name: 'isencaoview',
+        name: 'isencaoid',
         component: () =>
             import ('../views/IsencaoView.vue')
     }, 

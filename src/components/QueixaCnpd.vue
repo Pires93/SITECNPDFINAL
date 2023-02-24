@@ -50,6 +50,7 @@
                   type="email"
                   class="form-control"
                   name="email"
+                  v-model="email"
                   id="email"
                   placeholder="Entre seu email Ex: cnpd@cnpd.cv"
                   />
@@ -148,17 +149,19 @@
               <div class="col-md-12" v-if="checkAnexos"> 
                 
                 <Field
-                  v-model="anexos"
-                  name="anexos"
+                  v-model="anexo"
+                  name="anexo"
                   class="form-control"
                   type="file"
                   ref="file"
                   :rules="validateText" 
-                  accept="application/pdf,image/png, image/gif, image/jpeg"
+                  accept="image/png, image/gif, image/jpeg, application/pdf"
                   
                 />
+
+                <!--accept="image/png, image/gif, image/jpeg"-->
                 
-                <ErrorMessage class="errorMessage" name="anexos" />
+                <ErrorMessage class="errorMessage" name="anexo" />
                 <br>
                 <span style="color: #BC9913">Se tiver mais do que um anexo por favor entre em contato por email.</span>
               </div>

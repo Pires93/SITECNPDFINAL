@@ -18,23 +18,19 @@
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b v-if="lista">Diretiva Nº.{{ lista.id }} - {{ lista.name }}</b>
+            <b v-if="lista">Diretiva Nº.{{ lista.num_doc }} - {{ lista.titulo }}</b>
           </router-link>
            
         </h5>
       </div>
       <div v-if="lista">
         <div class="section-title">
-          <h2>Diretiva Nº.{{ lista.id }} - {{ lista.name }}</h2>
+          <h2>Diretiva Nº.{{ lista.num_doc }} - {{ lista.titulo }}</h2>
         </div>
         <p></p>
         <div class="post-img">
-          <embed
-            borda="borda"
-            src="/img/auto.pdf"
-            width="100%"
-            height="800px"
-          />
+          <embed class="borda" :src="'http://localhost:8000/storage/publicacoesPdf/'+ lista.anexo " width="100%" height="800px" /> 
+         
         </div>
       </div>
     </div>
@@ -54,7 +50,7 @@ export default {
   },
 
   mounted() {
-    fetch("https://jsonplaceholder.typicode.com/users/" + this.$route.params.id)
+    fetch("http://127.0.0.1:8000/api/diretiva/" + this.$route.params.id)
       .then((response) => response.json())
       .then((data) => (this.lista = data))
       .catch((err) => console.log(err.message));

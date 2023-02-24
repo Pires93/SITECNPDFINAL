@@ -18,23 +18,23 @@
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b v-if="lista">Panfleto Nº.{{ lista.id }} - {{ lista.title }}</b>
+            <b v-if="listaDados">Panfleto Nº.{{ listaDados.num_doc }} - {{ listaDados.titulo }}</b>
           </router-link>
         </h5>
       </div>
-      <div v-if="lista">
+      <div v-if="listaDados">
         <div class="section-title">
-          <h2>{{ lista.title }}</h2> 
+          <h2>{{ listaDados.titulo }}</h2> 
         </div>
         <div class="row content">
-          <a class="downloadpdf" href="/img/downloadpdf.png" download>
+          <a class="downloadpdf" target="_blank" :href="'http://localhost:8000/storage/publicacoesPdf/'+ listaDados.anexo " download>
             <img src="/img/downloadpdf.png"  style="width: 140px" />
           </a>
           <!--FLIPBOOK-->
 
           <iframe
             id="frame"
-            src="https://flipbookpdf.net/web/site/c2b01bb6ff0d82b2452421e3898f30d8d17a6fae202211.pdf.html"
+            :src="listaDados.link"
             width="100%"
             height="600"
             style="border: none"
@@ -55,14 +55,14 @@ export default {
 
   data: function () {
     return {
-      lista: null,
+      listaDados: null,
     };
   },
 
   mounted() {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + this.$route.params.id)
+    fetch("http://127.0.0.1:8000/api/panfleto/" + this.$route.params.id)
       .then((response) => response.json())
-      .then((data) => (this.lista = data))
+      .then((data) => (this.listaDados = data))
       .catch((err) => console.log(err.message));
   },
 };
