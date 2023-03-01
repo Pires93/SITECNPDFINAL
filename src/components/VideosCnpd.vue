@@ -254,12 +254,6 @@ video {
   object-fit: cover;
 }
 
-#idsearch {
-  width: 40%;
-  height: 30px;
-  text-align: center;
-  box-shadow: 1px 1px #061536;
-}
 .pleft {
   text-align: left;
   font-weight: bold; 
