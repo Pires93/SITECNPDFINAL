@@ -17,7 +17,7 @@
           </router-link>
         </h5>
       </div>
-      <Form @submit="onSubmit">
+      <Form @submit="onSubmit"  method="POST" enctype="multipart/form-data">
         <div class="section-title">
           <h2>
             Notificação de tratamento de dados biométricos de trabalhadores
@@ -37,10 +37,11 @@
               </div>
               <div class="col-md-10">
                 <Field
+                 
                   name="tipoNotificacao"
                   as="select"
                   class="form-select"
-                  v-model="tipoNotificacao"
+                  v-model="tipo_notificacao"
                   :rules="validateRadio"
                 >
                   <option value="">- selecione o tipo de Notificação -</option>
@@ -57,7 +58,7 @@
             </div>
           </div>
         </div>
-
+          
         <div class="col-md-12" id="divg">
           <div class="container">
             <div class="row">
@@ -73,7 +74,7 @@
                   id="tipoPessoa"
                   name="tipoPessoa"
                   value="Pessoa Singular"
-                  v-model="tipoPessoa"
+                  v-model="tipo_pessoa"
                 />
                 <label for="Pessoa Singular"> Pessoa Singular</label>
               </div>
@@ -84,7 +85,7 @@
                   id="tipoPessoa"
                   name="tipoPessoa"
                   value="Pessoa Coletiva"
-                  v-model="tipoPessoa"
+                  v-model="tipo_pessoa"
                 />
                 <label for="Pessoa Coletiva"> Pessoa Coletiva</label>
               </div>
@@ -95,6 +96,7 @@
 
               <div class="col-md-12">
                 <Field
+                  v-model="nome_denominacao"
                   name="nomedenominacao"
                   type="text"
                   class="form-control"
@@ -112,35 +114,63 @@
                   id="nomecomercial"
                   placeholder=" Nome/Comercial"
                   name="nomecomercial"
+                  v-model="nome_comercial"
                 />
               </div>
               <div class="col">
-                <Field
+                <!--
+              <Field
                   as="select"
                   name="atividadeDesenvolvida"
+                  v-model="atividade_desenvolvida"
                   class="form-select"
                   aria-label="Default select example"
                   :rules="validateRadio"
                 >
                   <option value="">- Escolha a actividade desenvolvida-</option>
-                  <option v-for="atividade in atividades" :key="atividade">
-                    {{ atividade }}
+                  <option v-for="atividade in atividades"  :key="atividade.value"
+                    :value="atividade.value">
+                    {{ atividade.value }}
                   </option>
                 </Field>
                 <ErrorMessage
                   class="errorMessage"
                   name="atividadeDesenvolvida"
                 />
+                -->
+               
+                <Field
+                  name="atividadeDesenvolvida"
+                  as="select"
+                  class="form-select"
+                  v-model="atividadeDesenvolvida"
+                  :rules="validateRadio"
+                >
+                  <option value="">selecione a atividade desenvolvida</option>
+                  <option
+                    v-for="atividadeDesenvolvida in atividadesDesenvolvidas"
+                    :key="atividadeDesenvolvida.value"
+                    :value="atividadeDesenvolvida.value"
+                  >
+                    {{ atividadeDesenvolvida.value }}
+                  </option>
+                </Field>
+                <ErrorMessage
+                  class="errorMessage"
+                  name="atividadeDesenvolvida"
+                />
+             
               </div>
               <div class="col">
                 <Field
                   name="nif"
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="nif"
                   alt="NIF"
                   placeholder="Número de NIF"
                   :rules="validateNumber"
+                  v-model="numero_nif"
                 />
                 <ErrorMessage class="errorMessage" name="nif" />
               </div>
@@ -154,6 +184,7 @@
                       id="rua"
                       alt="RUA"
                       placeholder="Entre o nome da Rua"
+                      v-model="rua_responsavel_tratamento"
                     />
                   </div>
                   <div class="col">
@@ -165,6 +196,7 @@
                       alt="Local"
                       placeholder="Cidade/Vila/Lugar/Zona"
                       :rules="validateText"
+                      v-model="local_responsavel_tratamento"
                     />
                     <ErrorMessage class="errorMessage" name="local" />
                   </div>
@@ -182,6 +214,7 @@
                       for="ilhaResp"
                       placeholder="- Seleciona uma ilha-"
                       :rules="validateRadio"
+                     
                     >
                       <option value="">- selecione uma ilha -</option>
                       <option
@@ -228,6 +261,7 @@
                       id="caixapostal"
                       alt="Caixa Postal"
                       placeholder="Entre o número da Caixa Postal"
+                      v-model="caixapostal_responsavel_tratamento"
                     />
                   </div>
                   <div class="col">
@@ -239,6 +273,7 @@
                       alt="Telefone/Telemovel"
                       placeholder="Contato: Telefone/Telemovel"
                       :rules="validateNumber"
+                      v-model="telefone_responsavel_tratamento"
                     />
                     <ErrorMessage class="errorMessage" name="telefone" />
                   </div>
@@ -254,6 +289,7 @@
                       id="email"
                       placeholder="Entre o seu email: example@cnpd.cv"
                       :rules="validateEmail"
+                      v-model="email_responsavel_tratamento"
                     />
                     <ErrorMessage class="errorMessage" name="email" />
                   </div>
@@ -295,6 +331,7 @@
                   alt="Nome Denominação: Refere-se à designação oficial de uma instituição pública ou privada"
                   placeholder=" Representante"
                   :rules="validateText"
+                  v-model="nome_representante_tratamento"
                 />
                 <ErrorMessage
                   class="errorMessage"
@@ -308,6 +345,7 @@
                   class="form-control"
                   id="rua"
                   placeholder=" Rua"
+                  v-model="rua_representante_tratamento"
                 />
               </div>
               <div class="col">
@@ -317,6 +355,7 @@
                   class="form-control"
                   id="caixapostalRepre"
                   placeholder=" Caixa Postal"
+                  v-model="caixapostal_representante_tratamento"
                 />
               </div>
               <div class="col-md-12">
@@ -327,6 +366,7 @@
                   id="cidadeRepre"
                   placeholder=" Cidade/Vila/Lugar/Zona"
                   :rules="validateText"
+                  v-model="local_representante_tratamento"
                 />
                 <ErrorMessage class="errorMessage" name="cidadeRepre" />
               </div>
@@ -386,6 +426,7 @@
                   id="nomecomercial"
                   placeholder=" Nome da pessoa do contato"
                   :rules="validateText"
+                  v-model="nome_pessoa_contato"
                 />
                 <ErrorMessage class="errorMessage" name="nomePessoaContato" />
               </div>
@@ -400,6 +441,7 @@
                       alt="nomePessoaContato"
                       placeholder="Entre o seu email: example@cnpd.cv"
                       :rules="validateEmail"
+                      v-model="email_representante_tratamento"
                     />
                     <ErrorMessage
                       class="errorMessage"
@@ -415,6 +457,7 @@
                       alt="Telefone/Telemovel"
                       placeholder="Contato: Telefone/Telemovel"
                       :rules="validateNumber"
+                      v-model="telefone_representante_tratamento"
                     />
                     <ErrorMessage
                       class="errorMessage"
@@ -457,6 +500,7 @@
                     id="entidadeProcessInfo"
                     placeholder=" Qual a Entidade Encarregue pelo processamento dos dados"
                     :rules="validateText"
+                    v-model="entidade_processamento_informacao"
                   />
                   <ErrorMessage
                     class="errorMessage"
@@ -470,6 +514,7 @@
                     name="ruaProcessInfo"
                     id="ruaProcessInfo"
                     placeholder=" Rua"
+                    v-model="rua_entidade_processamento"
                   />
                 </div>
                 <div class="col-md-12">
@@ -479,6 +524,7 @@
                     name="caixaPostalProcessInfo"
                     id="caixaPostalProcessInfo"
                     placeholder=" Caixa Postal"
+                    v-model="caixapostal_entidade_processamento"
                   />
                 </div>
                 <div class="col-md-12">
@@ -489,6 +535,7 @@
                     id="lugarProcessInfo"
                     placeholder="Cidade/Vila/Lugar/Zona da Entidade"
                     :rules="validateText"
+                    v-model="local_entidade_processamento"
                   />
                   <ErrorMessage class="errorMessage" name="lugarProcessInfo" />
                 </div>
@@ -505,6 +552,7 @@
                         for="ilhaServExt"
                         placeholder="- Seleciona uma ilha-"
                         :rules="validateRadio"
+
                       >
                         <option value="">- selecione uma ilha -</option>
                         <option
@@ -572,6 +620,7 @@
                   placeholder="-Indique a(s) finalidade(s) do tratamento-"
                   v-model="finalidadeTratamento"
                 />
+                
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
               </div>
 
@@ -583,6 +632,7 @@
                   id="numeroFuncionarios"
                   alt="numero de funcionario"
                   placeholder="indique o número de funcionários que aderiram ao sistema"
+                  v-model="numero_funcionarios"
                 />
               </div>
             </div>
@@ -603,10 +653,16 @@
                 <label class="form-check-label"> Dados registrados </label>
 
                 <treeselect
+                  :rules="validateText"
                   :multiple="true"
                   :options="dadosRegistrados"
                   placeholder="-Dados Pessoais contidos em cada registro -"
                   v-model="dadosRegistrado"
+                  name="xpto"
+                />
+                <ErrorMessage
+                  class="errorMessage"
+                  name="xpto"
                 />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
               </div>
@@ -618,6 +674,7 @@
                   :options="outrosDados"
                   placeholder="-Outros Dados Tratados -"
                   v-model="outrosDado"
+                  
                 />
                 <!--<pre class="language-json"><code>{{dadosRegistrado}}</code></pre>-->
               </div>
@@ -706,6 +763,7 @@
                     name="ruaDireitoAcesso"
                     id="ruaDireitoAcesso"
                     placeholder=" Rua"
+                    v-model="rua_direito_acesso"
                   />
                 </div>
                 <div class="col-md-12">
@@ -715,6 +773,7 @@
                     name="caixaPostalDireitoAcesso"
                     id="caixaPostalDireitoAcesso"
                     placeholder=" Caixa Postal"
+                    v-model="caixapostal_direito_acesso"
                   />
                 </div>
                 <div class="col-md-12">
@@ -725,6 +784,7 @@
                     id="localDireitoAcesso"
                     placeholder=" Local - Cidade/Vila/Lugar/Zona"
                     :rules="validateText"
+                    v-model="local_direito_acesso"
                   />
                   <ErrorMessage
                     class="errorMessage"
@@ -793,6 +853,7 @@
                             id="emailDireitoAcesso"
                             placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
                             :rules="validateEmail"
+                            v-model="email_direito_acesso"
                           />
                           <ErrorMessage
                             class="errorMessage"
@@ -807,6 +868,7 @@
                             id="telefoneDireitoAcesso"
                             placeholder="Contato: Telefone/Telemovel"
                             :rules="validateNumber"
+                            v-model="telefone_direito_acesso"
                           />
                           <ErrorMessage
                             class="errorMessage"
@@ -861,7 +923,7 @@
                   name="outraFormaDireitoAcesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso"
+                  v-model="outrasformas_direito_acesso"
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                 />
               </div>
@@ -891,8 +953,9 @@
                   class="form-control"
                   name="outraFormaDireitoAcessoFisica"
                   id="outraFormaDireitoAcesso"
-                  placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
+                  v-model="medidade_seguranca_fisica"
                   :rules="validateText"
+                  placeholder="Ocorre quando temos barreiras físicas que impeçam que pessoas não autorizadas tenham acesso a espaços onde os dados estão guardados"
                 />
                 <ErrorMessage
                   class="errorMessage"
@@ -913,8 +976,9 @@
                   class="form-control"
                   name="outraFormaDireitoAcessoLogica"
                   id="outraFormaDireitoAcesso"
-                  placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
+                  v-model="medidas_seguranca_logica"
                   :rules="validateText"
+                  placeholder="Consiste na implementação de chaves de acesso, encriptação do conteúdo e registos de operações efectuadas no sistema"
                 />
                 <ErrorMessage
                   class="errorMessage"
@@ -956,14 +1020,63 @@
                       >Se sim, juntar a cópia do parecer ou comprovativo do
                       pedido.</label
                     >
-                    <input class="form-control" type="file" id="formFile" />
+                    <input @change="getImg" name="parecer_representante_trabalhadore" type="file" accept="application/pdf" />
+                             
+
+
                   </div>
                 </div>
               </div>
+              
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  9. Catálogo do equipamento
+                </div>
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="row">
+                <div class="col">
+                  <div class="col">
+                    <label class="form-check-label">
+                      Existe o catalágo do equipamento?
+                    </label>
+                    <buttom
+                      @click="Changecatalago"
+                      type="button"
+                      class="btn btn-outline-primary"
+                      name="morada"
+                      id="moradasimbotton"
+                    >
+                      {{ checkCatalogo ? "Não" : "Sim" }}
+                    </buttom>
+                  </div>
+                  <div class="col-md-12"><br /></div>
+                  <div class="col-md-12" v-if="checkCatalogo">
+                    <label for="formFile" class="form-label"
+                      >Se sim, anexa aqui o catálago do equipamentp.</label
+                    >
+                    <input @change="getcatalago"  type="file" accept="application/pdf"/>
+                             
+
+
+                  </div>
+                </div>
+              </div>
+              
+              
             </div>
           </div>
         </div>
         <div class="col-md-12"><br /></div>
+        
+        
 
         <div class="col-12" id="divsave">
           <button
@@ -975,6 +1088,59 @@
             <IconAwe class="icon-color" icon="paper-plane" /> Submeter Dados
           </button>
         </div>
+
+
+        <!------------------MODAL SHOW ------------------------->
+        <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                    <button
+                        @click="closeSuccess"
+                        id="buttonsave"
+                        class="btn btn-primary" 
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>        
+                  <div class="modalFooter">
+                   <button
+                        @click="closeError"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
       </Form>
     </div>
   </section>
@@ -988,10 +1154,13 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 // import the component
 import Treeselect from "vue3-treeselect";
 // import the styles
+
 import "vue3-treeselect/dist/vue3-treeselect.css";
 
+import axios from "axios";
 export default {
   components: {
+  
     // Multiselect,
     Treeselect,
     Form,
@@ -1002,6 +1171,51 @@ export default {
 
   data() {
     return {
+      msg:null,
+      filePath: '',
+      file: '',
+      name:'',
+      tipo_notificacao:"",
+      tipo_pessoa:"",
+      nome_denominacao:"",
+      nome_comercial:"",
+      numero_nif:null,
+      rua_responsavel_tratamento:"",
+      local_responsavel_tratamento:"",
+      caixapostal_responsavel_tratamento:null,
+      telefone_responsavel_tratamento:null,
+      email_responsavel_tratamento:"",
+      nome_representante_tratamento:"",
+      rua_representante_tratamento:"",
+      caixapostal_representante_tratamento:null,
+      local_representante_tratamento:"",
+      nome_pessoa_contato:"",
+      email_representante_tratamento:"",
+      telefone_representante_tratamento:null,
+      entidade_processamento_informacao:"",
+      rua_entidade_processamento:"",
+      caixapostal_entidade_processamento:"",
+      local_entidade_processamento:"",
+      finalidade_tratamento:[],
+      numero_funcionarios: null,
+      dados_registrados:[],
+      rua_direito_acesso:"",
+      caixapostal_direito_acesso:null,
+      local_direito_acesso:"",
+      email_direito_acesso:"",
+      telefone_direito_acesso:null,
+      outrasformas_direito_acesso:"",
+      medidade_seguranca_fisica:"",
+      medidas_seguranca_logica:"",
+      parecer_representante_trabalhadore:"",
+      catalago_equipamento:"",
+      atividadeDesenvolvida:"",
+      
+     
+      
+      
+
+      checkCatalogo:false,
       checkMorada: false,
       checkServico: false,
       checkDireitoAcesso: false,
@@ -1087,33 +1301,57 @@ export default {
         ],
         Brava: [{ value: "Brava", label: "Brava" }],
       },
-      atividades: [
-        "Produção da Electricidade",
-        "Actividade de Televisão",
-        "Emprego (Selecção, fornecimento de recursos humanos)",
-        "Segurança e Ordem pública",
-        "Estabelecimento comercial de venda a público",
-        "Produção da Água",
-        "Telecomunicação",
-        "Segurança Privad",
-        "Ensino (Pré-escolar, Básico, Secundário, Superior)",
-        "Estabelecimento comercial de venda a público",
-        "Serviço de Internet (processamento de dados, domiciliação de informação",
-        "Administração Pública (Central, Local)",
-        "Saúde",
-        "Centro Comercial",
-        "Publicidade, Estudos de Mercado, Sondagens de Opinião",
-        "Negócios Estrangeiros",
-        "Previdência Social",
-        "Alojamento (Hotel, Residencial, Pensão, etc.)",
-        "Defesa",
-        "Actividade Financeira",
-        "Comércio Electrónico",
-        "Informática",
-        "Justiça",
-        "Seguros",
-        "Transporte (Aéreo, Marítimo, Terrestre)",
-      ],
+      atividadesDesenvolvidas: [
+            { "value": "Actividade de Televisão", "label": "Actividade de Televisão" },
+            {
+              "value": "Emprego (Selecção, fornecimento de recursos humanos)",
+              "label": "Emprego (Selecção, fornecimento de recursos humanos)"
+            },
+            { "value": "Segurança e Ordem pública", "label": "Segurança e Ordem pública" },
+            { "value": "Produção da Água", "label": "Produção da Água" },
+            { "value": "Telecomunicação", "label": "Telecomunicação" },
+            { "value": "Segurança Privada", "label": "Segurança Privada" },
+            {
+              "value": "Ensino (Pré-escolar, Básico, Secundário, Superior)",
+              "label": "Ensino (Pré-escolar, Básico, Secundário, Superior)"
+            },
+            {
+              "value": "Estabelecimento comercial de venda a público",
+              "label": "Estabelecimento comercial de venda a público"
+            },
+            {
+              "value":
+                "Serviço de Internet (processamento de dados, domiciliação de informação",
+              "label":
+                "Serviço de Internet (processamento de dados, domiciliação de informação"
+            },
+            {
+              "value": "Administração Pública (Central, Local)",
+              "label": "Administração Pública (Central, Local)"
+            },
+            { "value": "Saúde", "label": "Saúde" },
+            { "value": "Centro Comercial", "label": "Centro Comercial" },
+            {
+              "value": "Publicidade, Estudos de Mercado, Sondagens de Opinião",
+              "label": "Publicidade, Estudos de Mercado, Sondagens de Opinião"
+            },
+            { "value": "Negócios Estrangeiros", "label": "Negócios Estrangeiros" },
+            { "value": "Previdência Social", "label": "Previdência Social" },
+            {
+              "value": "Alojamento (Hotel, Residencial, Pensão, etc.)",
+              "label": "Alojamento (Hotel, Residencial, Pensão, etc.)"
+            },
+            { "value": "Defesa", "label": "Defesa" },
+            { "value": "Actividade Financeira", "label": "Actividade Financeira" },
+            { "value": "Comércio Electrónico", "label": "Comércio Electrónico" },
+            { "value": "Informática", "label": "Informática" },
+            { "value": "Justiça", "label": "Justiça" },
+            { "value": "Seguros", "label": "Seguros" },
+            {
+              "value": "Transporte (Aéreo, Marítimo, Terrestre)",
+              "label": "Transporte (Aéreo, Marítimo, Terrestre)"
+            }
+          ],
       dadosRegistrado: null,
       dadosRegistrados: [
         { id: "Impressão digital", label: "Impressão digital" },
@@ -1170,9 +1408,180 @@ export default {
           label: "Substituição da Notificação não autorizada",
         },
       ],
+      tiposVideovigilancias: [
+            { "value": "Centros Comerciais", "label": "Centros Comerciais" },
+            {
+              "value": "Edifícios de habitação Condomínios",
+              "label": "Edifícios de habitação Condomínios"
+            },
+            {
+              "value": "Estabelecimentos comerciais de venda ao público",
+              "label": "Estabelecimentos comerciais de venda ao público"
+            },
+            {
+              "value": "Estabelecimentos de Ensino e Similares",
+              "label": "Estabelecimentos de Ensino e Similares"
+            },
+            { "value": "Estabelecimentos de Saude", "label": "Estabelecimentos de Saude" },
+            {
+              "value": "Estabelecimentos destinados a dança",
+              "label": "Estabelecimentos destinados a dança"
+            },
+            {
+              "value": "Farmácias, ParaFarmácias e Posto de Venda de Medicamentos e Similares",
+              "label": "Farmácias, ParaFarmácias e Posto de Venda de Medicamentos e Similares"
+            },
+            { "value": "Gasolineiras", "label": "Gasolineiras" },
+            { "value": "Hotelaria", "label": "Hotelaria" },
+            {
+              "value": "Instalações empresariais industriais e de serviços",
+              "label": "Instalações empresariais industriais e de serviços"
+            },
+            { "value": "Instituiçoes Financeiras", "label": "Instituiçoes Financeiras" },
+            {
+              "value": "Lares e outros Estabelecimentos de Apoio Social",
+              "label": "Lares e outros Estabelecimentos de Apoio Social"
+            },
+            { "value": "Locais de Culto", "label": "Locais de Culto" },
+            {
+              "value": "Museus, Bibliotecas e Salas de Espectáculo",
+              "label": "Museus, Bibliotecas e Salas de Espectáculo"
+            },
+            {
+              "value": "Ourivesarias,Joalharias e Relojoarias",
+              "label": "Ourivesarias,Joalharias e Relojoarias"
+            },
+            { "value": "Parques de Estacionamento", "label": "Parques de Estacionamento" },
+            {
+              "value": "Recintos Espectáculos desportivos",
+              "label": "Recintos Espectáculos desportivos"
+            },
+            {
+              "value": "Residências Moradias Unifamiliares",
+              "label": "Residências Moradias Unifamiliares"
+            },
+            { "value": "Restauração", "label": "Restauração" },
+            { "value": "Sucateiras", "label": "Sucateiras" },
+            {
+              "value": "Formulário geral de videovigilância",
+              "label": "Formulário geral de videovigilância"
+            }
+          ],
     };
   },
   methods: {
+
+    getImg(event){
+
+     this.parecer_representante_trabalhadore = event.target.files[0];
+
+     console.log(this.parecer_representante_trabalhadore);
+    },
+    getcatalago(event){
+      this.catalago_equipamento = event.target.files[0];
+
+      console.log(this.catalago_equipamento);
+    },
+
+   
+
+    async onSubmit() {
+      const data = {
+        tipo_notificacao:   this.tipo_notificacao,
+        tipo_pessoa:  this.tipo_pessoa,
+        nome_denominacao:   this.nome_denominacao,
+        atividade_desenvolvida: this.atividadeDesenvolvida,
+        nome_comercial:   this.nome_comercial,
+        numero_nif:   this.numero_nif,
+        rua_responsavel_tratamento:   this.rua_responsavel_tratamento,
+        local_responsavel_tratamento:   this.local_responsavel_tratamento,
+        ilha_responsavel_tratamento:    this.ilhaResp,
+        concelho_responsavel_tratamento:  this.concelhoResp,
+        caixapostal_responsavel_tratamento:this.caixapostal_responsavel_tratamento,
+        telefone_responsavel_tratamento:this.telefone_responsavel_tratamento,
+        email_responsavel_tratamento:this.email_responsavel_tratamento,
+        pais_responsavel_tratamento:this.paisResp,
+        nome_representante_tratamento:this.nome_representante_tratamento,
+        rua_representante_tratamento:this.rua_representante_tratamento,
+        caixapostal_representante_tratamento:this.caixapostal_representante_tratamento,
+        local_representante_tratamento:this.local_representante_tratamento,
+        ilha_representante_tratamento:this.ilhaMorRep,
+        concelho_representante_tratamento:this.concelhoMorRep,
+        nome_pessoa_contato:this.nome_pessoa_contato,
+        email_representante_tratamento:this.email_representante_tratamento,
+        telefone_representante_tratamento:this.telefone_representante_tratamento,
+        entidade_processamento_informacao:this.entidade_processamento_informacao,
+        rua_entidade_processamento:this.rua_entidade_processamento,
+        caixapostal_entidade_processamento:this.caixapostal_entidade_processamento,
+        local_entidade_processamento:this.local_entidade_processamento,
+        ilha_entidade_processamento:this.ilhaServExt,
+        concelho_entidade_processamento:this.concelhoServExt,
+        finalidade_tratamento:this.finalidadeTratamento,
+        numero_funcionarios:this.numero_funcionarios,
+        dados_registrados:this.dadosRegistrado,
+        outros_dados:this.outrosDado,
+        forma_registro:this.formasRegistro,
+        forma_tratamento_informacao:this.tratamentoInfo,
+        rua_direito_acesso:this.rua_direito_acesso,
+        caixapostal_direito_acesso:this.caixapostal_direito_acesso,
+        local_direito_acesso:this.local_direito_acesso,
+        ilha_direito_acesso:this.ilhaDirAcess,
+        concelho_direito_acesso:this.concelhoDirAcess,
+        email_direito_acesso:this.email_direito_acesso,
+        telefone_direito_acesso:this.telefone_direito_acesso,
+        forma_direito_acesso:this.formaDireitoAcesso,
+        outrasformas_direito_acesso:this.outrasformas_direito_acesso,
+        medidade_seguranca_fisica:this.medidade_seguranca_fisica,
+        medidas_seguranca_logica:this.medidas_seguranca_logica,
+        parecer_representante_trabalhadore: this.parecer_representante_trabalhadore,
+        catalago_equipamento: this.catalago_equipamento,
+        
+        
+        
+      };
+      //SUBMIT FORM WITH AXIOS
+      
+      try { 
+     await axios.post("http://127.0.0.1:8000/api/biometria/store", data, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      }); 
+      this.showModal = !this.showModal; 
+     /* setTimeout(function(){
+        window.location.reload();
+      }, 5000)*/
+
+    }catch(error){
+          this.ErrorModal = !this.ErrorModal; 
+        /* setTimeout(function(){
+          window.location.reload();
+        }, 5000)*/
+    
+       
+       
+      }
+        
+      
+      //limpar Message
+
+    
+
+      
+     
+      
+    
+        
+         
+    },
+    closeError(event) {
+      this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
+      window.location.reload();
+    },
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
+    },
     validateText(value) {
       // if the field is empty
       if (!value) {
@@ -1188,16 +1597,8 @@ export default {
       }
       return true;
     },
-    async dadosBackend() {
-      const req = await fetch("http://localhost:3000/dadosBackend");
-      const data = await req.json();
-      this.atividadesDesenvolvidas = data.atividadesDesenvolvidas;
-      this.tipoNotificacoes = data.tipoNotificacoes;
-    },
-    onSubmit(values) {
-      console.log(values, null, 2);
-      console.log("Clckado");
-    },
+    
+   
 
     validateEmail(value) {
       // if the field is empty
@@ -1239,6 +1640,9 @@ export default {
     changeRepTrab() {
       this.checkRepTrab = !this.checkRepTrab;
     },
+    Changecatalago(){
+      this.checkCatalogo = !this.checkCatalogo;
+    }
   },
 };
 </script>

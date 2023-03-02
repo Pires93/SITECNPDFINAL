@@ -17,12 +17,12 @@
           </router-link>
         </h5>
       </div>
-      <Form @submit="2" >
+      <Form @submit="submitForm" >
       <div class="section-title">
         <h2>NOTIFICAÇÃO DE TRATAMENTO DE DADOS</h2>
       </div>
       <!-- FORMS GERAL-->
-
+      
       <div class="col-md-12" id="divg">
         <div class="container">
           <div class="row">
@@ -92,6 +92,7 @@
             <div class="col-md-12">
               <Field
                 name="nomedenominacao"
+                v-model="nome_denominacao"
                 type="text"
                 class="form-control"
                 id="nomedenominacao"
@@ -105,6 +106,7 @@
               <input
                 name="nomecomercial"
                 type="text"
+                v-model="nome_comercial"
                 class="form-control"
                 id="nomecomercial"
                 alt="Nome comercial: Pode ser a sigla ou designação em relação ao qual a instituição é mais conhecida."
@@ -114,7 +116,28 @@
               
             </div>
             <div class="col">
+                <!--
               <Field
+                  as="select"
+                  name="atividadeDesenvolvida"
+                  v-model="atividade_desenvolvida"
+                  class="form-select"
+                  aria-label="Default select example"
+                  :rules="validateRadio"
+                >
+                  <option value="">- Escolha a actividade desenvolvida-</option>
+                  <option v-for="atividade in atividades"  :key="atividade.value"
+                    :value="atividade.value">
+                    {{ atividade.value }}
+                  </option>
+                </Field>
+                <ErrorMessage
+                  class="errorMessage"
+                  name="atividadeDesenvolvida"
+                />
+                -->
+               
+                <Field
                   name="atividadeDesenvolvida"
                   as="select"
                   class="form-select"
@@ -134,14 +157,16 @@
                   class="errorMessage"
                   name="atividadeDesenvolvida"
                 />
-            </div>
+             
+              </div>
             <div class="col">
               <Field
                 name="nif"
-                type="text"
+                type="number"
                 class="form-control"
                 id="nif"
                 alt="NIF"
+                v-model="numero_nif"
                 placeholder="Número de NIF"
                 :rules="validateNumber" 
               />
@@ -155,6 +180,7 @@
                     type="text"
                     class="form-control"
                     id="rua"
+                    v-model="rua_responsavel_tratamento"
                     alt="RUA"
                     placeholder="Entre o nome da Rua"
                     
@@ -168,6 +194,7 @@
                     class="form-control"
                     id="local"
                     alt="Local"
+                    v-model="local_responsavel_tratamento"
                     placeholder="Cidade/Vila/Lugar/Zona"
                     :rules="validateText"
                   />
@@ -202,25 +229,24 @@
                 </div>
                 <div class="col">
                   <Field
-                    as="select"
-                    class="form-select"
-                    v-model="concelhoResp"
-                    name="concelhoResp"
-                    id="concelhoResp"
-                    for="concelhoResp"
-                    placeholder="- Seleciona um concelho -"
-                    :rules="validateRadio"
-
-                  >
-                    <option value="">- selecione um concelho -</option>
-                    <option
-                      v-for="concelho in concelhos[ilhaResp]"
-                      :key="concelho.value"
-                      :value="concelho.value"
+                      as="select"
+                      class="form-select"
+                      v-model="concelhoResp"
+                      name="concelhoResp"
+                      id="concelhoResp"
+                      for="concelhoResp"
+                      placeholder="- Seleciona um concelho -"
+                      :rules="validateRadio"
                     >
-                      {{ concelho.label }}
-                    </option>
-                  </Field>
+                      <option value="">- selecione um concelho -</option>
+                      <option
+                        v-for="option in concelhos[ilhaResp]"
+                        :key="option.value"
+                        :value="option.value"
+                      >
+                        {{ option.label }}
+                      </option>
+                    </Field>
                   <ErrorMessage class="errorMessage" name="concelhoResp" />
                   
                 </div>
@@ -234,6 +260,7 @@
                     class="form-control"
                     id="caixapostal"
                     alt="Caixa Postal"
+                    v-model="caixapostal_responsavel_tratamento"
                     placeholder="Entre o número da Caixa Postal"
                   />
                 </div>
@@ -244,6 +271,7 @@
                     class="form-control"
                     id="telefone"
                     alt="Telefone/Telemovel"
+                    v-model="telefone_responsavel_tratamento"
                     placeholder="Contato: Telefone/Telemovel"
                     :rules="validateNumber"
                   />
@@ -259,6 +287,7 @@
                     type="email"
                     class="form-control"
                     id="email"
+                    v-model="email_responsavel_tratamento"
                     placeholder="Entre o seu email: example@cnpd.cv"
                     :rules="validateEmail"
                   />
@@ -267,7 +296,7 @@
                <div class="col">
                     <div class="col">
                       <Field
-                        :rules="validateRatio"
+                        :rules="validateText"
                         type="radio"
                         id="paisResp"
                         name="paisResp"
@@ -278,7 +307,7 @@
                     </div>
                     <div class="col">
                       <Field
-                        :rules="validateRatio"
+                        :rules="validateText"
                         type="radio"
                         id="paisResp"
                         name="paisResp"
@@ -301,25 +330,19 @@
                 type="text"
                 class="form-control"
                 id="Representante"
+                v-model="nome_representante_tratamento"
                 placeholder=" Representante"
                 :rules="validateText"
               />
               <ErrorMessage class="errorMessage" name="Representante" />
             </div>
-            <div class="col-md-12">
-              <input
-                type="text"
-                class="form-control"
-                id="nomecomercial"
-                alt="Nome comercial: Pode ser a sigla ou designação em relação ao qual a instituição é mais conhecida."
-                placeholder=" Nome/Comercial"
-              />
-            </div>
+            
             <div class="col-md-12">
               <input
                 type="text"
                 class="form-control"
                 id="Rua"
+                v-model="rua_representante_tratamento"
                 placeholder=" Rua"
               />
             </div>
@@ -328,6 +351,7 @@
                 type="text"
                 class="form-control"
                 id="caixapostal"
+                v-model="caixapostal_representante_tratamento"
                 placeholder=" Caixa Postal"
                 
               />
@@ -338,6 +362,7 @@
                 type="text"
                 class="form-control"
                 id="cidade"
+                v-model="local_representante_tratamento"
                 placeholder=" Cidade/Vila/Lugar/Zona"
                 :rules="validateText"
               />
@@ -398,6 +423,7 @@
                 type="text"
                 class="form-control"
                 id="nomepessoacontato"
+                v-model="nome_pessoa_contato"
                 placeholder=" Nome da pessoa do contato"
                 :rules="validateText"
               />
@@ -411,6 +437,7 @@
                     type="email"
                     class="form-control"
                     id="emailRepre"
+                    v-model="email_representante_tratamento"
                     alt="Caixa Postal"
                     placeholder="Entre o seu email: example@cnpd.cv"
                     :rules="validateEmail"
@@ -423,6 +450,7 @@
                     type="number"
                     class="form-control"
                     id="telefone"
+                    v-model="telefone_representante_tratamento"
                     alt="Telefone/Telemovel"
                     placeholder="Contato: Telefone/Telemovel"
                     :rules="validateNumber"
@@ -464,6 +492,7 @@
                   class="form-control"
                   name="entidadeProcessInfo"
                   id="entidadeProcessInfo"
+                  v-model="entidade_processamento_informacao"
                   placeholder=" Qual a Entidade Encarregue pelo processamento dos dados"
                   :rules="validateText"
                 />
@@ -475,7 +504,8 @@
                   class="form-control"
                   name="ruaProcessInfo"
                   id="ruaProcessInfo"
-                    placeholder=" Rua"
+                  v-model="rua_entidade_processamento"
+                  placeholder=" Rua"
                 />
                 <ErrorMessage class="errorMessage" name="ruaProcessInfo" />  
                 </div>
@@ -486,6 +516,7 @@
                   class="form-control"
                   name="caixaPostalProcessInfo"
                   id="caixaPostalProcessInfo"
+                  v-model="caixapostal_entidade_processamento"
                   placeholder=" Caixa Postal"
                 />
               </div>
@@ -495,6 +526,7 @@
                   class="form-control"
                   name="lugarProcessInfo"
                   id="lugarProcessInfo"
+                  v-model="local_entidade_processamento"
                   placeholder="Cidade/Vila/Lugar/Zona da Entidade"
                   :rules="validateText"
                 />
@@ -554,13 +586,13 @@
         </div>
       </div>
        <!---- ----------------- FINALIDADE DO TRATAMENTO-------------------------------------------------------------------->
-       <div class="col" id="divg">
+        <!---- ----------------- FINALIDADE DO TRATAMENTO-------------------------------------------------------------------->
+        <div class="col" id="divg">
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="divloco">
                 <div class="col-md-12" id="separacao">
-                  3. Finalidade do tratamento (primeira entidade de
-                  interconexão)
+                  3. Finalidade do tratamento 
                 </div>
               </div>
               <div class="col-md-12"><br /></div>
@@ -594,7 +626,7 @@
                   >
                     <div class="col-md-4" id="cambs">
                       <Field 
-                    :name="'categoria ' + (index + 1)"  
+                        :name="'categoria ' + (index + 1)"  
                         as="select"
                         class="form-select" 
                         :rules="validateRadio" 
@@ -616,8 +648,8 @@
                        </div>
                     <div class="col-md-7" id="cambs">
                       <Multiselect
-                        v-model="finalidadi.finalidd"
-                        :name="'finalidadi.finalidd ' + (index + 1)"  
+                        v-model="finalidadi.finalidade"
+                        :name="'finalidade ' + (index + 1)"   
                         :options="finalidadesCategorias[finalidadi.categoria]"
                         mode="tags"
                         placeholder="- selecione as finalidades -"
@@ -627,7 +659,7 @@
                         :multiple="true"
                         :rules="validateRadio" 
                       />
-                      <ErrorMessage class="errorMessage" :name="'finalidadi.finalidd ' + (index + 1)" />
+                      <ErrorMessage class="errorMessage" :name="'finalidadi.finalidade ' + (index + 1)" />
                       
                     </div>
                     <div class="col-md-1">
@@ -657,7 +689,7 @@
                   name="outraFinalidadeTratamento"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFinalidadeTratamento" 
+                  v-model="outraFinalidadeTratamento"    
                   placeholder="  Caso a sua finalidade de tratamento não se encontre na lista, introduza a sua finalidade no campo a seguir
                "
                 /> 
@@ -669,7 +701,8 @@
         </div>
       <!--    ************** DADOS PESSOAIS CONTIDOS EM CADA REGISTRO DADOS TRATADOS  -->
 
-      <div class="col" id="divg">
+     <div class="col" id="divg">
+
         <div class="container">
           <div class="row">
             <div class="col-md-12" id="divloco">
@@ -697,8 +730,6 @@
                 :searchable="true"
                 :object="true"
                 :multiple="true"
-                @input="onInput"
-
                 
                
               />
@@ -719,6 +750,7 @@
                 class="form-control"
                 name="outrosDadosArt8e11"
                 id="outrosDadosArt8e11"
+                v-model="outros_dados_tratados_8_11"
                 placeholder=" Mencionar quais os outros dados tratados referentes aos artigos 8º e 11º da lei nº. 121/IX/2021 de 17 de março "
                 :rules="validateText"
               ></Field>
@@ -734,7 +766,7 @@
                   name="listaDadosPessoaisTratados"
                   as="textarea"
                   class="form-control"
-                  v-model="listaDadosPessoaisTratados"
+                  v-model="lista_dados_pessoais_tratados"
                   :rules="validateText"
                   placeholder=" Mencionar todos os dados pessoais tratados EX: nome, BI, NIF, Registo criminal, etc"
                  />
@@ -743,6 +775,8 @@
           </div>
         </div>
       </div>
+    
+
       <!--    ***************************************** RECOLHA DE DADOS****************** -->
 
       <div class="col" id="divg">
@@ -785,6 +819,7 @@
                   class="form-control"
                   name="url"
                   id="url"
+                  v-model="url_recolha"
                   placeholder=" introduza aqui a URL de recolha "
                 />
                 
@@ -799,6 +834,7 @@
                   class="form-control"
                   name="OutraFormaRecolhaDireta"
                   id="OutraFormaRecolhaDireta"
+                  v-model="descricao_outra_forma_recolhadireta"
                   placeholder=" Descreve a outra forma de recolha direta"
                 ></textarea>
               </div>
@@ -816,7 +852,8 @@
                 class="form-control"
                 name="listaDadosPessoaisTratados"
                 id="listaDadosPessoaisTratados"
-                placeholder=" Descreve a outra forma de recolha direta"
+                v-model="recolha_indireta"
+                placeholder=" mencione as formas de recolha indireta"
                 rows="8"
               ></textarea>
             </div>
@@ -826,7 +863,8 @@
 
        <!---- ----------------- Comunicaçao dos dados a terceiros-------------------------------------------------------------------->
 
-       <div class="col" id="divg">
+      <!---- ----------------- Comunicaçao dos dados a terceiros-------------------------------------------------------------------->
+      <div class="col" id="divg">
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="divloco">
@@ -872,14 +910,14 @@
 
                   <div
                     class="row"
-                    v-for="(comunica, index) in comunicacao"
+                    v-for="(comunica, index) in comunicacao"   
                     :key="index"
                   >
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                       <Field  
-                  class="form-control" 
-                  :rules="validateText"
-                  v-model="comunica.entidadesComunicadas" 
+                        class="form-control" 
+                        :rules="validateText"
+                        v-model="comunica.entidadesComunicadas" 
                         :name="'entidadesComunicadas ' + (index + 1)"  
                         id="entidadesComunicadas"
                         :placeholder="
@@ -889,16 +927,28 @@
                 <ErrorMessage class="errorMessage"  :name="'entidadesComunicadas ' + (index + 1)"  />
                        
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <Field  
-                  class="form-control" 
-                  :rules="validateText"
-                  v-model="comunica.condicoesComunicacao"
-                  :name="'condicoesComunicacao ' + (index + 1)"
+                       class="form-control" 
+                       :rules="validateText"
+                        v-model="comunica.condicoesComunicacao"
+                        :name="'condicoesComunicacao ' + (index + 1)"
                         id="condicoesComunicacao"
                         :placeholder="'Quais  as condições de comunicação '"
                         />
                 <ErrorMessage class="errorMessage"  :name="'condicoesComunicacao ' + (index + 1)" />
+                   
+                         </div>
+                         <div class="col-md-4">
+                      <Field  
+                       class="form-control" 
+                       :rules="validateText"
+                        v-model="comunica.dadosTransferidos"
+                        :name="'dadosTransferidos ' + (index + 1)"
+                        id="dadosTransferidos"
+                        :placeholder="'Quais  são os dados transferidos '"
+                        />
+                <ErrorMessage class="errorMessage"  :name="'dadosTransferidos ' + (index + 1)" />
                    
                          </div>
                     <div class="col-md-1">
@@ -920,6 +970,7 @@
             </div>
           </div>
         </div>
+
 
       <!--    ************** INTERCONEXOES  -->
       <div class="col" id="divg">
@@ -953,6 +1004,7 @@
                   class="form-control"
                   name="descreverFinalidade"
                   id="descreverFinalidade"
+                  v-model="descricao_finalidade_interconexao"
                   placeholder=" Descreve a finalidade, tipos de dados objecto de interconexão e os responsáveis pelo tratamento"
                   :rules="validateText"
                 />
@@ -1015,25 +1067,25 @@
                     v-for="(inter, index) in internacional"
                     :key="index"
                   >
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <Field  
-                  class="form-control" 
-                  :rules="validateText"
-                  v-model="inter.entidadesInternacional" 
-                        :name="'entidadesInternacional ' + (index + 1)"
-                        id="entidadesInternacional"
-                        :placeholder="
+                      class="form-control" 
+                      :rules="validateText"
+                      v-model="inter.entidadesInternacional" 
+                      :name="'entidadesInternacional ' + (index + 1)"
+                      id="entidadesInternacional"
+                      :placeholder="
                           +(index + 1) +
                           'ª- Entidade para onde os dados são transferidos '
                         "
                         />
                 <ErrorMessage class="errorMessage" :name="'entidadesInternacional ' + (index + 1)" />
                        </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <Field  
-                  class="form-control" 
-                  :rules="validateText"
-                  v-model="inter.paisTransferido" 
+                         class="form-control" 
+                        :rules="validateText"
+                         v-model="inter.paisTransferido" 
                         :name="'paisTransferido ' + (index + 1)"
                         id="paisTransferido"
                         :placeholder="
@@ -1043,16 +1095,28 @@
                 <ErrorMessage class="errorMessage" :name="'paisTransferido ' + (index + 1)" />
                       
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <Field  
-                  class="form-control" 
-                  :rules="validateText"
-                  v-model="inter.dadosTransferidos" 
-                        :name="'dadosTransferidos ' + (index + 1)"
-                        id="dadosTransferidos"
-                        :placeholder="'Quais os Dados que são transferidos '"
+                      class="form-control" 
+                      :rules="validateText"
+                      v-model="inter.dadosTransferidosInt" 
+                      :name="'dadosTransferidosInt ' + (index + 1)"
+                      id="dadosTransferidosInt"
+                      :placeholder="'Quais são os Dados que são transferidos '"
                         />
-                <ErrorMessage class="errorMessage"  :name="'dadosTransferidos ' + (index + 1)" />
+                <ErrorMessage class="errorMessage"  :name="'dadosTransferidosInt ' + (index + 1)" />
+                        </div>
+  
+                        <div class="col-md-3">
+                      <Field  
+                      class="form-control" 
+                      :rules="validateText"
+                      v-model="inter.fundamento" 
+                      :name="'fundamento ' + (index + 1)"
+                      id="fundamento"
+                      :placeholder="'Quais os fundamentos da transferencia'"
+                        />
+                <ErrorMessage class="errorMessage"  :name="'fundamento ' + (index + 1)" />
                         </div>
 
                     <div class="col-md-1">
@@ -1095,6 +1159,7 @@
                 type="text"
                 class="form-control"
                 name="prazoConserva"
+                v-model="prazo_maximo_conservacao"
                 id="caixaPostalPrprazoConservaocessInfoSR"
                 placeholder=" Indique por quanto tempo os dados serão conservados"
               />
@@ -1135,6 +1200,7 @@
                       class="form-control"
                       name="ruaDireitoAcesso"
                       id="ruaDireitoAcesso"
+                      v-model="rua_direito_acesso"
                       placeholder=" Rua"
                     />
                   </div>
@@ -1144,6 +1210,7 @@
                       class="form-control"
                       name="caixaPostalDireitoAcesso"
                       id="caixaPostalDireitoAcesso"
+                      v-model="caixapostal_direito_acesso"
                       placeholder=" Caixa Postal"
                     />
                   </div>
@@ -1153,6 +1220,7 @@
                       class="form-control"
                       name="localDireitoAcesso"
                       id="localDireitoAcesso"
+                      v-model="local_direito_acesso"
                       placeholder=" Local - Cidade/Vila/Lugar/Zona"
                     />
                   </div>
@@ -1219,6 +1287,7 @@
                         class="form-control"
                         name="emailDireitoAcesso"
                         id="emailDireitoAcesso"
+                        v-model="email_direito_acesso"
                         placeholder="Entre o email da pessoa de contato: example@cnpd.cv"
                       />
                       <ErrorMessage
@@ -1233,6 +1302,7 @@
                         class="form-control"
                         name="telefoneDireitoAcesso"
                         id="telefoneDireitoAcesso"
+                        v-model="telefone_direito_acesso"
                         placeholder="Contato: Telefone/Telemovel"
                       />
                       <ErrorMessage
@@ -1286,7 +1356,7 @@
                   name="outraFormaDireitoAcesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso" 
+                  v-model="outrasformas_direito_acesso" 
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                 /> 
               </div>
@@ -1315,13 +1385,14 @@
               <Field
                 as="textarea"
                 class="form-control"
-                name="outraFormaDireitoAcessoFisica"
+                name="medidasFisica"
                 id="outraFormaDireitoAcesso"
-                placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
+                v-model="medidade_seguranca_fisica" 
+                placeholder="Ocorre quando temos barreiras físicas que impeçam que pessoas não autorizadas tenham acesso a espaços onde os dados estão guardados"
                 :rules="validateText"
                 
               ></Field>
-              <ErrorMessage class="errorMessage" name="outraFormaDireitoAcessoFisica" />
+              <ErrorMessage class="errorMessage" name="medidasFisica" />
             </div>
             <div class="col-md-12"><br /></div>
             <div class="col-md-12">
@@ -1333,13 +1404,15 @@
                 Especifique as medidas lógica de segurança do sistema:
               </label>
               <Field
+                as="textarea"
                 class="form-control"
-                name="outraFormaDireitoAcessoLogica"
+                name="medidasLogica"
                 id="outraFormaDireitoAcesso"
-                placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
+                v-model="medidas_seguranca_logica"
+                placeholder=" Consiste na implementação de chaves de acesso, encriptação do conteúdo e registos de operações efectuadas no sistema"
                 :rules="validateText"
               ></Field>
-              <ErrorMessage class="errorMessage" name="outraFormaDireitoAcessoLogica" />
+              <ErrorMessage class="errorMessage" name="medidasLogica" />
             </div>
           </div>
         </div>
@@ -1373,8 +1446,7 @@
                   >Se sim, juntar a cópia do parecer ou comprovativo do
                   pedido.</label
                 >
-                <Field   name="file" class="form-control" type="file" id="formFile" />
-                <ErrorMessage class="errorMessage" name="file" />
+                <Field  accept="application/pdf" name="parecer_representante_trabalhadore"  v-model="parecer_representante_trabalhadore" type="file" />
               </div>
             </div>
           </div>
@@ -1383,7 +1455,7 @@
       <div class="col-md-12"><br /></div>
       <div class="col-12" id="divsave">
           <button
-            @click="submitForm"
+            
             id="buttonsave"
             class="btn btn-primary"
             type="submit"
@@ -1392,6 +1464,58 @@
                     /> Submeter Dados
           </button>
         </div>
+
+          <!------------------MODAL SHOW ------------------------->
+        <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                    <button
+                        @click="closeSuccess"
+                        id="buttonsave"
+                        class="btn btn-primary" 
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>        
+                  <div class="modalFooter">
+                   <button
+                        @click="closeError"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
     </Form>
       <!-- FIM DE FORMS-->
     </div>
@@ -1401,6 +1525,7 @@
 <script>
 import Multiselect from "@vueform/multiselect";
 import { Form, Field, ErrorMessage } from "vee-validate";
+import axios from "axios";
 export default {
   components: {
     Form,
@@ -1421,15 +1546,112 @@ export default {
       checkInterconexoes:false,
       checkComunicTerce: false,
       checkTransfInter: false,
+      atividadeDesenvolvida:"",
+      nome_denominacao:"",
+      nome_comercial:"",
+      numero_nif:"",
+      rua_responsavel_tratamento:"",
+      local_responsavel_tratamento:"",
+      caixapostal_responsavel_tratamento:"",
+      telefone_responsavel_tratamento:"",
+      email_responsavel_tratamento:"",
+      nome_representante_tratamento:"",
+      rua_representante_tratamento:"",
+      caixapostal_representante_tratamento:"",
+      local_representante_tratamento:"",
+      nome_pessoa_contato:"",
+      email_representante_tratamento:"",
+      telefone_representante_tratamento:"",
+      entidade_processamento_informacao:"",
+      rua_entidade_processamento:"",
+      caixapostal_entidade_processamento:"",
+      local_entidade_processamento:"",
+      outraFormaDireitoAcesso:"",
+      formaDireitoAcesso:"",
+      paisResp:"",
+      tipoPessoa:"",
+      outros_dados_tratados_8_11:"",
+      lista_dados_pessoais_tratados:"",
+      url_recolha:"",
+      descricao_outra_forma_recolhadireta:"",
+      recolha_indireta:"",
+      descricao_finalidade_interconexao:"",
+      prazo_maximo_conservacao:"",
+      rua_direito_acesso:"",
+      caixapostal_direito_acesso:"",
+      local_direito_acesso:"",
+      email_direito_acesso:"",
+      telefone_direito_acesso:"",
+      outrasformas_direito_acesso:"",
+      medidade_seguranca_fisica:"",
+      medidas_seguranca_logica:"",
+      parecer_representante_trabalhadore:"",
+      outraFinalidadeTratamento:"",
+      showModal: false,
+      ErrorModal: false,
+      
+
+      
 
       /**************************TIPO NOTIFICACAO *********************************** */
-      tipoNotificacao: null,
-      tipoNotificacoes: null,
+      
+    
 
       /**********************************ATIVIDADE DESENVOLVIDA*********************************************** */
       atividade: null,
       atividadeSR: null,
-      atividadesDesenvolvidas: null,
+      
+      atividadesDesenvolvidas: [
+            { "value": "Actividade de Televisão", "label": "Actividade de Televisão" },
+            {
+              "value": "Emprego (Selecção, fornecimento de recursos humanos)",
+              "label": "Emprego (Selecção, fornecimento de recursos humanos)"
+            },
+            { "value": "Segurança e Ordem pública", "label": "Segurança e Ordem pública" },
+            { "value": "Produção da Água", "label": "Produção da Água" },
+            { "value": "Telecomunicação", "label": "Telecomunicação" },
+            { "value": "Segurança Privada", "label": "Segurança Privada" },
+            {
+              "value": "Ensino (Pré-escolar, Básico, Secundário, Superior)",
+              "label": "Ensino (Pré-escolar, Básico, Secundário, Superior)"
+            },
+            {
+              "value": "Estabelecimento comercial de venda a público",
+              "label": "Estabelecimento comercial de venda a público"
+            },
+            {
+              "value":
+                "Serviço de Internet (processamento de dados, domiciliação de informação",
+              "label":
+                "Serviço de Internet (processamento de dados, domiciliação de informação"
+            },
+            {
+              "value": "Administração Pública (Central, Local)",
+              "label": "Administração Pública (Central, Local)"
+            },
+            { "value": "Saúde", "label": "Saúde" },
+            { "value": "Centro Comercial", "label": "Centro Comercial" },
+            {
+              "value": "Publicidade, Estudos de Mercado, Sondagens de Opinião",
+              "label": "Publicidade, Estudos de Mercado, Sondagens de Opinião"
+            },
+            { "value": "Negócios Estrangeiros", "label": "Negócios Estrangeiros" },
+            { "value": "Previdência Social", "label": "Previdência Social" },
+            {
+              "value": "Alojamento (Hotel, Residencial, Pensão, etc.)",
+              "label": "Alojamento (Hotel, Residencial, Pensão, etc.)"
+            },
+            { "value": "Defesa", "label": "Defesa" },
+            { "value": "Actividade Financeira", "label": "Actividade Financeira" },
+            { "value": "Comércio Electrónico", "label": "Comércio Electrónico" },
+            { "value": "Informática", "label": "Informática" },
+            { "value": "Justiça", "label": "Justiça" },
+            { "value": "Seguros", "label": "Seguros" },
+            {
+              "value": "Transporte (Aéreo, Marítimo, Terrestre)",
+              "label": "Transporte (Aéreo, Marítimo, Terrestre)"
+            }
+          ],
       /*******************************************RECOLHA DIRETA ******************************************/
       recolhaDireta: null,
       recolhaDiretas: [
@@ -1442,57 +1664,36 @@ export default {
         {
           condicoesComunicacao: "",
           entidadesComunicadas: "",
-          dadosTrasnferidos: "",
+          dadosTransferidos: "",
         },
       ],
 
       /*******************************************DADOS PESSOAIS CONTIDOS EM CADA REGISTRO DADOS TRATADOS ******************************************/
 
-      dadosPessoaisTratado: null,
+      dadosPessoaisTratado:null,
       dadospessoaisTratados: [
-        {
-          value: "Convicções ou filiação partidária ou sindical, fé religiosa",
-          label: "Convicções ou filiação partidária ou sindical, fé religiosa",
-        },
-        {
-          value: "Convicções filosóficas ou ideológicas",
-          label: "Convicções filosóficas ou ideológicas",
-        },
-        { value: "Origem racial ou étnica", label: "Origem racial ou étnica" },
-        { value: "Vida Privada", label: "Vida Privada" },
-        {
-          value: "Dados da saúde, vida sexual ou genéticos",
-          label: "Dados da saúde, vida sexual ou genéticos",
-        },
-        {
-          value: "Suspeitas de atividades ilícitas",
-          label: "Suspeitas de atividades ilícitas",
-        },
-        { value: "Condenações penais", label: "Condenações penais" },
-        {
-          value: "Decisões que apliquem medidas de segurança",
-          label: "Decisões que apliquem medidas de segurança",
-        },
-        {
-          value: "Coímas, sansões acessórias",
-          label: "Coímas, sansões acessórias",
-        },
-        {
-          value: "Infrações penais e Contra-ordenações",
-          label: "Infrações penais e Contra-ordenações",
-        },
-        {
-          value:
-            "Outros dados referentes ao art. 8º e 11º da lei nº.121/IX/2021 de 17 de março",
-          label:
-            "Outros dados referentes ao art. 8º e 11º da lei nº.121/IX/2021 de 17 de março",
-        },
+      
+        {value: "Convicções ou filiação partidária ou sindical, fé religiosa", label: "Convicções ou filiação partidária ou sindical, fé religiosa"},
+        {value: "Convicções filosóficas ou ideológicas", label: "Convicções filosóficas ou ideológicas"},
+        { alue: "Origem racial ou étnica", label: "Origem racial ou étnica"},
+        {value: "Vida Privada", label: "Vida Privada"  },
+        {value: "Dados da saúde, vida sexual ou genéticos", label: "Dados da saúde, vida sexual ou genéticos"},
+        {value: "Suspeitas de atividades ilícitas",label: "Suspeitas de atividades ilícitas"},
+        {value: "Condenações penais",label: "Condenações penais" },
+        {value: "Decisões que apliquem medidas de segurança",label: "Decisões que apliquem medidas de segurança" },
+        {value: "Coímas, sansões acessórias",label: "Coímas, sansões acessórias"},
+        {value: "Infrações penais e Contra-ordenações",label: "Infrações penais e Contra-ordenações"},
+        {value: "Outros dados referentes ao art. 8º e 11º da lei nº.121/IX/2021 de 17 de março",label:"Outros dados referentes ao art. 8º e 11º da lei nº.121/IX/2021 de 17 de março"},
+          
+          
+        
       ],
 
       /*******************************************TIPO DE NOTIFICAÇÃO ******************************************/
       tipoNot: null,
       error: "",
-      TipoNotf: [
+      tipoNotificacao: null,
+      tipoNotificacoes: [
         { value: "1ª Notificação", label: "1ª Notificação" },
         { value: "Alteração", label: "Alteração" },
         {
@@ -1506,7 +1707,7 @@ export default {
       ilhaServExt: null,
       ilhaDirAcess: null,
       ilha: null,
-      ilhas: null,
+      
       concelho: null,
       concelhoMorInst: null,
       concelhoServExt: null,
@@ -1524,6 +1725,18 @@ export default {
       concelhoRespSR: null,
       ilhaMorRepSR: null,
       concelhoMorRepSR: null,
+     
+      ilhas: [
+        { value: "Santo Antão", label: "Santo Antão" },
+        { value: "São Vicente", label: "São Vicente" },
+        { value: "São Nicolau", label: "São Nicolau" },
+        { value: "Sal", label: "Sal" },
+        { value: "Boa Vista", label: "Boa Vista" },
+        { value: "Maio", label: "Maio" },
+        { value: "Santiago", label: "Santiago" },
+        { value: "Fogo", label: "Fogo" },
+        { value: "Brava", label: "Brava" },
+      ],
 
       concelhos: {
         "Santo Antão": [
@@ -1571,7 +1784,29 @@ export default {
       selected: {},
       finalidd: null,
       categoria: null,
-      categorias: null,
+      categorias: [
+            {
+              "id": 1,
+              "value": "Gestão contabilidade, fiscal e administrativa",
+              "label": "Gestão contabilidade, fiscal e administrativa"
+            },
+            { "id":2, "value": "Gravação de Chamadas", "label": "Gravação de Chamadas" },
+            { "id":3, "value": "Recursos Humanos", "label": "Recursos Humanos" },
+            { "id":4, "value": "Telecomunicações", "label": "Telecomunicações" },
+            { "id":5, "value": "Actividade Social", "label": "Actividade Social" },
+            {
+              "id":6,
+              "value": "Actividade Financeira, Creditícia e Seguradora",
+              "label": "Actividade Financeira, Creditícia e Seguradora"
+            },
+            { "id":7, "value": "Actividade Educativa", "label": "Actividade Educativa" },
+            { "id":8, "value": "Saúde", "label": "Saúde" },
+            {
+              "id":9,
+              "value": "Actividade Comercial e de Marketing",
+              "label": "Actividade Comercial e de Marketing"
+            }
+          ],
 
       finalidadesCategorias: {
         "Gestão contabilidade, fiscal e administrativa": [
@@ -1984,15 +2219,16 @@ export default {
 
       internacional: [
         {
-          dadosTransferidos: "",
-          entidadesInternacional: "",
-          paisTransferido: "",
-          fundamento: "",
+            dadosTransferidosInt: "",
+            entidadesInternacional: "",
+            paisTransferido: "",
+            fundamento: "",
         },
       ],
     };
   },
   methods: {
+    
      onInput(event) {
       const value = event.target.value;
 
@@ -2016,23 +2252,105 @@ export default {
       }
       return true;
     },
-    async dadosBackend() {
-      const req = await fetch("http://localhost:3000/dadosBackend");
-      const data = await req.json();
-      this.ilhas = data.ilhas;
-      this.atividadesDesenvolvidas = data.atividadesDesenvolvidas;
-      this.tipoNotificacoes = data.tipoNotificacoes;
-      this.categorias = data.categorias;
-    },
-      onSubmit(values) {
-      console.log(values, null, 2);
-      console.log("Clckado");
-      if(this.dadosPessoaisTratado == null){
-       alert("Hello! I am an alert box!!");
-      }else{
-        console.log("ok");
+    
+   async  submitForm() {
+     const data = {
+
+        tipo_notificacao: this.tipoNotificacao,
+        tipo_pessoa:  this.tipoPessoa,
+        nome_denominacao:   this.nome_denominacao,
+        atividade_desenvolvida: this.atividadeDesenvolvida,
+        nome_comercial:   this.nome_comercial,
+        numero_nif:   this.numero_nif,
+        rua_responsavel_tratamento:   this.rua_responsavel_tratamento,
+        local_responsavel_tratamento:   this.local_responsavel_tratamento,
+        ilha_responsavel_tratamento:    this.ilhaResp,
+        concelho_responsavel_tratamento:  this.concelhoResp,
+        caixapostal_responsavel_tratamento:this.caixapostal_responsavel_tratamento,
+        telefone_responsavel_tratamento:this.telefone_responsavel_tratamento,
+        email_responsavel_tratamento:this.email_responsavel_tratamento,
+        pais_responsavel_tratamento:this.paisResp,
+        nome_representante_tratamento:this.nome_representante_tratamento,
+        rua_representante_tratamento:this.rua_representante_tratamento,
+        caixapostal_representante_tratamento:this.caixapostal_representante_tratamento,
+        local_representante_tratamento:this.local_representante_tratamento,
+        ilha_representante_tratamento:this.ilhaRepre,
+        concelho_representante_tratamento:this.concelhoRepre,
+        nome_pessoa_contato:this.nome_pessoa_contato,
+        email_representante_tratamento:this.email_representante_tratamento,
+        telefone_representante_tratamento:this.telefone_representante_tratamento,
+        entidade_processamento_informacao:this.entidade_processamento_informacao,
+        rua_entidade_processamento:this.rua_entidade_processamento,
+        caixapostal_entidade_processamento:this.caixapostal_entidade_processamento,
+        local_entidade_processamento:this.local_entidade_processamento,
+        ilha_entidade_processamento:this.ilhaServExt,
+        concelho_entidade_processamento:this.concelhoServExt,
+        outraFinalidadeTratamento:this.outraFinalidadeTratamento,
+        array_finalidades:this.finalidadiCategory,
+        array_comunicacao_terceiros: this.comunicacao, 
+        dados_pessoais_contidos:this.dadosPessoaisTratado,
+        outros_dados_tratados_8_11:this.outros_dados_tratados_8_11,  
+        lista_dados_pessoais_tratados:this.lista_dados_pessoais_tratados,
+        recolha_direta:this.recolhaDireta,
+        url_recolha:this.url_recolha,
+        descricao_outra_forma_recolhadireta:this.descricao_outra_forma_recolhadireta,
+        recolha_indireta:this.recolha_indireta,
+        descricao_finalidade_interconexao:this.descricao_finalidade_interconexao,
+        prazo_maximo_conservacao:this.prazo_maximo_conservacao,
+        array_transferencia_internacional:this.internacional,
+        rua_direito_acesso:this.rua_direito_acesso,
+        caixapostal_direito_acesso:this.caixapostal_direito_acesso,
+        local_direito_acesso:this.local_direito_acesso,
+        ilha_direito_acesso:this.ilhaDirAcess,
+        concelho_direito_acesso:this.concelhoDirAcess,
+        email_direito_acesso:this.email_direito_acesso,
+        telefone_direito_acesso:this.telefone_direito_acesso,
+        forma_direito_acesso:this.formaDireitoAcesso,
+        outrasformas_direito_acesso:this.outrasformas_direito_acesso,
+        medidade_seguranca_fisica:this.medidade_seguranca_fisica,
+        medidas_seguranca_logica:this.medidas_seguranca_logica,
+        parecer_representante_trabalhadore:this.parecer_representante_trabalhadore,
+
+
+        
+
+       
+
+     };
+     try { 
+     await axios.post("http://127.0.0.1:8000/api/geral/store", data, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      }); 
+      this.showModal = !this.showModal; 
+     /* setTimeout(function(){
+        window.location.reload();
+      }, 5000)*/
+
+    }catch(error){
+          this.ErrorModal = !this.ErrorModal; 
+        /* setTimeout(function(){
+          window.location.reload();
+        }, 5000)*/
+    
+       
+       
       }
+     
+     
+
     },
+
+    closeError(event) {
+      this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
+      window.location.reload();
+    },
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
+    },
+    
    
    
     
@@ -2089,24 +2407,30 @@ export default {
 
     addFinalidd() {
       this.finalidadiCategory.push({
-        categoria: "",
-        finalidadesCategorias: "",
+       // categoria: "",
+        //finalidadesCategorias: "",
       });
+
+      
     },
+    
     addComunicTerce() {
       this.comunicacao.push({
-        condicoesComunicacao: "",
-        entidadesComunicadas: "",
+        //condicoesComunicacao: "",
+        //entidadesComunicadas: "",
       });
     },
     /*TRANSFER INTERNACIONAL*/
     addTransfInter() {
       this.internacional.push({
-        dadosTransferidos: "",
-        entidadesInternacional: "",
-        paisTransferido: "",
-        fundamento: "",
+        //dadosTransferidosInt: "",
+        //entidadesInternacional: "",
+        //paisTransferido: "",
+        //fundamento: "",
       });
+    },
+    removeInter(index) {
+      this.internacional.splice(index, 1);
     },
     removeComunic(index) {
       this.comunicacao.splice(index, 1);
@@ -2123,9 +2447,7 @@ export default {
   },
   
 
-  mounted() {
-    this.dadosBackend();
-  },
+
   watch: {
     categoria() {
       this.finalidd = null;

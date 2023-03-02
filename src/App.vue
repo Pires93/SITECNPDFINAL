@@ -31,6 +31,13 @@ data(){
 </script>
 
 <style >
+#addmore {
+  background-color: #bd9a13;
+  outline: none !important;
+  border-color: #061536;
+  color: #061536;
+  box-shadow: 0 0 10px #061536;
+}
 #moradasimbotton {
   margin-left: 10px;
   color: #061536;
