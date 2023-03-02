@@ -50,7 +50,7 @@
               <router-link to="#"> Canal do Cidadão</router-link> 
               <ul class="ulid">
                 <li><router-link to="/direitos"> Direitos dos Titulares </router-link></li>
-                <li><router-link to="/conselhos"> Conselhos Práticos </router-link></li>
+                <li><router-link to="/conselhospraticos"> Conselhos Práticos </router-link></li>
                 <li><router-link to="/faq"> Perguntas Frequentes </router-link></li> 
                 <li><router-link to="/queixa"> Apresentar Queixa </router-link></li> 
               </ul>
@@ -163,7 +163,7 @@
               >
               <div v-show="showcanalcidadao" id="showcanalcidadao">
                <li><router-link to="/direitos"> Direitos dos Titulares </router-link></li>
-                <li><router-link to="/conselhos"> Conselhos Práticos </router-link></li>
+                <li><router-link to="/conselhospraticos"> Conselhos Práticos </router-link></li>
                 <li><router-link to="/faq"> Perguntas Frequentes </router-link></li> 
                 <li><router-link to="/queixa"> Apresentar Queixa </router-link></li> 
               </div>

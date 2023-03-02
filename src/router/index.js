@@ -233,7 +233,7 @@ const routes = [{
         component: () =>
             import ('../views/TaxaView.vue')
     },
-    {
+    /*{
        path: '/conselhos',
        meta:{
         title: "Conselhos Práticos",
@@ -242,7 +242,7 @@ const routes = [{
         component: () =>
             import ('../views/ConselhoPraticoView.vue')
 
-    },
+    },*/
     {
         path: '/direitos',
         meta:{
@@ -410,6 +410,25 @@ const routes = [{
         name: 'teste',
         component: () =>
             import ('../views/TesteView.vue')
+    },
+    {
+        path: '/conselhospraticos',
+        meta:{
+            title: "Conselhos Práticos - CNPD",
+            },
+        name: 'ConselhosView',
+        component: () =>
+            import ('../views/ConselhosView.vue')
+    },
+
+    {
+        path: '/conselhoview/:id',
+        meta:{
+            title: "Conselho Prático ID - CNPD",
+            },
+        name: 'conselhoview',
+        component: () =>
+            import ('../views/ConselhoView.vue')
     },
 
 

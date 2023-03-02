@@ -1,6 +1,6 @@
 <template>
-  <!-- ======= isencoes Section ======= -->
-  <section id="isencoes" class="isencoes">
+  <!-- ======= conselhos Section ======= -->
+  <section id="conselhos" class="conselhos">
     <div class="container">
       <div class="section-bredcumbs">
         <h5>
@@ -10,53 +10,49 @@
           </router-link>
           <b> > </b>
           <router-link style="text-decoration: none" to="#">
-            <b>Formulários</b>
+            <b>Canal do Cidadão</b>
           </router-link>
           <b> > </b>
-          <router-link style="text-decoration: none" to="/isencoes">
-            <b>Isenções de Notificações</b>
+          <router-link style="text-decoration: none" to="/conselhos">
+            <b>Conselhos Práticos</b>
           </router-link>
         </h5>
       </div>
       <div class="section-title">
-        <h2>ISENÇÕES DE NOTIFICAÇÃO</h2>
+        <h2>CONSELHOS PRÁTICOS</h2>
       </div>
 
       <div class="row">
         <div class="form-group">
-          <p class="pleft">Isenções disponíveis: {{ countNumbers() }}</p>
+          <p class="pleft">Conselhos Práticos disponíveis: {{ countNumbers() }}</p>
           <input
             id="idsearch"
             type="text"
             class="form-control"
             v-model="search"
-            placeholder="Procurar por isenções ..."
+            placeholder="Procurar por titulo ..."
           />
         </div>
         <p><br /></p>
         <div
           id="box"
-          v-for="(pub, index) in filteredList"
+          v-for="(conselho, index) in filteredList"
           :key="index"
           class="row"
         >
-          <router-link :to="{ name: 'isencaoid', params: { id: pub.id } }">
-            <div class="post-box" alt="Abrir Isenção em PDF">
-              <!-- :src="pub.url" src="/img/lei.png"-->
+          <router-link :to="{ name: 'conselhoview', params: { id: conselho.id } }">
+            <div class="post-box"> 
 
               <div id="isencao" class="first">
-                <img src="/img/isencoes.jpg" alt="Avatar" style="width: 60px" />
+                <img :src="'http://localhost:8000/storage/conselhopratico/'+ conselho.imagem "
+                   alt="" 
+                  style="width: 60px" />
               </div>
               <div id="isencao" class="second">
                 <h5 class="post-title">
-                  {{ pub.titulo }}
+                  {{ conselho.titulo }}
                 </h5>
-              </div>
-              <div id="isencao" class="third">
-                <div class="icon">
-                  <IconAwe class="icon-color" icon="file-pdf" />
-                </div>
-              </div>
+              </div> 
             </div>
           </router-link>
         </div>
@@ -79,21 +75,21 @@
       </div>
     </div>
   </section>
-  <!-- End isencoes Section -->
+  <!-- End conselhos Section -->
 </template>
 
 <script>
 import axios from "axios";
 
 export default {
-  name: "IsencoesCnpd",
+  name: "conselhosCnpd",
   data: () => ({
-    isencoes: [], //array com os itens
+    conselhos: [], //array com os itens
     currentSort: "titulo", //ordenar por titulo
     currentSortDir: "asc", // ordenar ascendente
     search: "", //search
     searchSelection: "",
-    pageSize: 8, //paginacao
+    pageSize: 6, //paginacao
     currentPage: 1,
   }),
 
@@ -105,7 +101,7 @@ export default {
       this.currentSort = s;
     },
     nextPage() {
-      if (this.currentPage * this.pageSize < this.isencoes.length)
+      if (this.currentPage * this.pageSize < this.conselhos.length)
         this.currentPage++;
     },
     prevPage() {
@@ -113,13 +109,13 @@ export default {
     },
 
     countNumbers() {
-      return this.isencoes.length;
+      return this.conselhos.length;
     },
   },
 
   computed: {
     filteredList() {
-      return this.isencoes
+      return this.conselhos
         .filter((data) => {
           let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());
           return titulo;
@@ -134,16 +130,16 @@ export default {
 
   created() {
     axios
-      .get("http://127.0.0.1:8000/api/isencoes")
+      .get("http://127.0.0.1:8000/api/listarConselhos")
       .then((response) => {
-        this.isencoes = response.data;
+        this.conselhos = response.data;
       });
   },
 };
 </script>
 
 <style scoped>
-#isencoes {
+#conselhos {
   padding-top: 100px;
   margin-left: 30px;
 }
@@ -154,7 +150,16 @@ export default {
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
-} 
+}
+.post-box .post-title {
+  font-size: 16px;
+  color: #374253;
+  margin-bottom: 18px;
+  position: relative;
+  text-align: left;
+  transition: 0.3s;
+}
+ 
 #isencao {
   margin: 10px;
 }
@@ -198,14 +203,7 @@ export default {
   text-transform: uppercase;
   border-radius: 50px;
 }
-.post-box .post-title {
-  font-size: 16px;
-  color: #374253;
-  margin-bottom: 18px;
-  position: relative;
-  text-align: left;
-  transition: 0.3s;
-}
+
 @media (min-width: 1024px) {
   .section-title p {
     width: 50%;

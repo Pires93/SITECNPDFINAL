@@ -15,25 +15,38 @@
         <div v-for="(news, index) in (filtrarNoticias)" :key="index" class="carousel-item active">
            
           <div class="post-img">
-            <img  :src="'http://localhost:8000/storage/capanoticia/'+news.imagem" class="img-fluid" alt="">
+            <img :src="'http://localhost:8000/storage/capanoticia/'+news.imagem" class="img-fluid" alt="">
           </div>
           <div id="titlemob" class="carousel-caption d-none d-md-block"> 
             <router-link :to="{name: 'eventview',params: { id: news.id}}" style="text-decoration: none">
               <h5>  {{news.titulo}}</h5>
               <!--{{ countnews() }} -->
+              <p v-if="news.conteudo.length>50" id="textoslide">
+              {{ news.conteudo.substring(0,250) }} ...
+              </p>
+              <p>
+                 <span>Ler mais </span> <IconAwe class="icon-color" icon="arrow-right" />
+               </p>
             </router-link> 
-            <p id="textoslide">{{news.titulo}}</p> 
+             
           </div>
         </div>
         
       <!-- MOSTRAR 3 CONSELHOS PRATICOS-->
       <div v-for="(conselho, index) in (conselhospraticos)" :key="index" class="carousel-item">
-          <div class="post-img"><img  :src="conselho.url"  class="img-fluid" alt=""></div><!--src="/img/passwordforte.png" -->
+          <div class="post-img"><img :src="'http://localhost:8000/storage/conselhopratico/'+conselho.imagem"  class="img-fluid" alt=""></div><!--src="/img/passwordforte.png" -->
           <div class="carousel-caption d-none d-md-block">
-            <router-link to="/conselhos" style="text-decoration: none">
-              <h5>Conselho -  {{conselho.id}}- {{conselho.title}}</h5>
+            <router-link :to="{name: 'conselhoview',params: { id: conselho.id}}" style="text-decoration: none">
+              <h5>  {{conselho.id}}- {{conselho.titulo}}</h5>
+              <div id="vermais" v-if="conselho.descricao.length>50"> 
+                {{ conselho.descricao.substring(0,200) }} ... 
+              </div> 
+              <p>
+                 <span>Ver mais </span> <IconAwe class="icon-color" icon="arrow-right" />
+               </p>
             </router-link> 
-            <p id="textoslide">{{conselho.title}}</p>
+              
+             
         </div>
       </div> 
   </div>
@@ -48,7 +61,7 @@ import axios from 'axios';
 export default {
   name: "BannerHome",
   data: () => ({
-    photos: [],
+    conselhos: [],
     noticias:[], //array com os itens
     currentSort:'title', //ordenar por title
     currentSortDir:'asc',// ordenar ascendente
@@ -81,9 +94,9 @@ export default {
   computed: { 
 
     conselhospraticos () {
-      return this.photos.filter((data) => { 
-        let title = data.title.toLowerCase().match(this.search.toLowerCase());  
-        return title;
+      return this.conselhos.filter((data) => { 
+        let titulo = data.titulo.toLowerCase().match(this.search.toLowerCase());  
+        return titulo;
       }).filter((row, index) => {
         let start = (this.currentPage-1)*this.pageSizeconselhos;
         let end = this.currentPage*this.pageSizeconselhos;
@@ -103,9 +116,9 @@ export default {
   },
 
   created () {
-    axios.get('https://jsonplaceholder.typicode.com/photos')
+    axios.get('http://127.0.0.1:8000/api/ultimosConselhos')
       .then(response => {
-        this.photos = response.data
+        this.conselhos = response.data
       });
       axios.get('http://127.0.0.1:8000/api/ultimaNoticia')
       .then(response => {
@@ -186,5 +199,8 @@ export default {
   margin-right: auto;
   width: auto;
   height: 600px;
+}
+p,#vermais{
+  color:#fff
 }
 </style>
