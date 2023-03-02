@@ -17,7 +17,7 @@
           </router-link>
         </h5>
       </div>
-      <Form @submit="onSubmit">
+      <Form @submit="submitForm" method="POST" enctype="multipart/form-data">
         <!-- FORMS Interconexao-->
         <div class="section-title">
           <h2>
@@ -95,6 +95,7 @@
 
               <div class="col-md-12">
                 <Field
+                  v-model="nome_denominacao"
                   name="nomedenominacao"
                   type="text"
                   class="form-control"
@@ -107,6 +108,7 @@
               </div>
               <div class="col-md-12">
                 <input
+                  v-model="nome_comercial"
                   type="text"
                   class="form-control"
                   id="nomecomercial"
@@ -122,13 +124,15 @@
                   v-model="atividadeDesenvolvida"
                   :rules="validateRadio"
                 >
-                  <option value="">- Selecione a atividade desenvolvida -</option>
+                  <option value="">selecione a atividade desenvolvida</option>
                   <option
                     v-for="atividadeDesenvolvida in atividadesDesenvolvidas"
                     :key="atividadeDesenvolvida.value"
                     :value="atividadeDesenvolvida.value"
                   >
                     {{ atividadeDesenvolvida.value }}
+
+
                   </option>
                 </Field>
                 <ErrorMessage
@@ -138,8 +142,10 @@
               </div>
               <div class="col">
                 <Field
+                 
+                  v-model="numero_nif"
                   name="nif"
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="nif"
                   alt="NIF"
@@ -152,6 +158,7 @@
                 <div class="row">
                   <div class="col">
                     <input
+                      v-model="rua_responsavel_tratamento"
                       type="text"
                       class="form-control"
                       id="rua"
@@ -161,6 +168,7 @@
                   </div>
                   <div class="col">
                     <Field
+                      v-model="local_responsavel_tratamento"
                       name="local"
                       type="text"
                       class="form-control"
@@ -175,30 +183,31 @@
               </div>
               <div class="col-md-12">
                 <div class="row">
-                  <div class="col">
-                    <Field
-                      as="select"
-                      class="form-select"
-                      v-model="ilhaResp"
-                      name="ilhaResp"
-                      id="ilhaResp"
-                      for="ilhaResp"
-                      placeholder="- Seleciona uma ilha-"
-                      :rules="validateRadio"
+                <div class="col">
+                  <Field
+                    as="select"
+                    name="ilhaResp"
+                    class="form-select"
+                    v-model="ilhaResp"
+                    id="ilhaResp"
+                    for="ilhaResp"
+                    
+                    :rules="validateRadio"
+
+                  >
+                   <option value="">- selecione uma ilha -</option>
+                    <option
+                      v-for="ilha in ilhas"
+                      :key="ilha.value"
+                      :value="ilha.value"
                     >
-                      <option value="">- selecione uma ilha -</option>
-                      <option
-                        v-for="option in ilhas"
-                        :key="option.value"
-                        :value="option.value"
-                      >
-                        {{ option.label }}
-                      </option>
-                    </Field>
-                    <ErrorMessage class="errorMessage" name="ilhaResp" />
-                  </div>
-                  <div class="col">
-                    <Field
+                      {{ ilha.label }}
+                    </option>
+                  </Field>
+                  <ErrorMessage class="errorMessage" name="ilhaResp" />
+                </div>
+                <div class="col">
+                  <Field
                       as="select"
                       class="form-select"
                       v-model="concelhoResp"
@@ -207,7 +216,6 @@
                       for="concelhoResp"
                       placeholder="- Seleciona um concelho -"
                       :rules="validateRadio"
-
                     >
                       <option value="">- selecione um concelho -</option>
                       <option
@@ -218,14 +226,16 @@
                         {{ option.label }}
                       </option>
                     </Field>
-                    <ErrorMessage class="errorMessage" name="concelhoResp" />
-                  </div>
+                  <ErrorMessage class="errorMessage" name="concelhoResp" />
+                  
                 </div>
+              </div>
               </div>
               <div class="col-md-12" id="divloco">
                 <div class="row">
                   <div class="col">
                     <input
+                      v-model="caixapostal_responsavel_tratamento"
                       type="text"
                       class="form-control"
                       id="caixapostal"
@@ -235,6 +245,7 @@
                   </div>
                   <div class="col">
                     <Field
+                      v-model="telefone_responsavel_tratamento"
                       name="telefone"
                       type="number"
                       class="form-control"
@@ -251,6 +262,7 @@
                 <div class="row">
                   <div class="col">
                     <Field
+                      v-model="email_responsavel_tratamento"
                       name="email"
                       type="email"
                       class="form-control"
@@ -291,6 +303,7 @@
               </div>
               <div class="col-md-12">
                 <Field
+                  v-model="nome_representante_tratamento"
                   name="representante"
                   type="text"
                   class="form-control"
@@ -300,17 +313,10 @@
                 />
                 <ErrorMessage class="errorMessage" name="representante" />
               </div>
+              
               <div class="col-md-12">
                 <input
-                  type="text"
-                  class="form-control"
-                  name="nomecomercialRI"
-                  id="nomecomercialRI" 
-                  placeholder=" Nome/Comercial"
-                />
-              </div>
-              <div class="col-md-12">
-                <input
+                  v-model="rua_representante_tratamento"
                   type="text"
                   class="form-control"
                   id="ruaRI" 
@@ -320,6 +326,7 @@
               </div>
               <div class="col-md-12">
                 <input
+                  v-model="caixapostal_representante_tratamento"
                   type="text"
                   class="form-control"
                   id="caixaPostalRI" 
@@ -329,6 +336,7 @@
               </div>
               <div class="col-md-12">
                 <Field
+                  v-model="local_representante_tratamento"
                   name="localRepresentante"
                   type="text"
                   class="form-control"
@@ -388,6 +396,7 @@
               </div>
               <div class="col-md-12" id="divloco">
                 <Field
+                  v-model="nome_pessoa_contato"
                   type="text"
                   class="form-control"
                   name="nomePessoaContato"
@@ -401,6 +410,7 @@
                 <div class="row">
                   <div class="col">
                     <Field
+                      v-model="email_representante_tratamento"
                       name="emailRepresentante"
                       type="email"
                       class="form-control"
@@ -412,6 +422,7 @@
                   </div>
                   <div class="col">
                     <Field
+                      v-model="telefone_representante_tratamento"
                       name="telefoneRepresentante"
                       type="number"
                       class="form-control"
@@ -435,7 +446,7 @@
                 Processamento da informação
               </div>
               <div class="col-md-12"><br /></div>
-              <div class="col">
+             <div class="col">
                 <label class="form-check-label">
                   Existe um Serviço Externo encarregado do processamento?
                 </label>
@@ -449,65 +460,67 @@
                   {{ checkServico ? "Não" : "Sim" }}
                 </buttom>
               </div>
-              <div class="col-md-12"><br /></div>
-              <div class="col-md-12"  v-if="checkServico">
-                <div class="col-md-12">
-                  <Field
-                  :rules="validateText"
+
+              <div class="col-md-12"   v-if="checkServico">
+              <div class="col-md-12">
+                <Field
                   type="text"
                   class="form-control"
                   name="entidadeProcessInfo"
                   id="entidadeProcessInfo"
-                  placeholder=" Qual a Entidade Encarregue pelo proccessamento das imagens"
+                  v-model="entidade_processamento_informacao"
+                  placeholder=" Qual a Entidade Encarregue pelo processamento dos dados"
+                 :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="entidadeProcessInfo" /> 
+                <ErrorMessage class="errorMessage" name="entidadeProcessInfo" />
+              </div>
+              <div class="col-md-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="ruaProcessInfo"
+                  id="ruaProcessInfo"
+                  v-model="rua_entidade_processamento"
+                  placeholder=" Rua"
+                />
+                <ErrorMessage class="errorMessage" name="ruaProcessInfo" />  
                 </div>
                 <div class="col-md-12">
                   <input
                   
                   type="text"
                   class="form-control"
-                  name="ruaProcessInfo"
-                  id="ruaProcessInfo"
-                  placeholder=" Rua"
-                />
-                 
-                </div>
-                <div class="col-md-12">
-                  <input
-                 
-                  type="text"
-                  class="form-control"
                   name="caixaPostalProcessInfo"
                   id="caixaPostalProcessInfo"
-                    placeholder=" Caixa Postal"
+                  v-model="caixapostal_entidade_processamento"
+                  placeholder=" Caixa Postal"
                 />
-                 
-                </div>
-                <div class="col-md-12">
-                  <Field
-                  :rules="validateText"
+              </div>
+              <div class="col-md-12">
+                <Field
                   type="text"
                   class="form-control"
                   name="lugarProcessInfo"
                   id="lugarProcessInfo"
-                    placeholder="Cidade/Vila/Lugar/Zona da Entidade"
+                  v-model="local_entidade_processamento"
+                  placeholder="Cidade/Vila/Lugar/Zona da Entidade"
+                  :rules="validateText"
                 />
-                <ErrorMessage class="errorMessage" name="lugarProcessInfo" />   
-                </div>
+                <ErrorMessage class="errorMessage" name="lugarProcessInfo" />
+              </div>
 
-                <div class="col-md-12">
-                  <div class="row">
-                    <div class="col">
-                      <Field
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col">
+                    <Field
                       as="select"
                       class="form-select"
                       v-model="ilhaServExt"
-                      name="ilhaServExt"
-                      id="ilhaServExt"
-                      for="ilhaServExt"
+                      name="ilhaProcessInfo"
+                      id="ilhaProcessInfo"
+                      for="ilhaProcessInfo"
+                      
                       :rules="validateRadio"
-                        placeholder="- Seleciona uma ilha-"
                     >
                       <option value="">- selecione uma ilha -</option>
                       <option
@@ -518,16 +531,17 @@
                         {{ ilha.value }}
                       </option>
                     </Field>
-                    <ErrorMessage class="errorMessage" name="ilhaServExt" /> 
-                    </div>
-                    <div class="col">
-                      <Field
+                    <ErrorMessage class="errorMessage" name="ilhaProcessInfo" />
+                  </div>
+                  <div class="col">
+                    <Field
                       as="select"
                       class="form-select"
                       v-model="concelhoServExt"
-                      name="concelhoServExt"
-                      id="concelhoServExt"
-                      for="concelhoServExt"
+                      name="concelhoProcessInfo"
+                      id="concelhoProcessInfo"
+                      for="concelhoProcessInfo"
+                      placeholder="- Seleciona um concelho -"
                       :rules="validateRadio"
                     >
                       <option value="">- selecione um concelho -</option>
@@ -539,14 +553,14 @@
                         {{ concelho.value }}
                       </option>
                     </Field>
-                    <ErrorMessage class="errorMessage" name="concelhoServExt" />
-                        </div>
+                    <ErrorMessage class="errorMessage" name="concelhoProcessInfo" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
         <!--------------------------------------FINALIDADE DO TRATAMENTO----------------------------------------------------->
 
         <div class="col-md-12" id="divg">
@@ -560,7 +574,7 @@
               <div class="col-md-12"><br /></div>
               <div class="col">
                 <Multiselect
-                  v-model="value"
+                  v-model="finalidade"
                   name="finalidadetra"
                   id="finalidadetra"
                   placeholder="- Indique a(s) finalidade(s) do tratamento-"
@@ -576,6 +590,101 @@
         </div>
     <!---- ----------------- DADOS PESSOAIS  CONTIDOS DO TRATAMENTO-------------------------------------------------------------------->
     <div class="col" id="divg">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" id="divloco">
+                <div class="col-md-12" id="separacao">
+                  3. Dados pessoais contidos em cada registo
+                </div>
+              </div>
+              <div class="col-md-12"><br /></div>
+              <div class="col-md-12">
+                <label class="form-check-label">
+                  
+                </label>
+                <div class="col-md-12">
+                  <button
+                    @click="addFinalidd()"
+                    alt="Adicionar mais campos"
+                    type="button"
+                    id="addmore"
+                    class="btn btn-success"
+                  >
+                    <b class="add"
+                      ><IconAwe class="icon-color" icon="plus"
+                    /></b>
+                  </button>
+                  <div class="col-md-12"><br /></div>
+
+                  <label for="categorias">
+                    Selecione uma Categoria abaixo</label
+                  >
+                  <div
+                    class="row"
+                    v-for="(finalidadi, index) in finalidadiCategory"
+                    :key="index"
+                  >
+                    <div class="col-md-4" id="cambs">
+                      <Field 
+                        :name="'categoria ' + (index + 1)"  
+                        as="select"
+                        class="form-select" 
+                        :rules="validateRadio" 
+                        v-model="finalidadi.categoria" 
+                        :id="'categoria ' + (index + 1)" 
+                        for="categoria"
+                        placeholder="- Seleciona uma categoria-"
+                      >
+                        <option value=""> - selecione uma categoria -</option>
+                        <option
+                          v-for="categoria in categorias"
+                          :key="categoria.id"
+                          :value="categoria.value"
+                        >
+                          {{ categoria.label }}
+                        </option>
+                      </Field>
+                      <ErrorMessage class="errorMessage" :name="'categoria ' + (index + 1)" />
+                       </div>
+                    <div class="col-md-7" id="cambs">
+                      <Multiselect
+                        v-model="finalidadi.finalidade"
+                        :name="'finalidade ' + (index + 1)"   
+                        :options="finalidadesCategorias[finalidadi.categoria]"
+                        mode="tags"
+                        placeholder="- selecione  os dados pessoais tratados -"
+                        :close-on-select="true"
+                        :searchable="true"
+                        :object="true"
+                        :multiple="true"
+                        :rules="validateRadio" 
+                      />
+                      <ErrorMessage class="errorMessage" :name="'finalidadi.finalidade ' + (index + 1)" />
+                      
+                    </div>
+                    <div class="col-md-1">
+                      <button
+                        @click="removeFinalidd(index)"
+                        v-show="index != 0"
+                        type="button"
+                        id="removeItem"
+                        class="btn btn-danger"
+                      >
+                        <b class="add"
+                          ><IconAwe class="icon-color" icon="trash-can"
+                        /></b>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-md-12"><br /></div>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+    <!--<div class="col" id="divg">
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="divloco">
@@ -662,7 +771,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> 
+      -->
  
  
         <div class="col" id="divg"> 
@@ -676,7 +786,7 @@
                 <div class="row">
                   <div class="col">
                     <Multiselect
-                      v-model="value"
+                      v-model="trabalhadores_abrangido_obrigacao_sigilo"
                       name="trabalhadores"
                       id="finalidadetra"
                       placeholder="- Indique os trabalhadores abrangidos por especial obrigação do sigilo-"
@@ -695,7 +805,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12" id="separacao">
-                5.Exercício do direito de acesso às imagens gravadas
+                5.Exercício do direito de acesso 
               </div>
               <div class="col">
                 <label class="form-check-label">
@@ -715,6 +825,7 @@
               <div class="col-md-12" id="divg2" v-if="checkDireitoAcesso">
                 <div class="col-md-12">
                   <Field 
+                        v-model="rua_direito_acesso"
                         type="text"
                         class="form-control"
                         name="ruaDireitoAcesso"
@@ -724,6 +835,7 @@
                 </div>
                 <div class="col-md-12">
                   <Field 
+                        v-model="caixapostal_direito_acesso"
                         type="text"
                         class="form-control"
                         name="caixaPostalDireitoAcesso"
@@ -732,7 +844,8 @@
                       />  
                 </div>
                 <div class="col-md-12">
-                  <Field
+                  <Field 
+                        v-model="local_direito_acesso"
                         :rules="validateText"
                         type="text"
                         class="form-control"
@@ -803,6 +916,7 @@
                   <div class="row">
                     <div class="col">
                       <Field
+                        v-model="email_direito_acesso"
                         :rules="validateEmail"
                         type="email"
                         class="form-control"
@@ -817,6 +931,7 @@
                     </div>
                     <div class="col">
                       <Field
+                         v-model="telefone_direito_acesso"
                         :rules="validateNumber"
                         type="text"
                         class="form-control"
@@ -875,7 +990,7 @@
                   name="outraFormaDireitoAcesso"
                   as="textarea"
                   class="form-control"
-                  v-model="outraFormaDireitoAcesso" 
+                  v-model="outrasformas_direito_acesso" 
                   placeholder=" Mencionar outras formas de direito de acesso, caso não for mencionado acima"
                 /> 
               </div>
@@ -909,9 +1024,22 @@
               <div class="col-md-12" v-if="checkRepTrab">
                 <label for="formFile" class="form-label"
                   >Se sim, juntar a cópia do parecer ou comprovativo do
-                  pedido.</label
+                  pedido em formato PDF.</label
                 >
-                <input class="form-control" type="file" id="formFile" />
+                <Field
+                  v-model="parecer_representante_trabalhadore" 
+                  name="parecer_representante_trabalhadore"
+                  class="form-control"
+                  type="file"
+                  ref="file"
+                  :rules="validateText" 
+                  accept="application/pdf"
+                  
+                />
+
+                <!--accept="image/png, image/gif, image/jpeg"-->
+                
+                <ErrorMessage class="errorMessage" name="parecer_representante_trabalhadore" />
               </div>
             </div>
           </div>
@@ -936,7 +1064,7 @@
                   name="medidasFisica"
                   as="textarea"
                   class="form-control"
-                  v-model="medidasFisica"
+                  v-model="medidade_seguranca_fisica"
                   :rules="validateText"
                   placeholder="Ocorre quando temos barreiras físicas que impeçam que pessoas não autorizadas tenham acesso a espaços onde os dados estão guardados"
                 />
@@ -955,7 +1083,7 @@
                   name="medidasLogica"
                   as="textarea"
                   class="form-control"
-                  v-model="medidasLogica"
+                  v-model="medidade_seguranca_logica"
                   :rules="validateText"
                   placeholder="Consiste na implementação de chaves de acesso, encriptação do conteúdo e registos de operações efectuadas no sistema"
                 />
@@ -993,7 +1121,7 @@
                 <label for="formFile" class="form-label"
                   >Se sim, juntar a cópia do regulamento interno.</label
                 >
-                <input class="form-control" type="file" id="formFile" />
+                <Field class="form-control" accept="application/pdf" type="file" id="formFile" v-model="regulamento_interno"  :rules="validateText"  name="regulamento_interno"/>
               </div>
             </div>
           </div>
@@ -1007,11 +1135,63 @@
             value="Save"
             class="btn btn-primary"
             type="submit"
+            
           >
           <IconAwe class="icon-color" icon="paper-plane"
                     /> Submeter Dados
           </button>
         </div>
+         <!------------------MODAL SHOW ------------------------->
+         <div v-show="showModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/success1.gif" class="center">
+                  </div>
+                  <p id="success">O seu formulário foi submetido com Sucesso.</p>   
+                  <div class="modalFooter">
+                    <button
+                        @click="closeSuccess"
+                        id="buttonsave"
+                        class="btn btn-primary" 
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div v-show="ErrorModal" class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+                  <h5 class="modal-title" >
+                  Atenção:
+                  </h5>
+                  <hr> 
+                  <div class="modal-header" id="headermodal">
+                     <img id="img" src="/img/error-img.gif" class="center">
+                  </div>
+                  <p id="error">O seu formulário não foi submetido.</p>
+                  <p id="error1">Por favor tente novamente!</p>        
+                  <div class="modalFooter">
+                   <button
+                        @click="closeError"
+                        id="buttonsave"
+                        class="btn btn-primary"
+                      >
+                        <IconAwe class="icon-color" icon="circle-check" /> Fechar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
       </Form>
     </div>
   </section>
@@ -1019,7 +1199,7 @@
 
 <script>
 import Multiselect from "@vueform/multiselect";
-
+import axios from "axios";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
 export default {
@@ -1032,6 +1212,38 @@ export default {
   data() {
     return {
       nomeDenominacao: "",
+      tipoPessoa:"",
+      nome_denominacao:"",
+      nome_comercial:"",
+      numero_nif:"",
+      rua_responsavel_tratamento:"",
+      local_responsavel_tratamento:"",
+      caixapostal_responsavel_tratamento:"",
+      telefone_responsavel_tratamento:"",
+      email_responsavel_tratamento:"",
+      paisResp:"",
+      nome_representante_tratamento:"",
+      rua_representante_tratamento:"",
+      caixapostal_representante_tratamento:"",
+      local_representante_tratamento:"",
+      nome_pessoa_contato:"",
+      email_representante_tratamento:"",
+      telefone_representante_tratamento:"",
+      entidade_processamento_informacao:"",
+      rua_entidade_processamento:"",
+      caixapostal_entidade_processamento:"",
+      local_entidade_processamento:"",
+      rua_direito_acesso:"",
+      caixapostal_direito_acesso:"",
+      local_direito_acesso:"",
+      email_direito_acesso:"",
+      telefone_direito_acesso:"",
+      formaDireitoAcesso:"",
+      outrasformas_direito_acesso:"",
+      parecer_representante_trabalhadore:"",
+      regulamento_interno:"",
+      medidade_seguranca_fisica:"",
+      medidade_seguranca_logica:"",
       checkMorada: false,
       checkServico: false,
       checkServicoSR: false,
@@ -1040,14 +1252,15 @@ export default {
       checkTransfInter: false,
       checkRepTrab: false,
       checkRegInterno: false,
-
+      atividadeDesenvolvida:"",
+      trabalhadores_abrangido_obrigacao_sigilo:null,
       trabalhadorAbra: [
         { value: "Jornalista", label: "Jornalista" },
         { value: "Profissionais da saúde", label: "Profissionais da saúde" },
         { value: "Advogados", label: "Advogados" },
         { value: "Ministro de culto", label: "Ministro de culto" },
       ],
-
+      finalidade:null,
       finalidadeTratamento: [
         {
           value: "Gestão dos meios da empresa",
@@ -1060,8 +1273,20 @@ export default {
       ],
 
       /*******************************************TIPO DE NOTIFICAÇÃO ******************************************/
+     
+      
+
+      tipoNot: null,
+      error: "",
       tipoNotificacao: null,
-      tipoNotificacoes: null,
+      tipoNotificacoes: [
+        { value: "1ª Notificação", label: "1ª Notificação" },
+        { value: "Alteração", label: "Alteração" },
+        {
+          value: "Substituição da Notificação não autorizada",
+          label: "Substituição da Notificação não autorizada",
+        },
+      ],
       /**********************************ATIVIDADE DESENVOLVIDA*********************************************** */
 
       /** *********************ILHAS E CONCELHOS ************************************** */
@@ -1094,6 +1319,8 @@ export default {
       concelhoRespSR: null,
       ilhaMorRepSR: null,
       concelhoMorRepSR: null,
+    
+     
 
       concelhos: {
         "Santo Antão": [
@@ -1254,13 +1481,167 @@ export default {
       ],
  
       /**************************************************************************************************** */
+
+      atividadesDesenvolvidas: [
+            { "value": "Actividade de Televisão", "label": "Actividade de Televisão" },
+            {
+              "value": "Emprego (Selecção, fornecimento de recursos humanos)",
+              "label": "Emprego (Selecção, fornecimento de recursos humanos)"
+            },
+            { "value": "Segurança e Ordem pública", "label": "Segurança e Ordem pública" },
+            { "value": "Produção da Água", "label": "Produção da Água" },
+            { "value": "Telecomunicação", "label": "Telecomunicação" },
+            { "value": "Segurança Privada", "label": "Segurança Privada" },
+            {
+              "value": "Ensino (Pré-escolar, Básico, Secundário, Superior)",
+              "label": "Ensino (Pré-escolar, Básico, Secundário, Superior)"
+            },
+            {
+              "value": "Estabelecimento comercial de venda a público",
+              "label": "Estabelecimento comercial de venda a público"
+            },
+            {
+              "value":
+                "Serviço de Internet (processamento de dados, domiciliação de informação",
+              "label":
+                "Serviço de Internet (processamento de dados, domiciliação de informação"
+            },
+            {
+              "value": "Administração Pública (Central, Local)",
+              "label": "Administração Pública (Central, Local)"
+            },
+            { "value": "Saúde", "label": "Saúde" },
+            { "value": "Centro Comercial", "label": "Centro Comercial" },
+            {
+              "value": "Publicidade, Estudos de Mercado, Sondagens de Opinião",
+              "label": "Publicidade, Estudos de Mercado, Sondagens de Opinião"
+            },
+            { "value": "Negócios Estrangeiros", "label": "Negócios Estrangeiros" },
+            { "value": "Previdência Social", "label": "Previdência Social" },
+            {
+              "value": "Alojamento (Hotel, Residencial, Pensão, etc.)",
+              "label": "Alojamento (Hotel, Residencial, Pensão, etc.)"
+            },
+            { "value": "Defesa", "label": "Defesa" },
+            { "value": "Actividade Financeira", "label": "Actividade Financeira" },
+            { "value": "Comércio Electrónico", "label": "Comércio Electrónico" },
+            { "value": "Informática", "label": "Informática" },
+            { "value": "Justiça", "label": "Justiça" },
+            { "value": "Seguros", "label": "Seguros" },
+            {
+              "value": "Transporte (Aéreo, Marítimo, Terrestre)",
+              "label": "Transporte (Aéreo, Marítimo, Terrestre)"
+            }
+          ],
+
     };
+
+
+    
   },
 
   methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
+
+    addFinalidd() {
+      this.finalidadiCategory.push({
+       // categoria: "",
+        //finalidadesCategorias: "",
+      });
+    },
+    removeFinalidd(index) {
+      this.finalidadiCategory.splice(index, 1);
+    },
+    
+  async  submitForm() {
+     const data = {
+
+        tipo_notificacao: this.tipoNotificacao,
+        tipo_pessoa:  this.tipoPessoa,
+        nome_denominacao:   this.nome_denominacao,
+        atividade_desenvolvida: this.atividadeDesenvolvida,
+         nome_comercial:   this.nome_comercial,
+        numero_nif:   this.numero_nif,
+        rua_responsavel_tratamento:   this.rua_responsavel_tratamento,
+        local_responsavel_tratamento:   this.local_responsavel_tratamento,
+        ilha_responsavel_tratamento:    this.ilhaResp,
+        concelho_responsavel_tratamento:  this.concelhoResp,
+        caixapostal_responsavel_tratamento:this.caixapostal_responsavel_tratamento,
+        telefone_responsavel_tratamento:this.telefone_responsavel_tratamento,
+        email_responsavel_tratamento:this.email_responsavel_tratamento,
+        pais_responsavel_tratamento:this.paisResp,
+        nome_representante_tratamento:this.nome_representante_tratamento,
+        rua_representante_tratamento:this.rua_representante_tratamento,
+        caixapostal_representante_tratamento:this.caixapostal_representante_tratamento,
+        local_representante_tratamento:this.local_representante_tratamento,
+        ilha_representante_tratamento:this.ilhaMorRep,
+        concelho_representante_tratamento:this.concelhoMorRep,
+        nome_pessoa_contato:this.nome_pessoa_contato,
+        email_representante_tratamento:this.email_representante_tratamento,
+        telefone_representante_tratamento:this.telefone_representante_tratamento,
+        entidade_processamento_informacao:this.entidade_processamento_informacao,
+        rua_entidade_processamento:this.rua_entidade_processamento,
+        caixapostal_entidade_processamento:this.caixapostal_entidade_processamento,
+        local_entidade_processamento:this.local_entidade_processamento,
+        ilha_entidade_processamento:this.ilhaServExt,
+        concelho_entidade_processamento:this.concelhoServExt,
+        finalidade_tratamento:this.finalidade,
+        trabalhadores_abrangido_obrigacao_sigilo:this.trabalhadores_abrangido_obrigacao_sigilo,
+        rua_direito_acesso:this.rua_direito_acesso,
+        caixapostal_direito_acesso:this.caixapostal_direito_acesso,
+        local_direito_acesso:this.local_direito_acesso,
+        ilha_direito_acesso:this.ilhaDirAcess,
+        concelho_direito_acesso:this.concelhoDirAcess,
+        email_direito_acesso:this.email_direito_acesso,
+        telefone_direito_acesso:this.telefone_direito_acesso,
+        forma_direito_acesso:this.formaDireitoAcesso,
+        outrasformas_direito_acesso:this.outrasformas_direito_acesso,
+        parecer_representante_trabalhadore:this.parecer_representante_trabalhadore,
+        medidade_seguranca_fisica:this.medidade_seguranca_fisica,
+        medidas_seguranca_logica: this.medidade_seguranca_logica,
+        regulamento_interno:this.regulamento_interno,
+        dados_contido_em_cada_registros:this.finalidadiCategory
       
+      
+        
+
+
+        
+
+       
+
+     };
+     try { 
+     await axios.post("http://127.0.0.1:8000/api/tic/store", data, {
+        headers: { "Content-Type": "multipart/form-data; charset=utf-8" },
+      }); 
+      this.showModal = !this.showModal; 
+     /* setTimeout(function(){
+        window.location.reload();
+      }, 5000)*/
+
+    }catch(error){
+          this.ErrorModal = !this.ErrorModal; 
+        /* setTimeout(function(){
+          window.location.reload();
+        }, 5000)*/
+    
+       
+       
+      }
+     
+    
+     
+
+    },
+    closeError(event) {
+      this.ErrorModal = !this.ErrorModal; 
+     event.preventDefault();
+      window.location.reload();
+    },
+    closeSuccess(event) {
+      this.showModal = !this.showModal;  
+    event.preventDefault();
+    window.location.reload();
     },
     validateText(value) {
       // if the field is empty
@@ -1305,21 +1686,21 @@ export default {
     },
 
      
-    async dadosBackend() {
+   /* async dadosBackend() {
       const req = await fetch("http://localhost:3000/dadosBackend");
       const data = await req.json(); 
       this.ilhas = data.ilhas;
       this.atividadesDesenvolvidas = data.atividadesDesenvolvidas;
       this.tipoNotificacoes = data.tipoNotificacoes; 
       
-    },
+    },/*
      
     /*FINALIDADES MULTIPLAS*/
 
     addRegistro() {
       this.finalidadiCategory.push({
-        categoria: "",
-        finalidadesCategorias: "",
+        //categoria: "",
+        //finalidadesCategorias: "",
       });
     },
     removeRegistro(index) {
@@ -1347,10 +1728,10 @@ export default {
     changeRegInterno() {
       this.checkRegInterno = !this.checkRegInterno;
     },
+    
+    
   },
-  mounted() {
-    this.dadosBackend();
-  },
+  
 
   watch: {
     categoria() {
