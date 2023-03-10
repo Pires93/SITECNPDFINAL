@@ -146,6 +146,9 @@ export default {
 </script>
 
 <style>
+router-link{
+  color: #051636;
+}
 #idpage {
   display: flex;
   justify-content: center;

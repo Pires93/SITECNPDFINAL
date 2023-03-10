@@ -8,6 +8,21 @@
       <div class="col-md-12"  id="divg">
         <Form @submit="onSubmit">  
           <div class="row">
+            <p style="text-align: justify;">
+              Sem prejuízo do direito de recorrer às instâncias judiciais, 
+              qualquer pessoa pode apresentar queixas, reclamações ou petições
+               à Comissão Nacional de Protecção de Dados (CNPD) em caso de violação de seus dados pessoais.
+            </p>
+            <p style="text-align: justify;">
+              Para esse efeito, deve preencher o formulário disponibilizado abaixo,  
+              nos termos do n.º 1 artigo 30.º <a href="#">Lei n.º 42/VIII/2013</a>, de 17 de setembro,
+               alterada pela <a href="#">Lei n.º 120/IX/2021</a>, de 17 de março.
+            </p>
+            <p style="text-align: justify;">
+               As queixas, reclamações ou petições podem também ser apresentadas 
+               presencialmente junto da CNPD no seguinte endereço: Cidade da Praia, 
+               Chã d´Areia, Avenida China.
+            </p>
             <div class="col-md-6" id="divloco">
               <p class="pleft"> Dados do queixoso:</p>
                
@@ -339,6 +354,14 @@ export default {
 /*--------------------------------------------------------------
 # queixa
 --------------------------------------------------------------*/
+a:hover {
+  color: #bd9a13;
+  text-decoration: none;
+}
+a {
+  color: #bd9a13;
+  text-decoration: none;
+}
 #divg {
   font-family: "Times New Roman", Times, serif;
   padding: 10px;/*

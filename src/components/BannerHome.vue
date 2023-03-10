@@ -37,7 +37,7 @@
           <div class="post-img"><img :src="'http://localhost:8000/storage/conselhopratico/'+conselho.imagem"  class="img-fluid" alt=""></div><!--src="/img/passwordforte.png" -->
           <div class="carousel-caption d-none d-md-block">
             <router-link :to="{name: 'conselhoview',params: { id: conselho.id}}" style="text-decoration: none">
-              <h5>  {{conselho.id}}- {{conselho.titulo}}</h5>
+              <h5>  {{conselho.titulo}}</h5>
               <div id="vermais" v-if="conselho.descricao.length>50"> 
                 {{ conselho.descricao.substring(0,200) }} ... 
               </div> 
@@ -156,7 +156,7 @@ export default {
 /* On screens that are 600px wide or less, the background color is olive */
 @media screen and (max-width: 600px) {
   h5{ 
-    font-size:16px;   
+    font-size:10px;   
     color: #fff;  
     font-weight: 500;
     display: block;
@@ -175,7 +175,7 @@ export default {
 @media screen and (min-width: 900px) {
   h5{
   color: #fff; 
-    font-size: 50px; 
+    font-size: 30px; 
     font-weight: 1000;
     display: block;
     line-height: 1.1;
